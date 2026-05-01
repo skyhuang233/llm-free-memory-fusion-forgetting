@@ -1,0 +1,39 @@
+# Ablation: DFM-Fusion without per-entry truncation (post-concatenation only).
+# Identical to dfm_fusion_config.yaml except ablation_skip_per_entry_truncation: true.
+
+ablation_skip_per_entry_truncation: true
+
+embedding_model: "all-MiniLM-L6-v2"
+embedding_backend: "sentence-transformers"
+answer_model: "gpt-4o-mini"
+answer_temperature: 0.0
+
+retrieval_top_k: 10
+retrieval_token_budget: 4000
+
+decay:
+  lambda_base: 0.1
+  theta_promote: 0.7
+  theta_demote: 0.3
+  theta_fusion: 0.75
+  t_window: 10
+
+memory:
+  lml_capacity: 1000
+  sml_capacity: 500
+
+fusion:
+  token_budget: 768
+  dedup_threshold: 0.85
+  mmr_lambda: 0.7
+
+preservation:
+  coverage_threshold: 0.85
+  salient_top_k: 20
+
+evaluation:
+  num_runs: 3
+  seed: 42
+
+data:
+  locomo_path: "external/locomo/data/locomo10.json"

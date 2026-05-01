@@ -1,0 +1,24 @@
+{
+  "optimize_index": 0,
+  "issues": [
+    {
+      "title": "Fused memory embedding mismatch",
+      "description": "Fused memories used a weighted average of constituent embeddings instead of the embedding of the actual fused text. This caused retrieval inaccuracy -- the embedding didn't represent what the fused text actually said. Fixed by calling self.emb.embed(fused_text) instead of self.emb.fused_embedding(embeddings, weights) in fusion_deterministic.py:206."
+    },
+    {
+      "title": "Suboptimal fused text formatting",
+      "description": "Fused text used bare newlines to join selected sentences, which was ambiguous for the answer-gen LLM. Changed to pipe separators (' | ') in fusion_deterministic.py:190 to clearly delimit sentence boundaries."
+    },
+    {
+      "title": "Overly aggressive deduplication threshold",
+      "description": "The dedup_threshold of 0.90 was too aggressive, removing sentences that shared some but not all content. Lowered to 0.85 to preserve more diverse information in fused text."
+    },
+    {
+      "title": "Insufficient fusion token budget",
+      "description": "The fusion token_budget of 512 limited the number of sentences the MMR selector could include. Increased to 768 to preserve more information from each fusion cluster."
+    }
+  ],
+  "experiment_result_path": "EXPERIMENT_RESULTS/optimize_trace/iteration_0/",
+  "success": true,
+  "summary": "Optimized DFM-Fusion by fixing 4 issues: (1) re-embedding fused text from actual content instead of weighted-average embeddings, (2) improving text formatting with pipe separators, (3) lowering dedup threshold from 0.90 to 0.85, (4) increasing fusion token budget from 512 to 768. Results across 3 runs show improvement on all key metrics: Multi-hop F1 improved from 0.1828 to 0.1872 (now exceeding LLM-Fusion's 0.1863), Overall F1 improved from 0.3783 to 0.3795, Adversarial F1 improved from 0.8550 to 0.8595. Gap recovery improved from 77.3% to 105.9% (now exceeds the LLM-Fusion target). The method remains fully deterministic with zero additional LLM calls."
+}

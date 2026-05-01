@@ -1,0 +1,45 @@
+# Base configuration shared across all experimental conditions
+# DeterministicFadeMem-Fusion on LoCoMo benchmark
+
+# Models
+embedding_model: "all-MiniLM-L6-v2"  # local sentence-transformers model (API embedding not available via proxy)
+embedding_backend: "sentence-transformers"  # "sentence-transformers" for local, "openai" for API
+answer_model: "gpt-4o-mini"
+answer_temperature: 0.0
+
+# Retrieval
+retrieval_top_k: 10
+retrieval_token_budget: 4000  # B_ret
+
+# Decay hyperparameters
+decay:
+  lambda_base: 0.1
+  theta_promote: 0.7
+  theta_demote: 0.3
+  theta_fusion: 0.75
+  t_window: 10
+
+# Memory capacities
+memory:
+  lml_capacity: 1000
+  sml_capacity: 500
+
+# Fusion
+fusion:
+  token_budget: 512  # B_fuse per fused item
+  dedup_threshold: 0.85  # theta_dup for near-duplicate removal
+  mmr_lambda: 0.5  # MMR diversity-relevance tradeoff
+
+# Preservation (deterministic)
+preservation:
+  coverage_threshold: 0.8
+  salient_top_k: 10  # top-K TF-IDF tokens
+
+# Evaluation
+evaluation:
+  num_runs: 3
+  seed: 42
+
+# Data
+data:
+  locomo_path: "external/locomo/data/locomo10.json"

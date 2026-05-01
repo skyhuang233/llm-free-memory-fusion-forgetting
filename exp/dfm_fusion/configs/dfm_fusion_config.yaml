@@ -1,0 +1,45 @@
+# DFM-Fusion configuration: deterministic quote-preserving fusion.
+# Overrides fusion/preservation params from base_config; all other settings identical.
+
+# Models
+embedding_model: "all-MiniLM-L6-v2"
+embedding_backend: "sentence-transformers"
+answer_model: "gpt-4o-mini"
+answer_temperature: 0.0
+
+# Retrieval (same as baseline)
+retrieval_top_k: 10
+retrieval_token_budget: 4000
+
+# Decay hyperparameters (same as baseline)
+decay:
+  lambda_base: 0.1
+  theta_promote: 0.7
+  theta_demote: 0.3
+  theta_fusion: 0.75
+  t_window: 10
+
+# Memory capacities (same as baseline)
+memory:
+  lml_capacity: 1000
+  sml_capacity: 500
+
+# Fusion -- DFM-specific overrides
+fusion:
+  token_budget: 768
+  dedup_threshold: 0.85
+  mmr_lambda: 0.7
+
+# Preservation -- DFM-specific overrides
+preservation:
+  coverage_threshold: 0.85
+  salient_top_k: 20
+
+# Evaluation
+evaluation:
+  num_runs: 3
+  seed: 42
+
+# Data
+data:
+  locomo_path: "external/locomo/data/locomo10.json"

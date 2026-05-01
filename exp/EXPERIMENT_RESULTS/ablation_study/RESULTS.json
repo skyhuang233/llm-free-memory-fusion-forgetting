@@ -1,0 +1,89 @@
+{
+  "experiment": "DFM-Fusion Ablation Study: Coverage Check and Per-Entry Truncation",
+  "task_index": 6,
+  "num_runs_per_variant": 3,
+  "dataset": "LoCoMo-10 (1986 QA pairs, 282 multi-hop questions, 10 conversations)",
+  "models": {
+    "embedding": "all-MiniLM-L6-v2 (local sentence-transformers)",
+    "answer_generation": "gpt-4o-mini (temperature=0)",
+    "fusion": "deterministic (sentence segmentation + dedup + MMR packing)"
+  },
+  "comparison_table": {
+    "full_dfm_fusion": {
+      "multi_hop_f1_mean": 0.1872,
+      "multi_hop_f1_std": 0.0034,
+      "overall_f1_mean": 0.3795,
+      "overall_f1_std": 0.0012,
+      "delta_from_full_dfm": 0.0
+    },
+    "wo_coverage_check": {
+      "multi_hop_f1_mean": 0.1851,
+      "multi_hop_f1_std": 0.0003,
+      "overall_f1_mean": 0.3786,
+      "overall_f1_std": 0.0005,
+      "delta_from_full_dfm": -0.0021
+    },
+    "wo_per_entry_truncation": {
+      "multi_hop_f1_mean": 0.1850,
+      "multi_hop_f1_std": 0.0008,
+      "overall_f1_mean": 0.3799,
+      "overall_f1_std": 0.0006,
+      "delta_from_full_dfm": -0.0023
+    },
+    "no_fusion_baseline": {
+      "multi_hop_f1_mean": 0.1710,
+      "multi_hop_f1_std": 0.0009,
+      "overall_f1_mean": 0.3750,
+      "overall_f1_std": 0.0011,
+      "delta_from_full_dfm": -0.0162
+    }
+  },
+  "paired_ttests": {
+    "full_dfm_vs_wo_coverage": {
+      "n_questions": 282,
+      "mean_difference": 0.0021,
+      "t_statistic": 1.553,
+      "p_value": 0.1216,
+      "significant_at_0.05": false
+    },
+    "full_dfm_vs_wo_truncation": {
+      "n_questions": 282,
+      "mean_difference": 0.0023,
+      "t_statistic": 1.304,
+      "p_value": 0.1933,
+      "significant_at_0.05": false
+    },
+    "full_dfm_vs_no_fusion": {
+      "n_questions": 282,
+      "mean_difference": 0.0162,
+      "t_statistic": 2.172,
+      "p_value": 0.0307,
+      "significant_at_0.05": true
+    }
+  },
+  "ablation_diagnostics": {
+    "wo_coverage_check": {
+      "total_fusions_would_have_rejected": 9,
+      "average_coverage_recall": 0.961,
+      "note": "9 out of ~92 fusions per run would have been rejected by the coverage gate (recall < 0.85). Removing the gate allows these merges but the downstream QA impact is small."
+    },
+    "wo_per_entry_truncation": {
+      "total_length_dominance_queries": 0,
+      "total_retrieve_calls": 5958,
+      "length_dominance_fraction": 0.0,
+      "note": "No queries had the first retrieved item consuming >50% of the budget (B_ret=4000). Memory items are relatively short, so per-entry truncation rarely applies."
+    }
+  },
+  "key_findings": [
+    "Neither ablation causes a statistically significant drop in multi-hop F1 (p>0.05)",
+    "Both variants show small directional drops (-0.0021 and -0.0023) vs full DFM-Fusion",
+    "Full DFM-Fusion significantly outperforms No-Fusion baseline (p=0.031)",
+    "Coverage check acts as safety net: 9 fusions would have been rejected, minimal QA impact",
+    "Per-entry truncation has no effect when items are short (0% length dominance)"
+  ],
+  "runtime": {
+    "no_coverage_total_seconds": 7677,
+    "no_truncation_total_seconds": 7711,
+    "both_ran_in_parallel": true
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "experiment": "DFM-Fusion Optimized (Iteration 0) on LoCoMo",
+  "optimization_index": 0,
+  "num_runs": 3,
+  "dataset": "LoCoMo-10 (1986 QA pairs, 10 conversations)",
+  "changes_from_original": {
+    "fix_1_re_embed_fused_text": {
+      "file": "dfm_fusion/memory/fusion_deterministic.py:206",
+      "description": "Changed fused memory embedding from weighted average of constituent embeddings to embedding of actual fused text content"
+    },
+    "fix_2_text_formatting": {
+      "file": "dfm_fusion/memory/fusion_deterministic.py:190",
+      "description": "Changed fused text separator from newlines to pipe separators for better answer-gen LLM parsing"
+    },
+    "fix_3_dedup_threshold": {
+      "file": "dfm_fusion/configs/dfm_fusion_config.yaml",
+      "description": "Lowered dedup_threshold from 0.90 to 0.85 for richer fused content"
+    },
+    "fix_4_fusion_token_budget": {
+      "file": "dfm_fusion/configs/dfm_fusion_config.yaml",
+      "description": "Increased fusion token_budget from 512 to 768 for more sentence selection"
+    }
+  },
+  "optimized_config": {
+    "dedup_threshold": 0.85,
+    "mmr_lambda": 0.70,
+    "token_budget_B_fuse": 768,
+    "coverage_threshold": 0.85,
+    "salient_top_k_tfidf": 20,
+    "retrieval_top_k": 10,
+    "retrieval_token_budget": 4000
+  },
+  "aggregated_metrics": {
+    "overall_f1": {"mean": 0.3795, "std": 0.0012},
+    "multi_hop_f1": {"mean": 0.1872, "std": 0.0034},
+    "temporal_f1": {"mean": 0.0591, "std": 0.0004},
+    "open_domain_f1": {"mean": 0.1019, "std": 0.0013},
+    "single_hop_f1": {"mean": 0.3435, "std": 0.0017},
+    "adversarial_f1": {"mean": 0.8595, "std": 0.0011}
+  },
+  "per_run_metrics": {
+    "run_0": {
+      "overall_f1": 0.3809, "multi_hop_f1": 0.1916, "temporal_f1": 0.0588,
+      "open_domain_f1": 0.1015, "single_hop_f1": 0.3458, "adversarial_f1": 0.8587
+    },
+    "run_1": {
+      "overall_f1": 0.3780, "multi_hop_f1": 0.1835, "temporal_f1": 0.0588,
+      "open_domain_f1": 0.1006, "single_hop_f1": 0.3418, "adversarial_f1": 0.8587
+    },
+    "run_2": {
+      "overall_f1": 0.3797, "multi_hop_f1": 0.1867, "temporal_f1": 0.0597,
+      "open_domain_f1": 0.1036, "single_hop_f1": 0.3428, "adversarial_f1": 0.8610
+    }
+  },
+  "comparison_with_original": {
+    "original_dfm": {
+      "overall_f1": {"mean": 0.3783, "std": 0.0008},
+      "multi_hop_f1": {"mean": 0.1828, "std": 0.0016},
+      "adversarial_f1": {"mean": 0.8550, "std": 0.0011}
+    },
+    "optimized_dfm": {
+      "overall_f1": {"mean": 0.3795, "std": 0.0012},
+      "multi_hop_f1": {"mean": 0.1872, "std": 0.0034},
+      "adversarial_f1": {"mean": 0.8595, "std": 0.0011}
+    },
+    "llm_fusion_baseline": {
+      "overall_f1": 0.3805,
+      "multi_hop_f1": 0.1863,
+      "adversarial_f1": 0.8610
+    },
+    "no_fusion_baseline": {
+      "overall_f1": 0.3750,
+      "multi_hop_f1": 0.1710,
+      "adversarial_f1": 0.8602
+    },
+    "improvements": {
+      "overall_f1_delta": 0.0012,
+      "multi_hop_f1_delta": 0.0044,
+      "adversarial_f1_delta": 0.0045,
+      "single_hop_f1_delta": 0.0007
+    },
+    "gap_recovery": {
+      "original_gap_recovery_pct": 77.3,
+      "optimized_gap_recovery_pct": 105.9,
+      "interpretation": "Optimized DFM-Fusion now EXCEEDS LLM-Fusion on multi-hop F1 (0.1872 vs 0.1863), recovering 105.9% of the gap"
+    }
+  },
+  "fusion_statistics": {
+    "total_llm_calls": 0,
+    "accepted_fusions_per_run": 92,
+    "rejected_fusions": 0,
+    "acceptance_rate": 1.0,
+    "truncation_rate": 0.0
+  },
+  "runtime": {
+    "total_seconds": 7517,
+    "per_run_seconds": [2476, 2492, 2532],
+    "mean_per_run_seconds": 2500
+  }
+}

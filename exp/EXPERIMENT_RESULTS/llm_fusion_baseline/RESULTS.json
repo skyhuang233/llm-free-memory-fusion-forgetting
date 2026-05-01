@@ -1,0 +1,52 @@
+{
+  "experiment": "LLM-Fusion Baseline (FadeMem-Style) on LoCoMo",
+  "task_index": 1,
+  "num_runs": 3,
+  "dataset": "LoCoMo-10 (1986 QA pairs, 10 conversations)",
+  "models": {
+    "embedding": "all-MiniLM-L6-v2 (local sentence-transformers)",
+    "answer_generation": "gpt-4o-mini (temperature=0)",
+    "fusion": "gpt-4o-mini (temperature=0)",
+    "preservation_check": "gpt-4o-mini (temperature=0)"
+  },
+  "aggregated_metrics": {
+    "overall_f1": {"mean": 0.3805, "std": 0.0004},
+    "multi_hop_f1": {"mean": 0.1863, "std": 0.0021},
+    "temporal_f1": {"mean": 0.0614, "std": 0.0001},
+    "open_domain_f1": {"mean": 0.1068, "std": 0.0009},
+    "single_hop_f1": {"mean": 0.3439, "std": 0.0005},
+    "adversarial_f1": {"mean": 0.8610, "std": 0.0000}
+  },
+  "per_run_metrics": {
+    "run_0": {
+      "overall_f1": 0.3801, "multi_hop_f1": 0.1854, "temporal_f1": 0.0615,
+      "open_domain_f1": 0.1070, "single_hop_f1": 0.3432, "adversarial_f1": 0.8610
+    },
+    "run_1": {
+      "overall_f1": 0.3810, "multi_hop_f1": 0.1891, "temporal_f1": 0.0614,
+      "open_domain_f1": 0.1056, "single_hop_f1": 0.3442, "adversarial_f1": 0.8610
+    },
+    "run_2": {
+      "overall_f1": 0.3804, "multi_hop_f1": 0.1843, "temporal_f1": 0.0614,
+      "open_domain_f1": 0.1078, "single_hop_f1": 0.3442, "adversarial_f1": 0.8610
+    }
+  },
+  "fusion_statistics": {
+    "total_llm_calls": 226,
+    "accepted_fusions": 113,
+    "rejected_fusions": 0,
+    "acceptance_rate": 1.0,
+    "truncation_rate": 0.0
+  },
+  "reference_comparison": {
+    "fadem_published_multi_hop_f1": 29.43,
+    "our_multi_hop_f1": 18.63,
+    "sanity_check_range": [15, 45],
+    "sanity_check_passed": true
+  },
+  "runtime": {
+    "total_seconds": 8584,
+    "per_run_seconds": 2855,
+    "per_conversation_seconds": 285
+  }
+}

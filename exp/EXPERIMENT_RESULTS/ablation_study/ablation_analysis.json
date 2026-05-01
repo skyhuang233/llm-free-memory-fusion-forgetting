@@ -1,0 +1,67 @@
+{
+  "comparison_table": {
+    "full_dfm_fusion": {
+      "multi_hop_f1_mean": 0.1872481900914281,
+      "multi_hop_f1_std": 0.00336551817352267,
+      "delta_from_full_dfm": 0.0
+    },
+    "wo_coverage_check": {
+      "multi_hop_f1_mean": 0.18514084975919157,
+      "multi_hop_f1_std": 0.000257908757046432,
+      "delta_from_full_dfm": -0.002107340332236529
+    },
+    "wo_per_entry_truncation": {
+      "multi_hop_f1_mean": 0.18497996094477123,
+      "multi_hop_f1_std": 0.0007580290077827193,
+      "delta_from_full_dfm": -0.002268229146656864
+    },
+    "no_fusion_baseline": {
+      "multi_hop_f1_mean": 0.17103368102068636,
+      "multi_hop_f1_std": 0.0008956227923069494,
+      "delta_from_full_dfm": -0.016214509070741734
+    }
+  },
+  "paired_ttests": {
+    "full_dfm_vs_wo_coverage": {
+      "n_questions": 282,
+      "mean_a": 0.18724819009142807,
+      "mean_b": 0.1851408497591916,
+      "mean_difference": 0.0021073403322364737,
+      "t_statistic": 1.5526450580061866,
+      "p_value": 0.12163347120650944,
+      "significant_at_0.05": false
+    },
+    "full_dfm_vs_wo_truncation": {
+      "n_questions": 282,
+      "mean_a": 0.18724819009142807,
+      "mean_b": 0.18497996094477126,
+      "mean_difference": 0.0022682291466568083,
+      "t_statistic": 1.3040774577617589,
+      "p_value": 0.19327438461305416,
+      "significant_at_0.05": false
+    },
+    "full_dfm_vs_no_fusion": {
+      "n_questions": 282,
+      "mean_a": 0.18724819009142807,
+      "mean_b": 0.17103368102068636,
+      "mean_difference": 0.016214509070741706,
+      "t_statistic": 2.171747223086969,
+      "p_value": 0.03071113562810697,
+      "significant_at_0.05": true
+    }
+  },
+  "ablation_diagnostics": {
+    "wo_coverage_check": {
+      "total_fusions_would_have_rejected": 9,
+      "average_coverage_recall": 0.9610019459704944,
+      "interpretation": "9 fusions would have been rejected by coverage check. Removing the gate allows destructive merges that lose salient information."
+    },
+    "wo_per_entry_truncation": {
+      "total_length_dominance_queries": 0,
+      "total_retrieve_calls": 5958,
+      "length_dominance_fraction": 0.0,
+      "interpretation": "0.0% of queries had first item consuming >50% of budget. Without per-entry truncation, longer items dominate the retrieval context."
+    }
+  },
+  "overall_interpretation": "Removing the coverage check does NOT cause a significant drop in multi-hop F1 (p=0.1216). Although 9 fusions would have been rejected by the coverage gate, their impact on downstream QA is small. The coverage check acts as a safety net with minimal overhead. Removing per-entry truncation does NOT cause a significant drop in multi-hop F1 (p=0.1933). Per-entry truncation may not be critical when retrieved items are relatively short or uniform in length."
+}

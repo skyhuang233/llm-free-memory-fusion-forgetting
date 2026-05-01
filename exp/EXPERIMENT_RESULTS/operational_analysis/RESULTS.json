@@ -1,0 +1,67 @@
+{
+  "task": "Operational Metrics Analysis: DFM-Fusion vs LLM-Fusion Deployment Benefits",
+  "task_index": 7,
+  "conditions": ["LLM-Fusion", "DFM-Fusion", "No-Fusion"],
+  "benchmark": "LoCoMo (10 conversations, 1986 QA pairs, 3 runs/condition)",
+
+  "api_calls": {
+    "LLM-Fusion": {"answer_calls": 1986, "fusion_calls": 226, "total_calls": 2212},
+    "DFM-Fusion": {"answer_calls": 1986, "fusion_calls": 0, "total_calls": 1986},
+    "No-Fusion": {"answer_calls": 1986, "fusion_calls": 0, "total_calls": 1986},
+    "reduction": {
+      "fusion_calls_eliminated": 226,
+      "total_call_reduction_pct": 10.22,
+      "fusion_call_reduction_pct": 100.0
+    }
+  },
+
+  "latency": {
+    "LLM-Fusion": {"total_elapsed_mean_s": 2855.4, "total_elapsed_std_s": 52.8, "estimated_maintenance_overhead_s": 439.4},
+    "DFM-Fusion": {"total_elapsed_mean_s": 2500.0, "total_elapsed_std_s": 23.8, "estimated_maintenance_overhead_s": 84.0},
+    "No-Fusion": {"total_elapsed_mean_s": 2416.0, "total_elapsed_std_s": 3.9},
+    "maintenance_speedup_ratio": 5.23,
+    "total_elapsed_reduction_s": 355.4,
+    "total_elapsed_reduction_pct": 12.4
+  },
+
+  "estimated_cost_per_run_usd": {
+    "LLM-Fusion": {"answer": 0.5079, "fusion": 0.0176, "total": 0.5255},
+    "DFM-Fusion": {"answer": 0.5079, "fusion": 0.0, "total": 0.5079},
+    "No-Fusion": {"answer": 0.5079, "fusion": 0.0, "total": 0.5079},
+    "savings_usd": 0.0176,
+    "savings_pct": 3.35,
+    "pricing": {"model": "gpt-4o-mini", "input_per_1m_usd": 0.15, "output_per_1m_usd": 0.60}
+  },
+
+  "fusion_behavior": {
+    "cluster_sizes": {
+      "DFM-Fusion": {"count": 92, "mean": 3.46, "median": 3.0, "min": 3, "max": 7},
+      "LLM-Fusion_candidates": {"count": 980, "mean": 3.67, "median": 3.0, "min": 3, "max": 7}
+    },
+    "acceptance_rates": {
+      "LLM-Fusion": {"accepted": 113, "rejected": 0, "rate": 1.0},
+      "DFM-Fusion": {"accepted": 92, "rejected": 0, "rate": 1.0, "preservation_pass_rate": 0.9674}
+    },
+    "fused_token_lengths": {
+      "DFM-Fusion": {"count": 92, "mean": 96.3, "median": 86.0, "min": 34, "max": 273, "budget": 768},
+      "LLM-Fusion_sample": {"count": 12, "mean": 97.5, "median": 101.5, "min": 56, "max": 153, "budget": 512}
+    }
+  },
+
+  "truncation_rates": {
+    "LLM-Fusion": 0.0,
+    "DFM-Fusion": 0.0,
+    "No-Fusion": 0.0,
+    "explanation": "B_ret/k = 4000/10 = 400 tokens per item; all memories well under budget"
+  },
+
+  "output_files": {
+    "figures": [
+      "dfm_fusion/results/figures/api_calls_by_condition.png",
+      "dfm_fusion/results/figures/wall_clock_maintenance.png",
+      "dfm_fusion/results/figures/fused_token_lengths.png"
+    ],
+    "summary_table": "dfm_fusion/results/operational_metrics.json",
+    "fusion_details": "dfm_fusion/results/fusion_event_details.json"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "experiment": "No-Fusion Ablation Baseline on LoCoMo",
+  "task_index": 2,
+  "num_runs": 3,
+  "dataset": "LoCoMo-10 (1986 QA pairs, 10 conversations)",
+  "models": {
+    "embedding": "all-MiniLM-L6-v2 (local sentence-transformers)",
+    "answer_generation": "gpt-4o-mini (temperature=0)",
+    "fusion": "none (passthrough)"
+  },
+  "aggregated_metrics": {
+    "overall_f1": {"mean": 0.3750, "std": 0.0011},
+    "multi_hop_f1": {"mean": 0.1710, "std": 0.0009},
+    "temporal_f1": {"mean": 0.0560, "std": 0.0014},
+    "open_domain_f1": {"mean": 0.0953, "std": 0.0008},
+    "single_hop_f1": {"mean": 0.3398, "std": 0.0018},
+    "adversarial_f1": {"mean": 0.8602, "std": 0.0011}
+  },
+  "per_run_metrics": {
+    "run_0": {
+      "overall_f1": 0.3747, "multi_hop_f1": 0.1723, "temporal_f1": 0.0565,
+      "open_domain_f1": 0.0942, "single_hop_f1": 0.3381, "adversarial_f1": 0.8610
+    },
+    "run_1": {
+      "overall_f1": 0.3740, "multi_hop_f1": 0.1703, "temporal_f1": 0.0540,
+      "open_domain_f1": 0.0957, "single_hop_f1": 0.3390, "adversarial_f1": 0.8587
+    },
+    "run_2": {
+      "overall_f1": 0.3765, "multi_hop_f1": 0.1705, "temporal_f1": 0.0574,
+      "open_domain_f1": 0.0961, "single_hop_f1": 0.3424, "adversarial_f1": 0.8610
+    }
+  },
+  "fusion_statistics": {
+    "total_llm_calls": 0,
+    "accepted_fusions": 0,
+    "rejected_fusions": 0,
+    "truncation_rate": 0.0
+  },
+  "fusion_gap_analysis": {
+    "llm_fusion_multi_hop_f1": 0.1863,
+    "no_fusion_multi_hop_f1": 0.1710,
+    "absolute_delta": 0.0152,
+    "relative_gap_pct": 8.9,
+    "paired_t_test": {"t_stat": 2.001, "p_value": 0.0464, "significant_at_0.05": true},
+    "bootstrap_95ci": [0.0013, 0.0309],
+    "directional_match_with_fadem": true,
+    "fadem_published_gap_pct": -53.7,
+    "note": "Gap is smaller than FadeMem published due to local MiniLM embeddings and batch evaluation mode"
+  },
+  "reference_comparison": {
+    "fadem_published_fusion_f1": 29.43,
+    "fadem_published_no_fusion_f1": 13.63,
+    "our_fusion_f1": 18.63,
+    "our_no_fusion_f1": 17.10
+  },
+  "runtime": {
+    "total_seconds": 7265,
+    "per_run_seconds": 2422,
+    "per_conversation_seconds": 242
+  }
+}
