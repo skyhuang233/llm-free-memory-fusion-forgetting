@@ -1,0 +1,31 @@
+# Large inner directory (contains .venv-wsl and full experiment data)
+llm-free-memory-fusion-forgetting-master/
+
+# MCP runtime data
+.vexp/
+
+# Credentials / sensitive scripts
+upload.py
+
+# Temp files
+tmp_test_write*.txt
+
+# Virtual environments
+.venv/
+.venv-wsl/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Experiment / ML artifacts
+wandb/
+.env
+
+# Large binaries
+reference paper/*.tar.gz
+reference paper/*.pdf
+
+# VS Code (optional, keep settings)
+# .vscode/
