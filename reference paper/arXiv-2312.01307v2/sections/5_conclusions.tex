@@ -1,0 +1,8 @@
+\section{Conclusions}
+In this paper, we introduce a novel framework for language-guided manipulation of articulated objects.
+Bridging the understanding of object semantics and actionability at the part level, we can ground language-implied actions to executable manipulations.
+Throughout our framework, we also study the combination of general-purpose large vision/language models and domain-specialist models for enhancing the richness and correctness of network predictions.  better handle these tasks and achieve state-of-the-art performance.
+We demonstrate our strong generalizability across diverse object categories and tasks. We also provide a new benchmark for language-instructed articulated-object manipulations.
+
+\paragraph{Limitations and future work}  
+Since the SAGE system is built upon existing large vision-language models, it suffers from the drawbacks of demanding massive data and massive computing power. Although in our case we use APIs provided by GPT-4V, the long inference time and high cost could be a concern. On the other hand, we rely on the expert model GAPartNet to detect parts and its prior knowledge to manipulate the parts. The policy is not always optimal by blindly following the pre-defined end-effector trajectories. Such a motion-planning-based execution policy is not as responsive as a reinforcement learning or imitation learning agent. One future exploration direction could be fine-tuning existing large models to directly output the desired low-level action of the end-effector to increase responsiveness. 

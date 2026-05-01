@@ -1,0 +1,121 @@
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}
+
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage[noadjust,sort]{cite}
+\usepackage[font=footnotesize]{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+% \usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{lipsum} % for dummy text
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usepackage{textcomp}
+
+\IEEEoverridecommandlockouts
+\overrideIEEEmargins
+
+% \renewcommand{\algorithmicrequire}{\textbf{Input:}}
+% \renewcommand{\algorithmicensure}{\textbf{Output:}}
+
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\DeclareMathOperator*{\Argmax}{arg\!max}
+
+
+\definecolor{bench}{rgb}{0.92,0.96,1.0}
+\definecolor{success}{rgb}{0.89,0.98,0.89}
+\newcommand{\bench}{\rowcolor{bench}}
+\newcommand{\success}{\rowcolor{success}}
+\usepackage{colortbl}
+% \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+%     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\input{preamble}
+\input{math_commands}
+
+
+\title{\LARGE \bf
+\texttt{SAGE}: Bridging \texttt{{S}}emantic and \texttt{{A}}ctionable Parts for 
+\texttt{{GE}}neralizable Articulated-Object Manipulation under Language Instructions
+% Disentangling Physical and Cognitive Affordances for Generalizable Articulated-Object Manipulation\TODO{VLM part}
+\author{Haoran Geng$^{*1,2}$, Songlin Wei$^{*2,3}$, Congyue Deng$^{1}$, Bokui Shen$^{1}$, He Wang$^{\dagger2,3}$, Leonidas Guibas$^{\dagger1}$} % <-this % stops a space
+\thanks{$^*$ Equal contribution. $^\dagger$ Equal advising.}%
+\thanks{$^1$ Department of Computer Science, Stanford University.}%
+\thanks{$^2$ CFCS, School of Computer Science, Peking University.}%
+\thanks{$^3$ Beijing Academy of Artificial Intelligence.}%
+\thanks{{Corresponding author: \texttt{hewang@pku.edu.cn}}}%\scriptsize
+}
+
+
+
+\begin{document}
+
+
+\newcommand{\insertteaser}{
+    \includegraphics[width=0.87\linewidth]{figures/sage_teaser_new.pdf}
+    \vspace{-.3cm}
+    \captionof{figure}{\textbf{Overview.} We present SAGE, a framework bridging the understanding of semantic and actionable parts for generalizable manipulation of articulated objects. \textbf{Left:} our pipeline. Initially, a context-aware instruction interpretation module is employed to parse the input instruction and observation into an action program and associated semantic parts. Subsequently, we ground the semantic part (container) to its actionable part (slider button) and generate the motion (the ``press'' action for a button) to complete the task. \textbf{Right:} examples of real-world tasks and our results. Our framework is able to tackle diverse manipulation tasks on a large variety of articulated objects.}
+\vspace{-0.5cm}
+    \label{fig:teaser}
+    
+}
+
+\makeatletter
+\apptocmd{\@maketitle}{\centering\insertteaser}{}{}% insert the figure after authors
+\makeatother
+
+\maketitle
+\setcounter{figure}{1}
+
+% \twocolumn[{%
+% \renewcommand\twocolumn[1][]{#1}%
+% \maketitle
+% \begin{center}
+%     \centering
+%     \captionsetup{type=figure}
+%     \includegraphics[width=0.9\linewidth]{figures/teaser.png}
+%     \captionof{figure}{\textbf{Overview.}
+%     A blender that can be turned on by pressing its container. An object part can be interpreted differently as a semantic part (``container'') or as an actionable part (``button''). Both aspects need to be considered for understanding the part functionality and successfully interacting with it.
+%     }
+%     \label{fig:teaser}
+% \end{center}
+% }]
+
+\thispagestyle{empty}
+\pagestyle{empty}
+
+
+
+
+
+% VLM: planning re-planning (update)
+% part level -> object skill -> articulation -> pre-defined skill -> failure cases
+% **part** -> articulated -> skill
+\input{sections/0_abstract}
+\input{sections/1_intro}
+\input{sections/2_related_work}
+\input{sections/3_method}
+\input{sections/4-1_benchmark}
+\input{sections/4-2_experiments}
+\input{sections/5_conclusions}
+
+\clearpage
+
+
+\bibliographystyle{plain}
+\bibliography{example}  % .bib
+
+\end{document}

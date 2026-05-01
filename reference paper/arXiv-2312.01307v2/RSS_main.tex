@@ -1,0 +1,151 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{times}
+
+% numbers option provides compact numerical references in the text. 
+\usepackage[numbers]{natbib}
+\usepackage{multicol}
+\usepackage[bookmarks=true]{hyperref}
+% \usepackage{geometry}
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage[noadjust,sort]{cite}
+\usepackage[font=footnotesize]{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{lipsum} % for dummy text
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usepackage{textcomp}
+\usepackage{multirow}
+
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+
+
+\usepackage[normalem]{ulem} % to be deleted before submission
+
+\input{preamble}
+\input{math_commands}
+
+\newcommand{\haoran}[1]{{\color{red}[Haoran: #1]}}
+
+\pdfinfo{
+   /Author (Homer Simpson)
+   /Title  (Robots: Our new overlords)
+   /CreationDate (D:20101201120000)
+   /Subject (Robots)
+   /Keywords (Robots;Overlords)
+}
+
+\begin{document}
+
+%%%%% NEW MATH DEFINITIONS %%%%%
+% paper title
+\title{\LARGE
+\textbf{SAGE}: Bridging \textbf{{S}}emantic and \textbf{{A}}ctionable Parts for\\
+\textbf{{Ge}}neralizable Manipulation of Articulated Objects}
+
+% You will get a Paper-ID when submitting a pdf file to the conference system
+%\author{Author Names Omitted for Anonymous Review. Paper-ID 70}
+
+\author{\authorblockN{Haoran Geng$^{*1,2}$, Songlin Wei$^{*2,3}$, Congyue Deng$^{1}$, Bokui Shen$^{1}$, He Wang$^{\dagger2,3}$, Leonidas Guibas$^{\dagger1}$}
+\authorblockA{Department of Computer Science, Stanford University${^1}$ \\
+CFCS, School of Computer Science, Peking University${^2}$ \\
+Beijing Academy of Artificial Intelligence${^3}$ \\
+$^*$ Equal contribution. $^\dagger$ Equal advising. \\ 
+{Corresponding author: \texttt{hewang@pku.edu.cn}}
+}
+%\and
+%\authorblockN{Songlin Wei$^{*}$}
+%\authorblockA{CFCS, School of Computer Science, \\
+%Peking University.\\
+%Beijing Academy of Artificial Intelligence.}
+%\and
+%\authorblockN{Congyue Deng\\ and Bokui Shen}
+%\authorblockA{Department of Computer Science, \\ Stanford University}
+%\authorblockN{He Wang$^{\dagger}$}
+%\authorblockA{CFCS, School of Computer Science, \\Peking University.\\Beijing Academy of Artificial Intelligence.}
+%\authorblockN{Leonidas Guibas$^{\dagger}$}
+%\authorblockA{Department of Computer Science, \\ Stanford University}
+}
+
+
+% avoiding spaces at the end of the author lines is not a problem with
+% conference papers because we don't use \thanks or \IEEEmembership
+
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+
+%\authorblockA{\authorrefmark{1}School of Electrical and Computer Engineering\\
+% Georgia Institute of Technology,\\
+% Atlanta, Georgia 30332--0250\\ 
+% Email: mshell@ece.gatech.edu}
+%\authorblockA{\authorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+% Email: homer@thesimpsons.com}
+%\authorblockA{\authorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+% Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\authorblockA{\authorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+%\author{Haoran Geng$^{*1,2}$, Songlin Wei$^{*2,3}$, Congyue Deng$^{1}$, Bokui Shen$^{1}$, He Wang$^{\dagger2,3}$, Leonidas Guibas$^{\dagger1}$} % <-this % stops a space
+%\thanks{$^*$ Equal contribution. $^\dagger$ Equal advising.}%
+%\thanks{$^1$ Department of Computer Science, Stanford University.}%
+%\thanks{$^2$ CFCS, School of Computer Science, Peking University.}%
+%\thanks{$^3$ Beijing Academy of Artificial Intelligence.}%
+%\thanks{{Corresponding author: \texttt{hewang@pku.edu.cn}}}%\scriptsize
+% \maketitle
+
+
+
+\twocolumn[{%
+\renewcommand\twocolumn[1][]{#1}%
+\maketitle
+
+
+\begin{center}
+    \centering
+    \vspace{-2em}
+    \captionsetup{type=figure}
+    \includegraphics[width=0.95\linewidth]{figures/teaser.png}
+    \captionof{figure}{\textbf{Overview.} We present SAGE, a framework bridging the understanding of semantic and actionable parts for generalizable manipulation of articulated objects. \textbf{Left:} We give two examples of human instructions illustrating the concept of part semantics, part functionalities, and corresponding actions. \textbf{Right:} examples of real-world tasks and our results. Our framework can tackle diverse manipulation tasks on various articulated objects.}
+    \label{fig:teaser}
+\end{center}
+}]
+
+% \newcommand{\insertteaser}{
+%     \includegraphics[width=0.87\linewidth]{figures/sage_teaser_new.pdf}
+%     \captionof{figure}{\textbf{Overview.} 
+%     \TODO{high level, more demo}
+%     We present SAGE, a framework bridging the understanding of semantic and actionable parts for generalizable manipulation of articulated objects. \textbf{Left:} our pipeline. Initially, a context-aware instruction interpretation module is employed to parse the input instruction and observation into an action program and associated semantic parts. Subsequently, we ground the semantic part (container) to its actionable part (slider button) and generate the motion (the ``press'' action for a button) to complete the task. \textbf{Right:} examples of real-world tasks and our results. Our framework is able to tackle diverse manipulation tasks on a large variety of articulated objects.}
+%     \label{fig:teaser}
+% }
+% \insertteaser
+
+\input{sections/0_abstract}
+\input{sections/1_intro}
+\input{sections/2_related_work}
+\input{sections/3_method}
+\input{sections/4_experiments}
+\input{sections/5_conclusions}
+
+%\clearpage
+
+%% Use plainnat to work nicely with natbib. 
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

@@ -1,0 +1,359 @@
+\section{Problem Formulation}
+
+\subsection{Semantic and Actionable Parts}
+As shown in Fig~\ref{fig:teaser}, we characterize a \textit{semantic part} based on its human-defined identity or its functional role in articulated objects. During the interaction, for a \textit{actionable part}, we adopt the concept of "Generalizable Actionable Part (GAPart)" as formulated by GAPartNet~\citep{geng2022gapartnet}. GAPart categorizes parts across different objects based on their actionability, where parts within the same GAPart category exhibit similar geometry and functionality. For instance, a button designed for pressing and a knob meant for rotation would not fall under the same GAPart category, even if they appear similar. Our approach emphasizes the importance of understanding parts at \textit{both semantic and action} levels for generalized manipulation of articulated objects.
+
+% Specifically, for the actionable parts, we adopt the concept of ``generalizable actionable part'' from \citep{geng2022gapartnet}. \TODO{Introduce what is GAPart.}
+
+% \TODOFIG{From left to right: [input language] $\to$ [semantic part] $\to$ [actionable part] $\to$ [action].}
+% \TODOFIG{GAPart definitions}
+
+
+\subsection{Problem Definition and Framework Overview}
+%\haoran{check; add notation!}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=.95\linewidth]{figures/method_overview.png}
+    \caption{\textbf{Framework overview.} Given a natural language input conditioned on visual observation, we first obtain the semantic parts and interpret the language instructions on them. Then we link the semantic parts to actionable parts through a part grounding module, on which executable actions can be predicted.}
+    \label{fig:framework_overview}
+\end{figure}
+
+\noindent \textbf{Problem definition.} Our task focuses on open-vocabulary manipulation of articulated objects. The input consists of a human language instruction and a single-view RGB-D image. A fixed base robot arm is required to follow human instructions and manipulate the articulated object within the scene to achieve the goal specified in the instructions.
+
+\noindent \textbf{Framework overview (Fig. \ref{fig:framework_overview}).} We propose SAGE, a comprehensive framework designed for open-vocabulary articulated object manipulation in the wild. By combining the strength of the general-purpose Visual Language Model (VLM) and a domain-specific 3D part perception and manipulation model, SAGE is uniquely capable of understanding object parts on both semantic and action levels, facilitating more effective and adaptable manipulation in real-world scenarios.
+
+In the SAGE system, we employ the classic \textit{perception-decision-execution-feedback} loop to generalizable articulate object manipulation:
+%\sout{(1) Initially, our language instruction interpretation model deciphers the semantics of human instructions, translating them into a part-action program.
+%Subsequently, our specialized perception model comprehends the action concept, grounding the visual input to identifiable actionable parts and determining the necessary manipulation actions.
+%Following execution, with the aid of our interactive feedback model, our system successfully completes the task.
+%Each critical component of this process will be detailed in the subsequent sections.}
+%(1) We first use our language instruction interpretation model to understand the semantics and parse human instructions \sout{into part action programs|. (2) Then, the perception model we designed comprehends the action concept, grounding the visual input to identifiable actionable parts and determining the necessary manipulation actions. (3) Following the execution, with the aid of our interactive feedback model, our system successfully completes the task with the ability to adapt online and recover from failures, enhancing its capability to handle dynamic scenarios effectively.
+More specifically, (1) we first use GPT-4V to process the input RGB image to obtain a scene description that contains task-related information, such as \textit{semantic parts}, part interaction possibilities, and object states. We further detect more \textit{actionable parts} with GAPartNet and fuse both outputs to obtain the final part-aware scene description. (2) Then, we again prompt GPT-4V to comprehend the scene description together with the human instruction to act like a global planner. It outputs action programs step by step and makes decisions based on execution feedback. (3) The action programs are executed with a motion planner which controls the robot arm to follow a predefined trajectory grounded on the actionable part. (4) Finally, we interactively detect the part and object state changes and feedback on the updates to the global planner.
+%We will introduce each important component in the following sections.
+
+
+% \TODO{First give a brief overview of the cleanest version of our pipeline.}
+
+% \TODO{Then introduce all our modules and the add-ons.}
+
+% \noindent Semantic part: $\tilde{p}$ \\
+% part mask $M$ $M_j$ \\
+% actionable part $p, p_j$ \\
+% actionable part label $l_{p_j}$ \\
+% actionable part pose $\mathbf{p}$ \\
+% joint type: $J$ \\
+% the change of part state: $\Delta s$ \\
+% action tuple $\textbf{a}$ \\
+% strategy: $\mathcal{S}$ \\
+% image(RGB) $I_{\text{rgb}}$ \\
+% image(RGBD) $I_{\text{rgbd}}$ \\
+% image(depth) $I_{d}$ \\
+% point cloud $X$ \\
+% Observation (t frame): $I^{t}, P^t$ \\
+% Part movement (t frame): $\delta s_t$ \\
+% Joint state (t frame): $j_t$ \\
+% % j indicate proposals; i indicate ground truth/actual parts
+% part proposal masks $\mathcal{M} = \{M_j\}_j$ \\
+% part proposals from SAM $\mathcal{M}^\text{2D} = \{{M}_j^\text{2D}\}_j$ \\
+% part proposals from GAPartNet $\mathcal{M}^\text{3D} = \{{M}_j^\text{3D}\}_j$ \\
+% Actionable Part Feature Dataset $\{\mathcal{F}^\text{dino}_\text{part}, l_\text{part}\}$ \\
+% Image Feature Map $F$ \\
+% Image Feature Map from DINOv2 $F^\text{dino}$ \\
+% Image Feature Map from DINOv2 for part j $F^\text{dino}_{j}$ \\
+
+
+% \begin{table}[]
+% \begin{tabular}{ccccccccccccc}
+% Obj. Cat. & Microwave & Microwave & Microwave & StorageFurniture & StorageFurniture & StorageFurniture & Cabinet & Cabinet & Cabinet & KitchenPot & Remote & Blender \\
+% Task ID & \begin{tabular}[c]{@{}c@{}}1: Open the\\ (closed) door\end{tabular} & \begin{tabular}[c]{@{}c@{}}2: Open the\\ (open) door\end{tabular} & \begin{tabular}[c]{@{}c@{}}3. Close the\\ (open) door\end{tabular} & \begin{tabular}[c]{@{}c@{}}4: Open the\\ (closed) drawer\end{tabular} & \begin{tabular}[c]{@{}c@{}}5: Open the\\ (open) drawer\end{tabular} & \begin{tabular}[c]{@{}c@{}}6. Close the\\ (open) drawer\end{tabular} & \begin{tabular}[c]{@{}c@{}}7: Open the\\ (closed) door\end{tabular} & \begin{tabular}[c]{@{}c@{}}8: Open the\\ (open) door\end{tabular} & \begin{tabular}[c]{@{}c@{}}9. Close the\\ (open) door\end{tabular} & 10. Open the lid & 11. Press the button & 12. Press the lid \\
+% VoxPoser(\%) &  &  &  &  &  &  &  &  &  &  &  &  \\
+% GAPartNet(\%) &  &  &  &  &  &  &  &  &  &  &  &  \\
+% Ours(\%) &98.0&96.0&94.1&83.3&80.0&95.0&79.3&89.6&83.1&85.7&60.7&42.9 
+% \end{tabular}
+% \end{table}
+
+% \begin{table*}[]
+% \resizebox{2.\columnwidth}{!}{
+% \begin{tabular}{c|ccc|ccc}
+% \hline \hline
+% \bench Object Category & \multicolumn{3}{c|}{Microwave} & \multicolumn{3}{c}{StorageFurniture} \\ \hline
+
+% \bench Instruction & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}Unlatch the microwave door.\\ Open this microwave.\\ Open this object.\\ Open the door, please.\\ I want to access the microwave's interior.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Shut the microwave door.\\ Swing the microwave door closed.\\ Close it.\\ Close this door.\\ Push the microwave door shut.\end{tabular} & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}Pull out the drawer.\\ Slide the drawer open.\\ Unseal the furniture drawer.\\ Swing out the cabinet's drawer.\\ Extend the drawer.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Close the drawer.\\ Shut the drawer.\\ Slide the cabinet drawer shut.\\ Nudge the drawer closed.\\ Don't leave the drawer open.\end{tabular} \\ \hline
+
+% \bench Task ID & \multicolumn{1}{c|}{Task 1} & \multicolumn{1}{c|}{Task 2} & Task 3 & \multicolumn{1}{c|}{Task 4} & \multicolumn{1}{c|}{Task 5} & Task 6 \\ \hline
+
+% \bench Initial Part State & \multicolumn{1}{c|}{closed} & \multicolumn{1}{c|}{open(0-30 degrees)} & open (30-60 degrees) & \multicolumn{1}{c|}{closed} & \multicolumn{1}{c|}{open(0-30 degrees)} & open(30-60 degrees) \\ \hline
+
+% % \bench \# Object & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+
+% \bench \# Case & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+
+% \success \begin{tabular}[c]{@{}c@{}}SuccessRate\\ VoxPoser (\%)\end{tabular} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+
+% \success \begin{tabular}[c]{@{}c@{}}SuccessRate\\ GAPartNet(\%)\end{tabular} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} & 81.3 \\ \hline
+
+% \success \begin{tabular}[c]{@{}c@{}}SuccessRate\\ Ours(\%)\end{tabular} & \multicolumn{1}{c|}{98.0} & \multicolumn{1}{c|}{96.0} & 94.1 & \multicolumn{1}{c|}{83.3} & \multicolumn{1}{c|}{80.0} & 95.0 \\ \hline \hline
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+% \bench Object Category & \multicolumn{1}{c|}{StorageFurniture} & \multicolumn{1}{c|}{} & StorageFurniture & \multicolumn{1}{c|}{KitchenPot} & \multicolumn{1}{c|}{Remote} & Blender \\ \hline
+
+% \bench Instruction & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}Pull out the door.\\ Slide the door open.\\ Unseal the furniture door.\\ Swing out the cabinet's door.\\ Extend the door.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Close the door.\\ Shut the door.\\ Shut the door on it.\\ Draw the door shut, please.\\ Don't leave the door open.\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Open the lid.\\ Lift the pot's lid.\\ Turn up the cover.\\ Help me open the pot.\\ I want to see the pot interior.\end{tabular}} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Push the button.\\ Tap the button.\\ Press button, please.\\ Click the remote on the remote.\\ Please press the button.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Push the button.\\ Tap the button.\\ Press button, please.\\ Click the remote on the remote.\\ Please press the button.\end{tabular} \\ \hline
+
+% \bench Task ID & \multicolumn{1}{c|}{Task 7} & \multicolumn{1}{c|}{Task 8} & Task 9 & \multicolumn{1}{c|}{Task 10} & \multicolumn{1}{c|}{Task 11} & Task 12 \\ \hline
+
+% \bench Initial Part State & \multicolumn{1}{c|}{closed} & \multicolumn{1}{c|}{open(30-60 degrees)} & open(30-60 degrees) & \multicolumn{1}{c|}{closed} & \multicolumn{1}{c|}{open} & open \\ \hline
+
+% \bench \# Case & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{2} & 1 \\ \hline
+
+% % \bench \# Task & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+
+% \success \begin{tabular}[c]{@{}c@{}}SuccessRate\\ VoxPoser (\%)\end{tabular} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+% \success\begin{tabular}[c]{@{}c@{}}SuccessRate\\ GAPartNet(\%)\end{tabular} & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c|}{} & \multicolumn{1}{c|}{} &  \\ \hline
+% \success\begin{tabular}[c]{@{}c@{}}SuccessRate\\ Ours(\%)\end{tabular} & \multicolumn{1}{c|}{79.3} & \multicolumn{1}{c|}{89.6} & 83.1 & \multicolumn{1}{c|}{85.7} & \multicolumn{1}{c|}{60.7} & 42.9 \\ \hline \hline
+% \end{tabular}}
+% \end{table*}
+
+% \begin{table*}[]
+% \resizebox{2.\columnwidth}{!}{
+% \begin{tabular}{c|cc|c|cc|c}
+% \hline
+% Object Category & \multicolumn{2}{c|}{Microwave} & Microwave & \multicolumn{2}{c|}{StorageFurniture} & StorageFurniture \\ \hline
+% Instruction & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}Unlatch the microwave door.\\ Open this microwave.\\ Open this object.\\ Open the door, please.\\ I want to access the microwave's interior.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Shut the microwave door.\\ Swing the microwave door closed.\\ Close it.\\ Close this door.\\ Push the microwave door shut.\end{tabular} & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}Pull out the drawer.\\ Slide the drawer open.\\ Unseal the furniture drawer.\\ Swing out the cabinet's drawer.\\ Extend the drawer.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Close the drawer.\\ Shut the drawer.\\ Slide the cabinet drawer shut.\\ Nudge the drawer closed.\\ Don't leave the drawer open.\end{tabular} \\ \hline
+% \multicolumn{1}{c|}{Task ID} & \multicolumn{1}{c|}{Task 1} & \multicolumn{1}{c|}{Task 2} & \multicolumn{1}{c|}{Task 3} & \multicolumn{1}{c|}{Task 4} & \multicolumn{1}{c|}{Task 5} & \multicolumn{1}{c}{Task 6} \\ \hline
+% Initial Part State & \multicolumn{1}{c|}{closed} & open(0-30 degrees) & open (30-60 degrees) & \multicolumn{1}{c|}{closed} & open(0-30 degrees) & open(30-60 degrees) \\ \hline 
+% \# Object & \multicolumn{1}{c|}{98.0} & 96.0 &  & \multicolumn{1}{c|}{} &  &  \\ \hline
+% \# Task & \multicolumn{1}{c|}{} &  &  & \multicolumn{1}{c|}{} &  &  \\ \hline
+% \hline
+
+% Object Category & \multicolumn{2}{c|}{StorageFurniture} & StorageFurniture & \multicolumn{1}{c|}{KitchenPot} & Remote & Blender \\ \hline
+% Instruction & \multicolumn{2}{c|}{\begin{tabular}[c]{@{}c@{}}Pull out the door.\\ Slide the door open.\\ Unseal the furniture door.\\ Swing out the cabinet's door.\\ Extend the door.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Close the door.\\ Shut the door.\\ Shut the door on it.\\ Draw the door shut, please.\\ Don't leave the door open.\end{tabular} & \multicolumn{1}{c|}{\begin{tabular}[c]{@{}c@{}}Open the lid.\\ Lift the pot's lid.\\ Turn up the cover.\\ Help me open the pot.\\ I want to see the pot interior.\end{tabular}} & \begin{tabular}[c]{@{}c@{}}Push the button.\\ Tap the button.\\ Press button, please.\\ Click the remote on the remote.\\ Please press the button.\end{tabular} & \begin{tabular}[c]{@{}c@{}}Push the button.\\ Tap the button.\\ Press button, please.\\ Click the remote on the remote.\\ Please press the button.\end{tabular} \\ \hline
+% \multicolumn{1}{c|}{Task ID} & \multicolumn{1}{c|}{Task 7} & \multicolumn{1}{c|}{Task 8} & \multicolumn{1}{c|}{Task 9} & \multicolumn{1}{c|}{Task 10} & \multicolumn{1}{c|}{Task 11} & \multicolumn{1}{c}{Task 12} \\ \hline
+% Initial Part State & \multicolumn{1}{c|}{closed} & open(30-60 degrees) & open(30-60 degrees) & \multicolumn{1}{c|}{closed} & open & \multicolumn{1}{c}{open} \\ \hline
+% \# Object & \multicolumn{1}{c|}{79.3} & 89.6 &  & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c}{} \\ \hline
+% \# Task & \multicolumn{1}{c|}{} &  &  & \multicolumn{1}{c|}{} &  & \multicolumn{1}{c}{} \\ \hline
+% \end{tabular}}
+% \end{table*}
+
+
+\section{Method}
+\label{sec:method}
+
+\subsection{Part-aware Scene Perception}
+\label{sec:method:scene_percep}
+
+In daily-life scenarios, human language instructions could be diverse and even ambiguous. To facilitate large language models to truly understand human intention and plan accordingly, it is beneficial to add comprehensive scene descriptions to the prompt text inspired by the success of Chain-of-thought \citep{wei2023chainofthought} prompting.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{figures/interpret.jpg}
+    \caption{
+    \textbf{Context-aware instruction interpretation.} With instruction and observation (RGBD image) as input, the interpreter first generates a scene description with VLM and GAPartNet\citep{geng2022gapartnet}. Then LLM(GPT-4) takes both instruction and scene description as input and generates semantic parts and action programs. Optionally, we can input a specific user manual, and LLM will generate a target actionable part; see Sec.\ref{sec:grounding} for more details about the actionable part.
+    }
+    \label{fig:pipe_interpretation}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.95\linewidth]{figures/scene_description.png}
+    \caption{
+    \textbf{Scene description.} To better help with action generation, the scene description should contain object information, part information, and some interaction-related information. We use expert GAPart model\citep{gadre2021act} to generate some expert descriptions as part of the VLM prompt and then generate the scene descriptions, which works well and absorbs the advantages of both models.
+    }
+    \label{fig:pipe_scene_descri}
+    \vspace{-0.5cm}
+\end{figure}
+
+\paragraph{Scene Description}
+Chain-of-thought\citep{wei2023chainofthought} is proven useful for prompting large models. Here, we also notice that, compared to outputting an action program (See Sec. \ref{ssec:action_program}) directly using a Visual-Language Model, it is better to first generate a scene description $\tilde{D}_{scene}$ containing task-related information (such as parts, object states, interaction possibilities).
+%and then insert the description $\tilde{D}_{scene}$ into the VLM.
+%\sout{and obtain the desired action programs. In our implementation, we first use GPT-4V \citep{openai2023gpt4} to get the scene description $\tilde{D}_{scene}$ and then insert it into the prompt to get the action programs.} 
+However, we observe that VLM provides rich context but lacks accuracy in part-related perception as illustrated in Fig. \ref{fig:pipe_scene_descri}. This example illustrates that employing the Visual-Language Model directly can result in the omission of crucial information related to parts and tasks, or may even introduce factual inaccuracies.
+
+\paragraph{Actionable Part Detection}
+%After getting the results from language instruction interpretation, which includes the semantic part information and corresponding semantic-level interaction strategy, we then first ground the semantic part to the physical part. In particular, with the semantic part, \eg handle as input, we ground it to an actionable part with its pose.
+%
+%\noindent\textbf{Part discovery.} 
+%
+%In our methodology for part-level object perception, we leverage the strengths of both broad-spectrum 2D vision models and specialized 3D models.
+%Initially, 
+We deploy the 3D GAPart Model \citep{geng2022gapartnet} to enhance part perception. This model interprets the partial RGBD point cloud $X$ to yield its set of 3D part proposals, which are masked point clouds denoted as $\mathcal{M}^{3D} = \{l_j, M_j^{3D}\}_{j=1}^n$, where $l$ is the actionable part label, ${M}$ is the masked partial point cloud, and $j$ indexes the detected actionable parts from $1$ to $n$. We reframe the actionable parts with a template sentence as shown in Fig. \ref{fig:pipe_scene_descri}, eg., \textit{There are 4 hinge-door and 4 line-fixed-handle on the object}. The sentences that contain actionable parts are then appended to obtain the part-enhanced scene description ${D}_{scene}$. We empirically found this significantly boosts the performance of perception. More details are given in the experiments.
+%Subsequently, our general-purpose large model processes the RGB image $I_{rgb}$ in tandem with the semantic parts $\{\tilde{p}\}$ from action unit $\va$, producing a series of 2D part proposals represented as $\mathcal{M}_j^{2D} = \{M_j^{2D}\}$. By synergizing the robust capabilities of general-purpose 2D vision models, such as SAM \citep{kirillov2023segany} and GroundedDINO \citep{liu2023grounding}, with the expertise of the domain-specific 3D GAPart Model, we achieve a comprehensive and nuanced part perception.
+
+\subsection{Instruction Interpretation and Global Planner}
+\label{language_method}
+%\TODO{longer more detail}
+Given the part-aware scene description ${D}_{scene}$, we here again employ GPT-4V \citep{openai2023gpt4} as the instruction interpreter to translate natural-language instruction $\tilde{I}$ into executable actions that will be sent to the downstream execution module. 
+We devise a representation named \textit{action unit} to encapsulate the output actions.
+
+\paragraph{Action Units}
+\label{ssec:action_program}
+We define the most basic manipulation on one single part of articulated objects as an ``action unit'', which can be represented by a 3-tuple $\va = (\tilde{p}, j, \Delta s)$ with part name $\tilde{p}$, joint type $j$, and the change of part state $\Delta s$.
+The part name $\tilde{p}$ is a noun in natural language.
+%which will later be sent into an open-vocabulary segmentation module; 
+$j$ refers to the joint directly linked to part $\tilde{p}$ and indicates whether it is a revolute or a prismatic joint; $\Delta s$ is the state change of joint $j$ under the action, which is either an angle $\pm\theta$ if $j$ is revolute or a relative translation $\pm t$ \wrt the part bounding box if $j$ is prismatic.
+%
+The final output of the interpreter should be in one of the following formats:
+\begin{itemize}
+    \item a single action unit,
+    \item an unordered union of multiple action units,
+    \item an ordered list of multiple action units,
+\end{itemize}
+or be a finite combination of the three formats.
+%
+Following the convention of programming languages (PL), this can be viewed as a typing system with expressions:
+\begin{equation*}
+    \va ~|~ \texttt{Union}\{\va,\va\} ~|~ \texttt{List}[\va,\va]
+\end{equation*}
+Here the \texttt{Union} expression is for non-deterministic policy generation when multiple action units can reach the same goal, e.g., both pulling the door and pressing a button result in the microwave door being opened.
+\texttt{List} is for sequential action generation when no single-step solution exists, e.g., to open a door, a knob must be first rotated to unlock the door.
+
+\paragraph{Global Planner} 
+\label{ssec:global_planner}
+Throughout the interaction, tracking of both the target gripper and part states is maintained by a global planner, where details are given in Algorithm \ref{algo:planning_update}. If significant discrepancies arise, the planner has the discretion to select from one of four states: "continue", "transition to the next step", "halt and replan", or "success". For instance, if the gripper is set to rotate 60 degrees along a joint, yet the door only opens to 15 degrees, the LLM planner would opt to "halt and re-plan". This interaction tracking model ensures that the LLM remains cognizant of developments during interactions, permitting strategy adjustments and, where necessary, recovery from unforeseen setbacks.
+% During the interaction, we keep tracking the target gripper state and part state, if some major differences happens here, the planner will choose from these four states: "go on", "change to next step", "stop and replan", "success, stop". For example, the gripper want to rotate 60 degrees along the joint but the door only open for 15 degrees, the LLM planner will choose to stop and replan. With this interaction tracking model, LLM can understand what is happening during interaction and update the strategy, even recover from some failures.
+
+
+% Compared with directly use Visual-Language Model to output the action programmes, we find that first generate the scene description with task-relative information and then use the description as a prompt to reason the action programmes works better,.
+
+
+% We employ GPT-4V \citep{openai2023gpt4} to parse the input instruction, which outlines the intended goal.
+% Here is an example of the overall inputs and outputs of the instruction interpreter:
+
+
+% Certain objects, such as appliances, have very diverse and intricate structures that can hardly be covered by general knowledge. Therefore, we also accommodate the additional input of the object usage manuals, which can be easily accessed together with the purchase of the object in real-life applications. This feature allows the LLM to gain expert knowledge of the object and thereby provide more precise and relevant outputs.
+
+
+
+
+% \paragraph{Language instruction interpretation}
+% \vspace{.5ex}
+% \noindent\fbox{\parbox{0.97\linewidth}{\scriptsize{\texttt{% <-- removes unnecessary first line indent
+% {\color{blue}Input:}\\
+% Open the microwave. \\
+% Scene description: It is a microwave with a door and handle on it. The microwave is made of silver metal and has a smooth surface. The door is open, revealing the interior of the microwave. The handle is on the door, allowing someone to open and close the door. The microwave is on a beige background. \\
+% {\color{blue}Output:} \\
+% Strategy 1: 1 step: (1) (Door, revolute, +90) \\
+% Strategy 2: 1 step: (1) (Handle, revolute, +90) \\
+% Strategy 3: 2 steps: (1) (Button, prismatic, -0.5) (2) (Door, revolute, +60) \\
+% Strategy 4: 2 steps: (1) (Handle, revolute, +30) (2) (Door, revolute, +60)
+% }}}}
+% \vspace{.5ex}
+
+
+
+
+\subsection{Part Grounding and Execution}
+\label{sec:grounding}
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=.85\linewidth]{figures/grounding.jpg}
+    \caption{\textbf{Part grounding.} With the observation as input, our method ensembles 2D proposals from GroundedSAM and 3D proposals from GAPartNet. then the proposals are fed to the ground as an actionable part. Leveraging ScoreNet, NMS, and PoseNet, we then present the perception results. Notice that: (1) For the part perception evaluation benchmark, we directly employ SAM\citep{kirillov2023segany}. However, within our manipulation pipeline, we utilize GroundedSAM, which also considers the semantic part as input.
+    (2) As highlighted in Fig.~\ref{fig:pipe_interpretation}, if the LLM produces a target actionable part, the grounding process is bypassed.
+    }
+    \label{fig:part_grounding}
+    \vspace{-0.5cm}
+\end{figure}
+
+
+
+% (1) for the interaction, we need to use several different parts \\
+% (2) we use GAPart Model do a basic segmentation \\
+% (3) when semantic part input, we combine the proposals together and output parts \\
+
+% In our approach to object perception at the part level, we harness the capabilities of both general-purpose 2D vision models and domain-specialized 3D models.
+
+% First, we use the 3D GAPart Model to bolster basic perception. This model processes the partial RGBD point cloud $X$ to generate its part proposals $\{/mathcal{M}_j^{3D}\}$.
+
+% Then, the general-purpose large model takes the RGB image $I_{rgb}$ and the semantic parts $\{\tilde{p}\}$ as input and outputs several part proposals$\{/mathcal{M}_j^{2D}\}$. We utilize the strengths of both the general-purpose 2D vision model (SAM\citep{sem} and GroundedDINO\citep{dino}) and the domain-specialist 3D model (GAPart Model). 
+An execution module is implemented to act accordingly to the action unit outputted by the global planner.
+Like any language-guided manipulation task, we first need to ground the action onto the corresponding physical actionable part.
+
+\paragraph{Actionable part grounding} 
+%Here we introduce an actionable part grounding model, which takes both the 2D and 3D part proposals as input and outputs the grounded GAPart labels. 
+To this end, We first collect a dataset of actionable part features and part labels $\{{F}^\text{dino}_\text{part}, l_\text{part}\}$. 
+This dataset contains the pre-defined interaction policies of each typical GAPart. The policies are a series of pre-defined end-effector trajectories to complete a certain motion for a specific part. It serves as our domain-specific expert which is the key to the success of our generalizable system.
+In particular,
+we extract a good image feature map $F^\text{dino}$ from DINOv2 \citep{oquab2023dinov2}. Then, for the target actionable part denoted as $p_j$, we use its mask to get the part feature $F^\text{dino}_j$.
+We first do max-pooling to obtain the part feature and run KNN algorithm to find the grounded actionable part label denoted as $l_j$
+%
+\begin{align*}
+    F^\text{dino}_j &= \text{MaxPooling}(F^\text{dino} [M_j]) \\
+    l_j &= \text{KNN}(\{{F}^\text{dino}_\text{part}, l_\text{part}\}, F_j^\text{dino}).
+\end{align*}
+% \wsl{where the subscript $\textit{part}$ denotes predefined feature and part label from GAPartNet.}
+
+% \noindent\textbf{Actionable part estimation.} We introduce a pose and joint estimation model to perceive grounded actionable parts. Similar to GAPartNet, the pose estimation model takes the point cloud $X$ as input and estimates the 6D part pose. Our model tackles part symmetry similar to GAPartNet, and we can directly infer the interaction joint state from the part pose thanks to the GAPart definition.
+
+
+\paragraph{Trajectory Generation}
+Once we have grounded the semantic part to the actionable GAPart, we can generate executable manipulations on this part. We first estimate the part pose $P_j$ as defined in GAPartNet \citep{geng2022gapartnet}. We also compute the joint state (part axis and position) and plausible motion direction based on the joint type (prismatic or revolute).
+%
+Then we generate the part actions according to these estimations. We first predict an initial gripper pose as the primary action. It is followed by a motion induced from a pre-determined strategy defined in GAPartNet \citep{geng2022gapartnet} according to the part poses and joint states. For example, to open a door with a revolute joint, the starting position can be on the door's rim or handle, with the trajectory being a circular arc oriented along the door's hinge.
+
+% After we ground the semantic part into an actionable part, followed by GAPartNet\citep{geng2022gapartnet}, we then generate a motion for this part. With the pre-defined actionable part pose, we can infer the joint state and part interaction information. We first generate a hand pose as the first action. Then, followed by the strategy, we use a fixed trajectory as the motion to manipulate the part. For example, for opening a door, the initial state is on the door edge and the fixed trajectory is a circular arc along the door joint. 
+
+% \begin{figure}[th]
+%     \centering
+%     \includegraphics[width=1\linewidth]{figures/exp__.jpg}
+%     \caption{Experiment DEMOS}
+%     \label{fig:exp}
+% \end{figure}
+
+
+\subsection{Interactive Feedback}
+
+% \vspace{-0.6cm}
+\begin{algorithm} 
+    \caption{Global Planner} 
+    \label{alg4}
+    \hspace*{\algorithmicindent} \textbf{Input} Gripper target and current state $\Delta g_t$,  $\delta g_t$ and part target and estimated movement $\Delta s_t$, $s_t$. 
+    % \hspace*{\algorithmicindent} \textbf{Output} Plan Update Decision
+    \begin{algorithmic}[1]
+        % \State \textbf{Input: } Gripper target state $\Delta g_t$, gripper current state $\delta g_t$, part target movement $\Delta s_t$, part estimated movement $\delta s_t$. 
+        \State $prompt$ = $\text{template}(\Delta g_t, \delta g_t, \Delta s_t, s_t)$ %\Comment{Predefined Template, See Supplementary Materials.}
+        \State $result$ = call VLM with $prompt$
+        \Switch{$result$}
+            \Case{$\texttt{"continue"}$}
+                \State{Continue the current strategy}
+            \EndCase
+            \Case{$\texttt{"transition to next step"}$}
+                \State{Finish the current action tuple and transition to the next action.}
+            \EndCase
+            \Case($\texttt{"halt and replan"}$)
+                \State{Stop the current execution and replan} \Comment{Some errors happened. }
+            \EndCase
+            \Case($\texttt{"success"}$)
+                \State{Success and terminate. }
+            \EndCase
+        \EndSwitch
+    \end{algorithmic}
+    \label{algo:planning_update}
+\end{algorithm}
+\begin{algorithm}
+    \caption{Interactive perception}
+    \label{alg3} 
+    \hspace*{\algorithmicindent} \textbf{Input} initial and current part point cloud $X_\text{part}^0, X_\text{part}^t$  \\
+    \hspace*{\algorithmicindent} \textbf{Output} joint axis $j_t$ and movement $s_t$ 
+    \begin{algorithmic}[1]
+        \State $t_t, R_t = \text{RANSAC}(\text{Umeyama}(X_\text{part}^0, X_\text{part}^t))$
+        %\Comment{Point cloud Registration}
+        \State $j_t, s_t = \text{GeometryInference}(R_t, t_t)$
+    \end{algorithmic}
+    \label{algo:interactive_perception}
+\end{algorithm}
+
+Up to now, we have only utilized a single initial observation $I^0_{rgbd}$ for generating open-loop interactions. We now introduce a mechanism to further leverage the observations acquired during the interaction process, which can update the perception results and adjust the manipulations accordingly. Toward this goal, we introduce a two-section feedback mechanism during interaction.
+% Beforehand, we introduce how we use the first frame of observation $I^1_{rgbd}$ to do the interaction planning, part perception, and grounding and then get the motion for interaction. Now we introduce how we use the observation during interaction to update the estimation results and manipulation planning. Here we introduce two levels of feedback during interaction.
+
+\noindent\textbf{Interactive perception.} 
+It should be noted that occlusion and estimation errors may arise during the perception of the first observation. To address these challenges, we propose a model that leverages interactive observations to enhance operation (see Algo.~\ref{algo:interactive_perception}). Consider two distinct observations, 
+$I_{rgbd}^{0}$ and $I_{rgbd}^{t}$, captured during an interaction. A part's motion can be detected between these two observations. We subsequently employ the mask of the moved part to deduce the actual joint state during the interaction. Applying RANSAC \citep{fischler1981random} for outlier removal and Umeyama algorithm \citep{umeyama1991least}, we estimate the rotation and translation between the two frames of the part's point cloud $X_\text{part}^0, X_\text{part}^t$. This computation subsequently allows us to ascertain the joint state
+$j_t$ and the current part movement states $s_t$.
+Finally, we send the joint state and part movement state back to the global planner (see Sec. \ref{ssec:global_planner}, thereby completing the main loop.
+% Notice that there can be occlusion and estimation error during actionable part perception, We introduce a model to better handle it with interaction observations. With two different observations $I_{rgbd}^{i_1}$ and observation $I_{rgbd}^{i_2}$ during the interaction,  the part moves within the two observations. Then we use the moved part mask to estimate the actual joint state during interaction. Here we use RANSAC to estimate the rotation and translation between these two frames of the part point cloud and then we can get the joint state. 
+
+

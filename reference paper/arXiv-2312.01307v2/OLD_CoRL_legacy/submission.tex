@@ -1,0 +1,389 @@
+\documentclass{article}
+\usepackage{corl_2023} 
+\input{preamble.tex}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+
+% Use this for the initial submission.
+% \usepackage[final]{corl_2023} % Uncomment for the camera-ready ``final'' version.
+%\usepackage[preprint]{corl_2023} % Uncomment for pre-prints (e.g., arxiv); This is like ``final'', but will remove the CORL footnote.
+
+
+\title{Disentangling Physical and Cognitive Affordance for Generalizable Manipulation of Articulated Objects}
+
+% The \author macro works with any number of authors. There are two
+% commands used to separate the names and addresses of multiple
+% authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to
+% break the lines. Using \AND forces a line break at that point. So,
+% if LaTeX puts 3 of 4 authors names on the first line, and the last
+% on the second line, try using \AND instead of \And before the third
+% author name.
+
+% NOTE: authors will be visible only in the camera-ready and preprint versions (i.e., when using the option 'final' or 'preprint'). 
+% 	For the initial submission the authors will be anonymized.
+
+\author{
+  %% examples of more authors
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \AND
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\newcommand{\jiahui}[1]{{\color{red}[Jiahui: #1]}}
+\newcommand{\congyue}[1]{{\color{blue}[Congyue: #1]}}
+\newcommand{\haoran}[1]{{\color{green}[Haoran: #1]}}
+\newcommand{\william}[1]{{\color{cyan}[William: #1]}}
+\newcommand{\legacy}[1]{{\color{blue}[Legacy: #1]}}
+
+\begin{document}
+\maketitle
+
+%===============================================================================
+
+\begin{abstract}
+    
+\end{abstract}
+
+% Two or three meaningful keywords should be added here
+\keywords{Articulated objects, generalizable manipulation} 
+
+%===============================================================================
+
+\section{Introduction}
+
+\TODO{
+Teaser.
+Demo: t=0 gripper pose as affordance map -> probabilistic output. Generalization.
+}
+
+% \jiahui{
+% Some random input:
+% General purpose policy across diverse manipulating objects can be factorized into elementary parts-oriented skills, which is a high-level goal of our community to study object parts for robotics. 
+% Our key insight is to ground natural language-defined tasks to such part-oriented skills via a joint embedding space synchronizing the visual-language part segments with the prior knowledge of manipulation skills from large-scale parts datasets, taking advantage of recent progress in large foundation models. 
+% We demonstrate that under our novel framework, even with simple modules and heuristic elementary skills, we can effectively achieve complex tasks. Experiments ...
+% }
+
+
+Generalizable manipulation skills .
+Home appliances can have very diverse structures but similar functionalities.
+
+Imagine you bought a new microwave and . Before switching it on, you can play with its parts. But to truly do meaningful things it, you probably need to look at its manual...
+\todo{Gibson's theory of physical and cognitive affordance}
+
+In this paper, we...
+
+To summarize, our main contributions are:
+
+(1) We provide a novel benchmark to evaluate the language-guided articulated object manipulation tasks. Compared with previous benchmarks, ours is more realistic and diverse.
+
+(2) We introduce a novel method to ground visual features to GAPart and the corresponding manipulation policy.
+
+(3) Predict non-deterministic policy on each part representing different manipulation styles and strategies.
+
+(4) Experiments...
+
+%===============================================================================
+
+\section{Related Works}
+
+\section{Benchmark}
+Our novel benchmark for articulated object manipulation introduces a fresh perspective compared to previous work \cite{geng2023partmanip, mu2021maniskill}. This benchmark uniquely investigates the integration of language and realistic observation in facilitating generalizable object manipulation.
+
+This benchmark exhibits a high level of diversity and realism.
+
+\textbf{Diversity}: Outperforming PartManip\cite{geng2023partmanip} and ManiSkill\cite{mu2021maniskill}, our benchmark includes a broader range of tasks and scenarios relating to articulated object manipulation.
+
+\textbf{Realism}: Unlike PartManip and ManiSkill 1\&2, our benchmark uses original human instructions as input, devoid of any oracle knowledge, enhancing the authenticity of its function.
+
+A comparative analysis of our benchmark with PartManip and ManiSkill is provided in Table~\ref{}.
+
+\begin{tabular}{c|c|c|c|c|c|c|c}
+\hline
+         & Language?        & Generalization Level & \# of Tasks & \# of Cat. &  \# of Ins. &  Realistic\\ 
+    \hline
+ManiSkill 1\&2   & $\times$ &  Cat.   &   &  &  &   $\times$ \\ 
+PartManip    & $\times$ & Cross-Cat. & &  &  & \checkmark \\
+\textbf{Ours}    & \checkmark  & Cross-Cat. &  &  & & \checkmark \\
+\hline
+\end{tabular}
+
+\subsection{Task Formulation}
+Our set of tasks is represented as $\mathcal{T}$, where each task in the set comprises several elements, including the objects, manipulation target direction, instructions, and success evaluation metrics.
+
+Firstly, we source our object categories from GAPartNet\cite{geng2022gapartnet}, comprising \todo{xxx} categories such as StorageFurniture, Table, Remote, and Safe.
+
+The manipulation target direction is represented as a binary value, $d$, indicating whether the part will move away from or towards the object's body.
+
+Instructions are provided as natural language commands for manipulating the articulated objects.
+
+Let $O$ denote the set of objects, $D$ the direction of manipulation, $I$ the instructions, and $E$ the evaluation metrics. A task $T$ can then be defined as a tuple:
+
+$$T=(O,D,I,E)\in \mathcal{T}$$
+
+\subsection{Object Assets}
+\todo{statistics}
+
+\subsection{Instruction Space, Observation Space, and Action Space}
+The Instruction Space, $\mathcal{I}$, encompasses the set of all possible natural language instructions that can be given to the robot. These commands are designed to be comprehensive and intuitive, simulating real-world human-machine interactions.
+
+The Observation Space, $\mathcal{O}$, contains all possible states that can be observed by the robot through its sensory inputs (such as vision and tactile sensing). This space is a reflection of the robot's understanding of its environment.
+
+The Action Space, $\mathcal{A}$, is the set of all actions that the robot can take in response to the instructions. Each action is associated with a manipulation of one or more parts of the object.
+
+Together, the Instruction Space, Observation Space, and Action Space form the decision-making framework for the robot. It listens to the instructions from $\mathcal{I}$, observes the environment through $\mathcal{O}$, and responds with actions from $\mathcal{A}$.
+
+These definitions provide a formal system of symbols that can be used throughout the rest of the paper to describe the workings of our benchmark and robotic system.
+
+% \section{Benchmark}
+% We build up a novel benchmark for articulated object manipulation. Compared with previous work\cite{geng2023partmanip, mu2021maniskill}, our benchmark is the first to investigate language and realistic observation for generalizable object manipulation. 
+% %
+% Our benchmark has high diversity and realism. 
+% %
+% \textbf{Diversity}: Our benchmark contains more tasks and more different settings for articulated object manipulation than PartManip\cite{geng2023partmanip} and ManiSkill\cite{mu2021maniskill}. 
+% %
+% \textbf{Realism}: Our benchmark gives original human instruction as input without knowing any oracle knowledge, which is not in PartManip and ManiSkill 1\&2. 
+% %
+% We compare our benchmark with PartManip and ManiSkill in Tab.~\ref{}
+
+% \subsection{Task Formulation}
+% We have several task sets $\mathcal{T}$, each task set is composed of objects, manipulation target direction, instruction, and success evaluation metrics. 
+% %
+% First, our object categories are selected from GAPartNet\cite{geng2022gapartnet} as much as possible, including \todo{xxx} categories, such as StorageFurniture, Table, Remote, and Safe. 
+% %
+% Manipulation target direction is a binary value $\mathcal{d}$, which indicates whether the part will move far from the object's body.
+% %
+% Instruction is a natural language for articulated object manipulation
+
+
+% \subsection{Object Assets}
+
+% \subsection{Instruction Space, Observation Space, and Action Space}
+
+
+
+\section{Method}
+Our method seeks to implement human directives to guide a robot in performing complex and universally applicable manipulations of articulated objects. This section is structured as follows:
+(1) We present an overview of our methodological approach.
+(2) The procedure for processing human directives is explained.
+(3) The process of integrating visual observation with processed language components to form interaction information is elucidated.
+(4) We describe the procedure for executing specific skills and accomplishing predefined tasks.
+
+\subsection{Overview}
+Our system for manipulating articulated objects begins by receiving human instructions ($I \in \mathcal{I}$) as its initial input. These instructions are integrated into a system prompt, which is subsequently processed by the GPT-4 language model. The language model identifies the semantic parts ($\text{SemPart}$) within the articulated object that are essential for the successful completion of the given task.
+
+For instance, given an instruction $I = \text{"Please open the cabinet"}$, GPT-4 identifies and communicates that semantic parts such as "handles", "knobs", "doors", "hinges", "locks", and "drawers" are essential for executing the task. This interpretation occurs without requiring any additional specification.
+
+The outputs from GPT-4, particularly the semantic parts $\text{SemPart}$, are then fed into Grounded SAM (GroundingDINO + SAM)\cite{kirillov2023segany,liu2023grounding}. This process results in segmented components and the corresponding DINO visual features. We apply a max-pooling operation to extract the part-specific DINO features and utilize K-Nearest Neighbors (KNN) to ground the semantic part to the GAPart definition.
+
+The GAPart definition\cite{geng2022gapartnet} bridges the gap between visual perception and the manipulation-centric representation of the articulated object.
+
+Following the GAPart embedding, we proceed to embed the manipulation policy into the current observational context ($O \in \mathcal{O}$). We leverage KNN once more to identify the nearest part and its corresponding optimal manipulation policy (the action with the highest historical success rate for manipulation).
+
+Finally, we implement the grounded manipulation policy, represented as $\pi$, to accomplish the task. This policy requires additional input data, specifically the part pose, which we denote as $\text{POSE}$. $\text{POSE}$ is obtained using a trained pose estimator. The pose estimator provides sufficient information for the policy to guide the robot toward task completion.
+
+This general methodology ensures that the robot is capable of executing a wide range of tasks involving the manipulation of articulated objects, using natural language instructions and visual observations. The grounding of semantic elements to physical parts of the object, combined with the optimal manipulation policy, guides the robot's actions in response to a variety of tasks.
+
+% \section{Method}
+% In general terms, we utilize innate human directives to facilitate the execution of a robot's intricate and universally applicable manipulations of articulated objects. This segment is structured as follows:
+% (1) We present an overview of our methodological approach.
+% (2) The procedure for processing intrinsic human directives is explained.
+% (3) The process of integrating visual observation with processed language components to form interaction information is elucidated.
+% (4) We describe the procedure for executing specific skills and accomplishing the predefined tasks.
+% \subsection{Overview}
+% \haoran{add degree?}
+% Our system for manipulating articulated objects starts by taking human instructions as its initial input. We seamlessly integrate this instruction into our system prompt, which is then processed by GPT-4. The AI determines the semantic elements within the articulated object that are capable of completing the given task. This includes deciding whether the specific part should be distanced from or drawn closer to the object to execute the task effectively—essentially, whether the joint should be opened or closed, and if it needs to be specified to what extent in the instruction.
+
+% For instance, if the instruction is "Please open the cabinet", GPT-4 will identify and communicate that components such as "handles", "knobs", "doors", "hinges", "locks", and "drawers" are crucial for this task, without any additional specifics required.
+
+% Utilizing the outputs from GPT-4, we input the semantically identified parts into Grounded SAM (GroundingDINO + SAM)\cite{kirillov2023segany,liu2023grounding}, yielding the segmented components and the DINO visual feature. We then employ a max-pooling operation to extract the part-specific DINO feature and utilize KNN (K-Nearest Neighbors) to ground the semantic part to the GAPart definition. This grounding process bridges the gap between visual perception and the manipulation-centric GAPart definition.
+
+% Following the GAPart embedding, we proceed to embed the manipulation policy into the current observational context. Here, we leverage KNN once more to identify the nearest part and the corresponding optimal manipulation policy (the one with the highest success rate for manipulation).
+
+% Subsequently, we adhere to the grounded manipulation policy to accomplish the task. This policy requires additional input data, specifically the part pose, which is obtained using our trained pose estimator. This estimator supplies sufficient information for the policy, thereby facilitating task completion.
+
+
+% \subsection{Language Processing and Prompts for LLM}
+% \haoran{Symbols and formulas}
+
+% The large language model (LLM) processes the human directives and generates semantically understandable instructions that our GAPart grounding system can interpret. This task involves identifying key phrases or components within the directives and then assigning the appropriate manipulative action to each specified part of the articulated object. GPT-4, the underlying language model, serves this crucial purpose.
+
+% The human instructions are formulated into a structured system prompt, which the GPT-4 model then processes. Our detailed prompt can be found in the supplementary materials. By analyzing the instruction, GPT-4 identifies the semantic components and defines the specific manipulations necessary to accomplish the task. This system helps to determine the necessary components and the manipulation policy without the need for explicit user instructions.
+
+% $$\{\text{Semantic Parts}\}, \{\text{Manipulation Info}\} \leftarrow \text{GPT--4} (\text{Prompt Template}(\text{Human Instruction}))$$
+
+
+% \subsection{Joint Embedding of Semantic and Actionable Parts}
+% After processing the language components and identifying the semantic parts, we merge these findings with visual observations from an off-the-shelf Foundation Model, Grounded SAM\cite{}. This fuses the semantic information with the object's visual characteristics, forming a comprehensive representation of the task.
+
+% The outputs from GPT-4 are inputted into Grounded SAM, which segments the object's components and determines the corresponding DINO visual feature. We then perform a max-pooling operation to extract part-specific DINO features. Utilizing K-Nearest Neighbors (KNN), we ground the semantic part to the GAPart definition, thereby bridging the gap between the semantic understanding and the Generalizable Part definition, which makes the downstream manipulation easier.
+% \todo{details}
+
+% Following this, we use the similar way to embed the manipulation policy into the observational context. This involves finding the nearest part and determining the corresponding optimal manipulation policy.
+
+% \todo{details}
+
+
+
+% \subsection{Action Execution}
+% Once the manipulation policy is defined and embedded within the current context, the robotic system proceeds to carry out the task. It leverages the grounded manipulation policy and additional input data to perform the necessary actions. The additional data comprise the part pose, which is obtained using our trained pose estimator.
+
+% This pose estimator provides the system with the exact orientation and location of the object part. This crucial information is needed for the manipulation policy to guide the robot's actions accurately and effectively. Thus, by combining the grounding of semantic understanding, actionable parts, and the current observational context, the robot successfully accomplishes the task.
+
+
+
+
+\section{Experiments}
+In the experimental phase, we will be testing the effectiveness and universality of our method on a series of complex articulated object manipulation tasks.
+\subsection{Comparison with current accessible vision-language foundation models}
+
+\subsection{perception}
+\begin{table}[ht]
+\centering
+% \setlength\tabcolsep{2pt}
+% \vspace{-1.5em}
+\renewcommand\arraystretch{1}
+\resizebox{.99\textwidth}{!}{
+\begin{tabular}
+{c|c|ccccccccccc}
+\hline
+&& Ln.F.Hl. & Rd.F.Hl. & Hg.Hl. & Hg.Ld.& Sd.Ld.  & Sd.Bn  & Sd.Dw. & Hg.Dr. & Hg.Kb. &Avg.AP
+% \begin{tabular}[c]{@{}c@{}} \\\end{tabular} 
+& Avg.AP50
+% \begin{tabular}[c]{@{}l@{}}\\ \end{tabular} 
+\\ \hline
+  & PG\cite{jiang2020pointgroup} &86.1 &23.0 &84.6 &80.01&88.3 &49.3 &62.6 &92.8 &34.6 &57.3 &66.8 \\ %\cline{2-13} 
+                        & SG\cite{vu2022softgroup} & 57.8 & {93.6} & 81.2 & 76.0 & 89.3 & 25.2 & 50.8 & 93.9 & 51.5 & 58.5 & 68.8 \\ %\cline{2-13} 
+                        Seen& AGP\cite{liu2022autogpart} &86.8 &20.3  &87.7 &79.7  &89.4  &62.3   &61.6  &92.5  & 16.7 & 57.2 &66.3 \\ %\cline{2-13} 
+                        % & AutoGPart  & & & & & & & & & & & \\ \cline{2-13} 
+                        & GAPartNet\cite{geng2022gapartnet}       &{89.2} &54.9 &{90.4} &{84.8} &{89.8} &{66.7} &{67.2} &{94.7} &{52.9} &{67.6} &{76.5} \\ 
+                        & Ours       && &&&&& && & &\textbf{78.4}\\ \hline
+ & PG\cite{jiang2020pointgroup} &32.44 &{}9.8 &2.1 &26.8 &0.0 &42.6 &57.0 &63.9 &1.7 &21.9 &26.3 \\ %\cline{2-13} 
+                        & SG\cite{vu2022softgroup} & 25.8 & 5.0 & 0.4 & 33.9 & 0.6 & {51.5} & 51.2 & {}69.0 & 12.1 & 22.0 & 27.7 \\ %\cline{2-13} 
+                        % & AutoGPart  & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{} &        &        &    &    \\ \cline{2-13} 
+                        Unseen& AGP\cite{liu2022autogpart} &{45.6} &4.8  &{3.1}  &34.3 &0.0  &47.8 &64.1 &63.1  &11.5  &25.7  &30.5  \\ %\cline{2-13} 
+                        & GAPartNet\cite{geng2022gapartnet}  & {{45.6}} & {{40.0}} & {{3.1}} & {{40.2}} & {{5.0}} & \multicolumn{1}{c}{{}49.1} & \multicolumn{1}{c}{{64.2}} &{69.1} &{23.4}&{32.0}  &{37.2}  \\ %\cline{2-13} 
+                        & Ours      & {{}} & {{}} & {{}} & {{}} & {{}} & \multicolumn{1}{c}{{}} & \multicolumn{1}{c}{{}} &{} &{}&{}  &\textbf{51.9}  
+                        \\ \hline
+\end{tabular}
+}
+
+\caption{xxx}
+\end{table}
+
+\begin{table}[ht]
+\centering
+\setlength{\tabcolsep}{0.2em}
+\resizebox{0.7\textwidth}{!}
+{
+\begin{tabular}{c|c|cccccccc}
+% \toprule
+\hline
+    &  & {\boldmath{$R_{e}$}} $\downarrow$ & {\boldmath{$T_{e}$}}$\downarrow$ & {\boldmath{$S_{e}$}}$\downarrow$ & {\boldmath{$\theta_{e}$}}$\downarrow$ & {\boldmath{$d_{e}$}}$\downarrow$ & \textbf{mIoU} $\uparrow$ & $\textbf{A}_{5}$ $\uparrow$ & $\textbf{A}_{10}$ $\uparrow$\\ \hline
+% \midrule
+
+&PG\cite{jiang2020pointgroup}  
+& 14.3&0.034&0.039&7.947&0.020&49.4&24.4&47.0\\ 
+Seen &AGP\cite{liu2022autogpart}        
+&14.4&0.036&0.039&7.955&0.021&48.7&26.8&49.1  \\
+Cat.&GAPartNet\cite{geng2022gapartnet}         
+&{9.9}&{0.024}&{0.035}&{7.4}&{0.014}&{51.2}&{28.3}&{53.1}\\ 
+&Ours             
+&&&&&&&&\\ \hline
+% \midrule
+ 
+&PG\cite{jiang2020pointgroup}        
+&18.2&{}0.056&0.073&12.0&0.031&36.2&19.2&42.9  \\
+Unseen&AGP\cite{liu2022autogpart}        
+&18.2&0.57&0.076&11.9&0.029&36.3&20.8&46.5  \\
+Cat.&GAPartNet\cite{geng2022gapartnet}       
+&{14.8}&{0.047}&{0.067}&{11.3}&{0.024}&{40.6}&{23.4}&{51.6}\\
+&Ours 
+&&&&&&&&\\\hline
+\end{tabular}
+}
+% \vspace{-2em}
+\caption{\textbf{Results of Part Pose Estimation on Seen and Unseen Object Categories in terms of \boldmath{$R_{e}$} ($^{\circ}$), \boldmath{$T_{e}$} (cm), \boldmath{$S_{e}$} (cm), \boldmath{$\theta_{e}$} ($^{\circ}$), \boldmath{$d_{e}$} (cm), \textbf{mIoU}=\textbf{3D mIoU} (\%), $\textbf{A}_5$=\textbf{5$^{\circ}$5cm accuracy} ($\%$), $\textbf{A}_{10}$=\textbf{10$^{\circ}$10cm accuracy} ($\%$).} PG=baseline modified from PointGroup \cite{jiang2020pointgroup}. AGP=baseline modified from AutoGPart\cite{liu2022autogpart}.} 
+\label{table:PoseEstimation}
+\vspace{-1em}
+\end{table}
+
+
+\subsection{targeted manipulation}
+
+
+
+\subsection{generalization of manipulation}
+
+\begin{table}[ht]
+\centering
+\setlength\tabcolsep{2pt} 
+\renewcommand{\arraystretch}{0.95}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|ccc|ccc}
+\hline
+Success  & \multicolumn{3}{c|}{OpenDoor}& \multicolumn{3}{c}{OpenDrawer}   \\ 
+%\cmidrule{2-7}
+Rate (\%) & Training & Val-Intra & Val-Inter & Training & Val-Intra & Val-Inter  \\
+\hline \multirow{1}{*}{\begin{tabular}[c]{@{}c@{}}PPO\cite{schulman2017proximal}\end{tabular}}
+&4.5$\pm$3.8&4.9$\pm$3.5&0.2$\pm$0.2&8.9$\pm$2.8&11.3$\pm$2.8&3.3$\pm$1.6\\
+{\begin{tabular}[c]{@{}c@{}}ILAD\cite{wu2022learning}\end{tabular}}
+&13.3$\pm$4.9&6.3$\pm$2.5&5.0$\pm$4.1&18.7$\pm$3.6&18.3$\pm$2.9&3.3$\pm$2.9\\
+{\begin{tabular}[c]{@{}c@{}}Where2act\cite{mo2021where2act}\end{tabular}}
+&25.4$\pm$0.1&23.4$\pm$0.0&15.2$\pm$0.1&39.6$\pm$0.2&37.2$\pm$0.2&20.5$\pm$0.1\\
+SilverBullet3D~\cite{pan2022silverbullet3d}&54.6$\pm$2.5&49.9$\pm$1.0&26.9$\pm$2.2&77.7$\pm$3.3&60.0$\pm$2.0&31.2$\pm$5.1\\
+\textit{Shen et. al}~\cite{shen2022learning}&1.5$\pm$0.6&0.3$\pm$0.6&2.3$\pm$4.0&9.7$\pm$0.5&18.0$\pm$2.2&2.7$\pm$1.9\\
+
+\textit{Wu et. al}~\cite{wu2022minimalist}&45.9$\pm$2.3&34.1$\pm$3.8&17.8$\pm$1.4&70.5$\pm$2.2&53.3$\pm$3.3&28.5$\pm$2.4\\
+\textit{Dubois et. al}~\cite{dubois2022improving}&35.4$\pm$4.4&25.1$\pm$2.1&1.3$\pm$1.0&61.4$\pm$4.3&38.3$\pm$2.0&2.7$\pm$1.6\\
+PartManip~\cite{geng2023partmanip}&{68.4$\pm$1.1}&{57.2$\pm$0.4}&{49.1$\pm$1.5}&{82.3$\pm$2.1}&{78.7$\pm$2.0}&{54.7$\pm$4.2} \\
+         
+\textbf{Ours}&
+85.2&78.4&63.3&&&  \\ \hline
+\end{tabular}}
+\caption{\textbf{Comparison with Baselines.} }%We compare our method with different types of methods.}
+\label{table:Baselines}
+\vspace{-2mm}
+\end{table}
+
+
+\subsection{Ablation Study}
+
+
+
+
+
+%===============================================================================
+
+\clearpage
+% The acknowledgments are automatically included only in the final and preprint versions of the paper.
+\acknowledgments{If a paper is accepted, the final camera-ready version will (and probably should) include acknowledgments. All acknowledgments go at the end of the paper, including thanks to reviewers who gave useful comments, to colleagues who contributed to the ideas, and to funding agencies and corporate sponsors that provided financial support.}
+
+%===============================================================================
+
+% no \bibliographystyle is required, since the corl style is automatically used.
+\bibliography{example}  % .bib
+
+\end{document}

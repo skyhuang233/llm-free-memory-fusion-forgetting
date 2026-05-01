@@ -1,0 +1,199 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{times}
+
+% numbers option provides compact numerical references in the text. 
+\usepackage[numbers]{natbib}
+\usepackage{multicol}
+\usepackage[bookmarks=true]{hyperref}
+
+\usepackage{mathtools}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage[noadjust,sort]{cite}
+\usepackage[font=footnotesize]{caption}
+\usepackage{subcaption}
+\usepackage{booktabs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+%\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{lipsum} % for dummy text
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{etoolbox}
+\usepackage{textcomp}
+\usepackage{multirow}
+
+\algnewcommand\algorithmicswitch{\textbf{switch}}
+\algnewcommand\algorithmiccase{\textbf{case}}
+\algdef{SE}[SWITCH]{Switch}{EndSwitch}[1]{\algorithmicswitch\ #1\ \algorithmicdo}{\algorithmicend\ \algorithmicswitch}%
+\algdef{SE}[CASE]{Case}{EndCase}[1]{\algorithmiccase\ #1}{\algorithmicend\ \algorithmiccase}%
+\algtext*{EndSwitch}%
+\algtext*{EndCase}%
+
+
+\usepackage[normalem]{ulem} % to be deleted before submission
+
+\input{preamble}
+\input{math_commands}
+
+\newcommand{\haoran}[1]{{\color{red}[Haoran: #1]}}
+
+\pdfinfo{
+   /Author (Homer Simpson)
+   /Title  (Robots: Our new overlords)
+   /CreationDate (D:20101201120000)
+   /Subject (Robots)
+   /Keywords (Robots;Overlords)
+}
+
+\begin{document}
+
+%%%%% NEW MATH DEFINITIONS %%%%%
+% paper title
+\title{\LARGE Supplementary Materials for \\
+\textbf{SAGE}: Bridging \textbf{{S}}emantic and \textbf{{A}}ctionable Parts for
+\textbf{{Ge}}neralizable Manipulation of Articulated Objects}
+
+% You will get a Paper-ID when submitting a pdf file to the conference system
+\author{Author Names Omitted for Anonymous Review. Paper-ID 70}
+
+% \author{\authorblockN{Michael Shell}
+% \authorblockA{School of Electrical and\\Computer Engineering\\
+% Georgia Institute of Technology\\
+% Atlanta, Georgia 30332--0250\\
+% Email: mshell@ece.gatech.edu}
+% \and
+% \authorblockN{Homer Simpson}
+% \authorblockA{Twentieth Century Fox\\
+% Springfield, USA\\
+% Email: homer@thesimpsons.com}
+% \and
+% \authorblockN{James Kirk\\ and Montgomery Scott}
+% \authorblockA{Starfleet Academy\\
+% San Francisco, California 96678-2391\\
+% Telephone: (800) 555--1212\\
+% Fax: (888) 555--1212}}
+
+
+% avoiding spaces at the end of the author lines is not a problem with
+% conference papers because we don't use \thanks or \IEEEmembership
+
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+% \author{\authorblockN{Michael Shell\authorrefmark{1},
+% Homer Simpson\authorrefmark{2},
+% James Kirk\authorrefmark{3}, 
+% Montgomery Scott\authorrefmark{3} and
+% Eldon Tyrell\authorrefmark{4}}
+% \authorblockA{\authorrefmark{1}School of Electrical and Computer Engineering\\
+% Georgia Institute of Technology,
+% Atlanta, Georgia 30332--0250\\ Email: mshell@ece.gatech.edu}
+% \authorblockA{\authorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+% Email: homer@thesimpsons.com}
+% \authorblockA{\authorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+% Telephone: (800) 555--1212, Fax: (888) 555--1212}
+% \authorblockA{\authorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+% \maketitle
+
+
+\twocolumn[{%
+\renewcommand\twocolumn[1][]{#1}%
+\maketitle
+% \begin{center}
+%     \centering
+%     \vspace{-2em}
+%     \captionsetup{type=figure}
+%     \includegraphics[width=0.95\linewidth]{figures/teaser.png}
+%     \captionof{figure}{\textbf{Overview.} We present SAGE, a framework bridging the understanding of semantic and actionable parts for generalizable manipulation of articulated objects. \textbf{Left:} We give two examples of human instructions illustrating the concept of part semantics, part functionalities, and corresponding actions. \textbf{Right:} examples of real-world tasks and our results. Our framework can tackle diverse manipulation tasks on various articulated objects.}
+%     \label{fig:teaser}
+% \end{center}
+}]
+
+
+% \newcommand{\insertteaser}{
+%     \includegraphics[width=0.87\linewidth]{figures/sage_teaser_new.pdf}
+%     \captionof{figure}{\textbf{Overview.} 
+%     \TODO{high level, more demo}
+%     We present SAGE, a framework bridging the understanding of semantic and actionable parts for generalizable manipulation of articulated objects. \textbf{Left:} our pipeline. Initially, a context-aware instruction interpretation module is employed to parse the input instruction and observation into an action program and associated semantic parts. Subsequently, we ground the semantic part (container) to its actionable part (slider button) and generate the motion (the ``press'' action for a button) to complete the task. \textbf{Right:} examples of real-world tasks and our results. Our framework is able to tackle diverse manipulation tasks on a large variety of articulated objects.}
+%     \label{fig:teaser}
+% }
+% \insertteaser
+
+\section{Supplementary Video}
+Please refer to the accompanying video for a comprehensive and intuitive overview of our methodology. The video includes demonstrations from real-world experiments with two interesting examples, offering a thorough analysis and detailed walk-through of our pipeline. We highly recommend watching the video for a clearer understanding of our work.
+
+\section{Part-aware Scene Perception}
+
+\subsection{Data sources.} Our dataset is primarily generated through the rendering of articulated data assets sourced from the GAPartNet dataset \citep{geng2022gapartnet}, itself an amalgamation of two pre-existing datasets: PartNet-Mobility \citep{xiang2020sapien} and AKB-48 \citep{liu2022akb}. From GAPartNet, we curated a selection of 27 object categories for our analysis.
+
+
+\subsection{Dataset Rendering}
+
+In line with the methodologies outlined in \citep{geng2022gapartnet}, our approach leverages the SAPIEN 2.0 platform \citep{xiang2020sapien} for the generation of a comprehensive dataset from our meticulously selected objects. This dataset encompasses partial point clouds, part semantic and instance segmentation masks, Normalized Point Coordinate Space (NPCS) maps, and part pose annotations. These components collectively furnish the requisite data for nuanced part perception and grounding tasks.
+
+\textbf{Environment Settings.} To enhance the realism of our rendered scenes, we activate the ray-tracing feature in SAPIEN. The process involves varying the articulation points of objects and selecting camera angles from pragmatically determined perspectives. For each object category, we specifically tailor the camera positioning range to ensure optimal visibility, avoiding perspectives that obscure significant details, such as the rear of StorageFurniture or the underside of an Oven, and maintaining a balanced distance. Concurrently, we modulate the ambient lighting between 10\% and 90\% intensity and permit slight camera rotations of up to $\pm 5^\circ$ to introduce a natural variability in our dataset's visual representation.
+The output image resolution is set to $800 \times 800$. For each object, we render 32 RGB images. Along with each RGB image, we also obtain the segmentation masks and the depth image using the built-in features of the SAPIEN environment. Additionally, we compute NPCS maps and oriented tight bounding boxes as part pose annotations for all GAParts.
+\textbf{Enhanced Balance.} In a departure from the practices of GAPartNet \citep{geng2022gapartnet}, we recognized the significance of representing objects in their closed state for tasks involving articulated object manipulation. To address this, we enriched our dataset by incorporating an additional 30% of data featuring articulated objects in their closed positions, captured from multiple camera viewpoints.
+
+\textbf{Point Cloud Generation.} We employ back-projection techniques using camera intrinsics alongside 2D RGB and depth images to generate dense, partial point clouds. Each of these dense clouds is then sampled down to 20,000 points through Farthest-Point-Sampling (FPS) to maintain uniformity and manageability. During this sampling process, we concurrently produce the corresponding ground truth for semantic and instance segmentation, as well as NPCS maps. These processed point clouds and their annotations are prepared offline to expedite subsequent 3D processing tasks.
+
+\subsection{Training Procedure}
+We adopt an end-to-end training approach, setting the maximum number of epochs at 200. The training utilizes the Adam optimizer, with a batch size of 32 and an initial learning rate set to 0.001. This training regimen is executed over approximately 1.5 days using a single NVIDIA GeForce RTX 4090 GPU. Furthermore, to enhance model performance, we progressively apply a multi-resolution training strategy, which has been shown to significantly improve results.
+
+% \section{Instruction Interpretation and Global Planner}
+
+% We use GPT-4V\citep{openai2023gpt4} to generate the action programs.
+
+% \section{Part Grounding and Execution}
+
+
+
+\subsection{Simulation Experiments}
+
+\textbf{Benchmark Settings.} We set up our interaction environment using the SAPIEN\citep{xiang2020sapien} simulator, modified from the ManiSkill challenge\citep{mu2021maniskill}. We benchmark our method on several tasks. These tasks exemplify robot manipulation under the motion constraint of a prismatic or a revolute joint. For evaluation, we randomly pick unseen objects that contain target semantics with target parts from seen and unseen object categories. Considering the limitation of the single gripper, we select such objects that, given the ground truth of their segmentation and pose, can be opened successfully using the heuristics under our benchmark setting.  Compared to the ManiSkill Challenge\citep{mu2021maniskill}, we provide diverse and challenging language instructions and limit our observation to a first-frame-only partial point cloud of the object, with only one point around the part center indicating which part to interact with. Given the initial state of the robot, it performs the whole manipulation only based on the observation at the first step until the global planner has new action units. The action space of the robot is the motor command of the 6 joints of the robot to determine the pose of the gripper, and we use position control to open or close grippers. A success is defined as manipulating the part for 90\% of the motion range within 1,000 steps with a stable stop at the end.
+
+\textbf{Part-pose-based Manipulation Heuristics.}
+Following GAPartNet\citep{geng2022gapartnet}, we use the interaction policy based on the heuristics to open drawers, open doors, manipulate handles, and press buttons and so on. Specifically, when we get the part pose, we can immediately get the grasping pose with our policy. Then we use a motion planning library (\ie, mplib, provided by SAPIEN \citep{xiang2020sapien}), to move our gripper to the grasping pose. Then, with our interaction policy and axis predicted from our method, we design the end-effector trajectory just along the trajectory of the part moving and interpolate the trajectory with a time step of $\frac{1}{250}$. With the IK (Inverse Kinematics) algorithm and a PID controller, we solve the poses of joints and move the end-effector along the trajectory. All of our implementations are decoupled from ROS and can be easily implemented in other simulators.
+
+
+\subsection{Real-world Experiments}
+
+% \vspace{-12mm}
+\textbf{Implementation Details.}
+To evaluate the robustness and generalizability of our method, we use XArm to manipulate previously unseen objects with only partial point cloud observations in the real world. We use similar motion planning and a similar end-effector trajectory as what we do in the simulator. A partial point cloud of the target object is acquired from the RGB-D camera (Kinect DK sensor in our experiments). To set up the interaction environment, we place the object and the robot arm in a proper position for interaction and use ArUco markers to calibrate the camera sensor. We also provide a point indicating the part to interact with, just like in the simulator. During manipulation, we first estimate the bounding box of the target part and calculate the trajectory using the heuristics, then use the control API provided by the robot arm to follow the trajectory and finish the task. Overall, we conduct several manipulation tasks with challenging language instructions.
+
+
+
+\section{More Experiment Results}
+We provide more real-world experiment results in Fig.\ref{fig:supp} and Fig.\ref{fig:supp2}. In Fig.\ref{fig:supp}, we provide more real-world experiment results and corresponding action programs. In 
+Fig.\ref{fig:supp2}, we provide more real-world experiment results with diverse instructions.
+\begin{figure*}
+    \centering
+    \includegraphics[width=.95\linewidth]{figures/supp.jpg}
+    \caption{\textbf{More Real-world Results.} More real-world experiment results and corresponding action programs.}
+    \label{fig:supp}
+\end{figure*}
+
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=.95\linewidth]{figures/supp2.jpg}
+    \caption{\textbf{More Real-world Results.} More real-world experiment results with diverse instructions.}
+    \label{fig:supp2}
+\end{figure*}
+
+
+\clearpage
+
+%% Use plainnat to work nicely with natbib. 
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

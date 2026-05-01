@@ -1,0 +1,32 @@
+\section{Introduction}
+
+% \jiahui{
+% Some random input:
+% General purpose policy across diverse manipulating objects can be factorized into elementary parts-oriented skills, which is a high-level goal of our community to study object parts for robotics. 
+% Our key insight is to ground natural language-defined tasks to such part-oriented skills via a joint embedding space synchronizing the visual-language part segments with the prior knowledge of manipulation skills from large-scale parts datasets, taking advantage of recent progress in large foundation models. 
+% We demonstrate that under our novel framework, even with simple modules and heuristic elementary skills, we can effectively achieve complex tasks. Experiments ...
+% }
+
+
+Generalizable object manipulation, which involves the transferability of manipulation skills across objects \todo{[cite]}, categories \todo{[cite]}, or even tasks \todo{[cite]}, is gaining increasing attention in the robot learning community.
+A line of works has focused on learning generalizable manipulations of articulated objects \todo{[cite]}. However, this remains a challenging problem in real-world scenarios with diverse object structures (such as home appliances) and complex goals (such as natural language instructions).
+
+Imagine you bought a new coffee machine for your home. Before switching it on, you can play with it by pressing its buttons, opening its lid, or taking off its container. But to make a coffee with it, you also need to truly understand the functionalities of its different parts with your prior knowledge or even by looking at the manual.
+%
+In Gibson's theory of distributed cognition, your operations with the coffee machine before and after can be explained by two different types of affordances: physical affordance and cognitive affordance. Physical affordances are for tasks that are mainly constrained by physical structures, such as the part and joint structures of articulated objects. Cognitive affordances, on the other hand, are provided by cultural conventions and involve a high-level semantic understanding of the object.
+
+Following this inspiration, we introduce a framework for generalizable manipulation of articulated objects with natural language instructions by bridging the physical and semantic understandings at the part level (Fig. \ref{fig:teaser}).
+Given a natural language input, a Large Language Model (LLM) first translates it into actions programs composed of part-level action units represented by 3-tuples of (part name, joint type, state change). To enable context-aware instruction interpretations, a Visual-Language Model (VLM) is also applied to the scene observations which generates a scene description and passes it to the LLM.
+Next, all action units in the action program will be turned into executable policies by a part manipulation generator. Given an RGBD visual input, we extract features in the image space and canonicalize them to the per-part pointclouds using NOCS \todo{[cite]}. We then predict the manipulation policies on the part pointclouds with canonicalized features, where we employ an implicit-PDF \cite{implicitpdf2021} module to enable probabilistic outputs when multiple ground truth exists (e.g. a door can be revolved by both pulling the hand and grabbing the rim). The policy generator is trained on a dataset of generalizable actionable parts (GAParts) \cite{geng2022gapartnet} for cross-category domain generalization.
+\todo{Experiments...}
+
+To summarize, our main contributions are:
+\begin{itemize}
+    \item We propose a novel framework for generalizable articulated-object manipulation in realistic scenarios with diverse objects and tasks under language instructions.
+    \item We design a context-aware instruction interpreter which translates natural language instructions into programmatic part-based actions.
+    \item We introduce a part manipulation generator with cross-category generalizations and non-deterministic policies.
+    \item \todo{Experiments...}
+    \item We also provide a new benchmark for language-guided articulated object manipulation tasks with more realistic and diverse scenarios.
+\end{itemize}
+
+\input{figures/teaser.tex}

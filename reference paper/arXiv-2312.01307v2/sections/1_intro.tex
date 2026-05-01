@@ -1,0 +1,49 @@
+% \vspace{-0.3cm}
+\section{Introduction}
+
+From furniture to home appliances, articulated object prevails in our daily lives.
+While being long studied in the robotics literature, their diverse object structures, functionalities, and manipulation goals in real-world scenarios remain challenging for most robot systems.
+%
+The design of a general system that accommodates such object diversities falls into the problem of generalizable object manipulation, which involves the transfer of manipulation skills across object shapes \citep{mu2021maniskill, gu2023maniskill2}, object categories\citep{geng2022gapartnet, geng2023partmanip, xu2023unidexgrasp, wan2023unidexgrasp++}, or even tasks \citep{yu2021metaworld}.
+Specifically, a line of works has focused on learning generalizable manipulation skills of articulated objects \citep{mu2021maniskill, gu2023maniskill2, geng2022gapartnet, geng2023partmanip, gong2023arnold, geng2022end}.
+%
+However, even these works are still limited to a few common object categories, leaving aside the problem of how to model the resemblance between seemingly irrelevant articulated objects, from a simple cabinet to a multifunctional blender with intricate mechanical structures and electricity-powered functionalities.
+
+
+In this work, we approach this problem by separately modeling the cross-category part commonality in their semantics and actions. Taking the blender in Fig. \ref{fig:teaser} top left as an example, to mince the food ingredients in it, one needs to press its container from the top to turn it on.
+%
+The part you press on is semantically a ``container'', but considering your interaction with it, its action resembles a ``button'' which can be pressed and trigger other mechanical motions (such as the blade rotating). To exert the functionality of this object, both part semantics and actions should be well understood.
+%
+This also fits into the two different types of affordances in Gibson's theory of distributed cognition \citep{zhang2006distributed}: physical affordance and cognitive affordance, which have different emphases in human cognition of interactable objects. Physical affordance focuses on physical structures such as the joint conditions and part motions of articulated objects; cognitive affordances, on the other hand, are provided by cultural conventions and involve a high-level semantic understanding of the object.
+
+
+Following this inspiration, we introduce SAGE, a framework for generalizable manipulation of articulated objects under natural language instructions by bridging semantic and actionable parts (Fig. \ref{fig:teaser} right).
+%
+Our key insight is that large Visual-Language Models (VLMs) possess general knowledge of part semantics, while small domain-specific models present higher accuracy in predicting part actions, which can serve as ``expert facts''.
+%
+Different from prior works that separately assign VLMs and small models to different sub-tasks\citep{huang2023voxposer}, we fuse their predictions in both context comprehension and part perception, which achieves a good balance of generality and exactness.
+
+Concretely, given a manipulation goal specified by natural language and an RGBD image as visual observation, an instruction interpreter first translates the language instruction into programmatic action representation. These action programs are composed of so-called action units, which are represented by 3-tuples of object semantic parts, joint types, and state changes.
+%
+We then convert the action programs defined on the object semantic parts into executable policies through a part grounding module that maps the semantic parts into so-called Generalizable Actionable Parts (GAParts), which is a cross-category definition of parts according to their actionabilities.
+%
+From the detected GAParts, we can generate physically plausible part actions indicated by the pre-obtained action programs.
+%
+Finally, we also introduce an interactive feedback module that actively responds to failed action steps and adjusts the overall policy accordingly, which enables the framework to act robustly under environmental ambiguities or failure.
+
+We demonstrate the effectiveness of our method both in simulation environments and on real robots. 
+Specifically, we also assess the crucial components of language-guided articulated-object manipulation: scene descriptions, part perceptions, and manipulation policies. Quantitatively, our method surpasses all baseline approaches. This success is attributed to our blend of a comprehensive general-purpose model and a precise domain specialist, endowing our method with both stellar performance and robust generalization capabilities. Qualitatively, we further illustrate the proficiency of our method through its performance on several demanding tasks.
+% In particular, we build up three novel benchmarks to evaluate three important parts of language-guided articulated-object manipulation, which are
+% scene descriptions, part perceptions, and manipulation policies.
+% Quantitatively, our method outperforms all the baseline. Thanks to our combination of informative general-purpose large model and accurate domain specialist, our method have both high performance and strong generalization ability.
+% Qualitatively, we also demonstrate our method on several challenging tasks can our method perform well.
+
+To summarize, our key contributions are:
+\begin{itemize}
+    \item We bridge the notion of semantic and actionable parts to model the commonality across articulated objects of highly diverse structures and functionalities.
+    \item We build a robot system for generalizable manipulation of articulated objects under language instructions.
+    \item We design a knowledge fusion mechanism between VLMs and small domain-specific models to incorporate expert facts into general perception and comprehension.
+    \item We demonstrate our strong generalizability on a variety of different objects under diverse language instructions in both simulation environments and on real robots.
+    %\item We also provide a new benchmark for articulated-object manipulation including evaluations of scene descriptions, part perceptions, and manipulation policies.
+\end{itemize}
+%\input{figures/teaser}

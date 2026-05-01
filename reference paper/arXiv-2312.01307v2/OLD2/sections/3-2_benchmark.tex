@@ -1,0 +1,70 @@
+\section{Benchmark}
+
+Our novel benchmark for language-guided articulated object manipulation introduces a fresh perspective compared to previous work \cite{geng2023partmanip, mu2021maniskill}. This benchmark uniquely investigates the integration of language and realistic observation in facilitating generalizable object manipulation.
+%
+Notably, our benchmark exhibits high diversity and realism:
+\begin{itemize}
+    \item \textbf{Diversity}: We include a broader range of tasks and scenarios relating to articulated object manipulation. Our benchmark includes diverse human natural language instructions and interaction scenarios.
+    \item \textbf{Realisticity}: We use original human instructions and camera sensor signal as input, devoid of any oracle knowledge, enhancing the authenticity of its function. We can directly transfer the policy learned in our benchmark in a real-world setting.
+\end{itemize}
+Detailed comparisons of our benchmark with PartManip\cite{geng2023partmanip} and ManiSkill\cite{mu2021maniskill} are shown in Table~\ref{}. \TODO{Benchmark comparison}
+
+% \begin{tabular}{c|c|c|c|c|c|c|c}
+% \hline
+%          & Language?        & Generalization Level & \# of Tasks & \# of Cat. &  \# of Ins. &  Realistic\\ 
+%     \hline
+% ManiSkill 1\&2   & $\times$ &  Cat.   &   &  &  &   $\times$ \\ 
+% PartManip    & $\times$ & Cross-Cat. & &  &  & \checkmark \\
+% \textbf{Ours}    & \checkmark  & Cross-Cat. &  &  & & \checkmark \\
+% \hline
+% \end{tabular}
+
+\subsection{Tasks}
+Our set of tasks is represented as $\mathcal{T}$, where each task in the set comprises several elements, including the objects, manipulation target direction, instructions, and success evaluation metrics.
+
+Firstly, we source our object categories from GAPartNet\cite{geng2022gapartnet}, comprising \todo{xxx} categories such as StorageFurniture, Table, Remote, and Safe.
+
+The manipulation target is represented as a binary value and a certain distance or angle, $\Delta s$, the binary value indicating whether the part will move away from or towards the object's body while the distance or angle indicating the part movement.
+
+Instructions are provided as natural language commands for manipulating the articulated objects.
+
+Let $O$ denote the set of objects, $D$ the direction of manipulation, $I$ the instructions, and $E$ the evaluation metrics. A task $T$ can then be defined as a tuple:
+
+$$T=(O,D,I,E)\in \mathcal{T}$$
+
+\subsection{Object Assets}
+\todo{statistics}
+
+\subsection{Instruction Space, Observation Space, and Action Space}
+The Instruction Space, $\mathcal{I}$, encompasses the set of all possible natural language instructions that can be given to the robot. These commands are designed to be comprehensive and intuitive, simulating real-world human-machine interactions.
+
+The Observation Space, $\mathcal{O}$, contains all possible states that can be observed by the robot through its sensory inputs (such as vision and tactile sensing). This space is a reflection of the robot's understanding of its environment.
+
+The Action Space, $\mathcal{A}$, is the set of all actions that the robot can take in response to the instructions. Each action is associated with a manipulation of one or more parts of the object.
+
+Together, the Instruction Space, Observation Space, and Action Space form the decision-making framework for the robot. It listens to the instructions from $\mathcal{I}$, observes the environment through $\mathcal{O}$, and responds with actions from $\mathcal{A}$.
+
+% \section{Benchmark}
+% We build up a novel benchmark for articulated object manipulation. Compared with previous work\cite{geng2023partmanip, mu2021maniskill}, our benchmark is the first to investigate language and realistic observation for generalizable object manipulation. 
+% %
+% Our benchmark has high diversity and realism. 
+% %
+% \textbf{Diversity}: Our benchmark contains more tasks and more different settings for articulated object manipulation than PartManip\cite{geng2023partmanip} and ManiSkill\cite{mu2021maniskill}. 
+% %
+% \textbf{Realism}: Our benchmark gives original human instruction as input without knowing any oracle knowledge, which is not in PartManip and ManiSkill 1\&2. 
+% %
+% We compare our benchmark with PartManip and ManiSkill in Tab.~\ref{}
+
+% \subsection{Task Formulation}
+% We have several task sets $\mathcal{T}$, each task set is composed of objects, manipulation target direction, instruction, and success evaluation metrics. 
+% %
+% First, our object categories are selected from GAPartNet\cite{geng2022gapartnet} as much as possible, including \todo{xxx} categories, such as StorageFurniture, Table, Remote, and Safe. 
+% %
+% Manipulation target direction is a binary value $\mathcal{d}$, which indicates whether the part will move far from the object's body.
+% %
+% Instruction is a natural language for articulated object manipulation
+
+
+% \subsection{Object Assets}
+
+% \subsection{Instruction Space, Observation Space, and Action Space}

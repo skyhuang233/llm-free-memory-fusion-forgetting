@@ -1,0 +1,84 @@
+%\usepackage{enumitem}
+%\usepackage[numbers]{natbib}
+%\usepackage{colortbl}
+
+% to create supplementary material title
+%\usepackage{titling}
+%\usepackage{multicol}
+
+
+%%
+%% paragraph
+%% 
+\renewcommand{\paragraph}[1]{\vspace{0em}\noindent\textbf{#1}.}
+%\setlength{\parindent}{0pt}%
+
+%%
+%% color
+%% 
+\usepackage{color}
+\usepackage{xcolor}
+\definecolor{turquoise}{cmyk}{0.65,0,0.1,0.3}
+\definecolor{purple}{rgb}{0.65,0,0.65}
+\definecolor{dark_green}{rgb}{0, 0.5, 0}
+\definecolor{orange}{rgb}{0.8, 0.6, 0.2}
+\definecolor{red}{rgb}{0.8, 0.2, 0.2}
+\definecolor{darkred}{rgb}{0.6, 0.1, 0.05}
+\definecolor{blueish}{rgb}{0.0, 0.3, .6}
+\definecolor{light_gray}{rgb}{0.7, 0.7, .7}
+\definecolor{pink}{rgb}{1, 0, 1}
+\definecolor{greyblue}{rgb}{0.25, 0.25, 1}
+% \definecolor{revcolor}{HTML}{347c12}
+\definecolor{tab_blue}{HTML}{1f77b4}
+\definecolor{tab_orange}{HTML}{ff7f0e}
+\definecolor{LightRed}{rgb}{0.99,0.89,0.89}
+
+%\definecolor{mesh_misty_rose}{HTML}{ffe4e1}#e6aaa3
+\definecolor{mesh_misty_rose}{HTML}{e6aaa3}
+\definecolor{mesh_yellow}{HTML}{ffba00}
+
+\definecolor{our_red}{rgb}{0.99,0.89,0.89}
+\definecolor{our_blue}{HTML}{1f77b4}
+\definecolor{our_orange}{HTML}{ff7f0e}
+
+%%
+%% comments
+%% 
+\newcommand{\todo}[1]{{\color{red}#1}}
+\newcommand{\TODO}[1]{\textbf{\color{red}[TODO: #1]}}
+\newcommand{\TODOFIG}[1]{\textbf{\color{blue}[Fig: #1]}}
+
+\newcommand{\important}[1]{{\color{blue}\textbf{Important:} #1}}
+
+% --- Congyue Deng
+\newcommand{\cd}[1]{{\color{blueish}#1}}
+\newcommand{\CD}[1]{{\color{blueish}{\bf [CD: #1]}}}
+
+% --- Bokui Shen
+\newcommand{\bs}[1]{{\color{tab_orange}#1}}
+\newcommand{\BS}[1]{{\color{tab_orange}{\bf [BS: #1]}}}
+
+\newcommand{\wsl}[1]{{\color{red}Songlin:#1}}
+
+%%
+%% shortcut for references
+%% 
+\newcommand{\Fig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\Figure}[1]{Figure~\ref{fig:#1}}
+\newcommand{\Tab}[1]{Tab.~\ref{table:#1}}
+\newcommand{\Table}[1]{Table~\ref{table:#1}}
+\newcommand{\eq}[1]{(\ref{eq:#1})}
+\newcommand{\Eq}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\Equation}[1]{Equation~\ref{eq:#1}}
+\newcommand{\Sec}[1]{Sec.~\ref{sec:#1}}
+\newcommand{\Section}[1]{Section~\ref{sec:#1}}
+\newcommand{\Appendix}[1]{Appendix~\ref{app:#1}}
+
+%%
+%% Paragraph control
+%% 
+%\renewcommand{\paragraph}[1]{\vspace{.2em}\noindent\textbf{#1}.}
+
+\newcommand{\SupplementaryMaterial}{{\color{darkred} supplementary materials}}
+
+\newcommand{\ie}{\textit{i.e.}}

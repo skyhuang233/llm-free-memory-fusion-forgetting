@@ -1,0 +1,456 @@
+\begin{thebibliography}{62}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Akakzia et~al.(2021)Akakzia, Colas, Oudeyer, Chetouani, and
+  Sigaud]{akakzia2021grounding}
+Ahmed Akakzia, C{\'e}dric Colas, Pierre-Yves Oudeyer, Mohamed Chetouani, and
+  Olivier Sigaud.
+\newblock Grounding language to autonomously-acquired skills via goal
+  generation.
+\newblock In \emph{ICLR 2021-Ninth International Conference on Learning
+  Representation}, 2021.
+
+\bibitem[Akkaya et~al.(2019)Akkaya, Andrychowicz, Chociej, Litwin, McGrew,
+  Petron, Paino, Plappert, Powell, Ribas, et~al.]{akkaya2019solving}
+Ilge Akkaya, Marcin Andrychowicz, Maciek Chociej, Mateusz Litwin, Bob McGrew,
+  Arthur Petron, Alex Paino, Matthias Plappert, Glenn Powell, Raphael Ribas,
+  et~al.
+\newblock Solving rubik's cube with a robot hand.
+\newblock \emph{arXiv preprint arXiv:1910.07113}, 2019.
+
+\bibitem[Brohan et~al.(2023)Brohan, Chebotar, Finn, Hausman, Herzog, Ho, Ibarz,
+  Irpan, Jang, Julian, et~al.]{brohan2023can}
+Anthony Brohan, Yevgen Chebotar, Chelsea Finn, Karol Hausman, Alexander Herzog,
+  Daniel Ho, Julian Ibarz, Alex Irpan, Eric Jang, Ryan Julian, et~al.
+\newblock Do as i can, not as i say: Grounding language in robotic affordances.
+\newblock In \emph{Conference on Robot Learning}, pages 287--318. PMLR, 2023.
+
+\bibitem[Burget et~al.(2013)Burget, Hornung, and Bennewitz]{burget2013whole}
+Felix Burget, Armin Hornung, and Maren Bennewitz.
+\newblock Whole-body motion planning for manipulation of articulated objects.
+\newblock In \emph{2013 IEEE International Conference on Robotics and
+  Automation}, pages 1656--1662. IEEE, 2013.
+
+\bibitem[Codevilla et~al.(2018)Codevilla, Müller, López, Koltun, and
+  Dosovitskiy]{codevilla2018driving}
+Felipe Codevilla, Matthias Müller, Antonio López, Vladlen Koltun, and Alexey
+  Dosovitskiy.
+\newblock End-to-end driving via conditional imitation learning.
+\newblock In \emph{2018 IEEE International Conference on Robotics and
+  Automation (ICRA)}, pages 4693--4700, 2018.
+\newblock \doi{10.1109/ICRA.2018.8460487}.
+
+\bibitem[Dai et~al.(2017)Dai, Chang, Savva, Halber, Funkhouser, and
+  Nie{\ss}ner]{dai2017scannet}
+Angela Dai, Angel~X. Chang, Manolis Savva, Maciej Halber, Thomas Funkhouser,
+  and Matthias Nie{\ss}ner.
+\newblock Scannet: Richly-annotated 3d reconstructions of indoor scenes.
+\newblock In \emph{Proc. Computer Vision and Pattern Recognition (CVPR), IEEE},
+  2017.
+
+\bibitem[Eisner et~al.(2022)Eisner, Zhang, and Held]{eisner2022flowbot3d}
+Ben Eisner, Harry Zhang, and David Held.
+\newblock Flowbot3d: Learning 3d articulation flow to manipulate articulated
+  objects.
+\newblock \emph{arXiv preprint arXiv:2205.04382}, 2022.
+
+\bibitem[Fang et~al.(2020)Fang, Wang, Gou, and Lu]{fang2020graspnet}
+Hao-Shu Fang, Chenxi Wang, Minghao Gou, and Cewu Lu.
+\newblock Graspnet-1billion: A large-scale benchmark for general object
+  grasping.
+\newblock In \emph{Proceedings of the IEEE/CVF conference on computer vision
+  and pattern recognition}, pages 11444--11453, 2020.
+
+\bibitem[Fischler and Bolles(1981)]{fischler1981random}
+Martin~A Fischler and Robert~C Bolles.
+\newblock Random sample consensus: a paradigm for model fitting with
+  applications to image analysis and automated cartography.
+\newblock \emph{Communications of the ACM}, 24\penalty0 (6):\penalty0 381--395,
+  1981.
+
+\bibitem[Gadre et~al.(2021)Gadre, Ehsani, and Song]{gadre2021act}
+Samir~Yitzhak Gadre, Kiana Ehsani, and Shuran Song.
+\newblock Act the part: Learning interaction strategies for articulated object
+  part discovery.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 15752--15761, 2021.
+
+\bibitem[Gal et~al.(2022)Gal, Alaluf, Atzmon, Patashnik, Bermano, Chechik, and
+  Cohen-Or]{gal2022image}
+Rinon Gal, Yuval Alaluf, Yuval Atzmon, Or~Patashnik, Amit~H. Bermano, Gal
+  Chechik, and Daniel Cohen-Or.
+\newblock An image is worth one word: Personalizing text-to-image generation
+  using textual inversion, 2022.
+
+\bibitem[Gao and Tedrake(2021)]{gao2021kpam}
+Wei Gao and Russ Tedrake.
+\newblock kpam-sc: Generalizable manipulation planning using keypoint
+  affordance and shape completion.
+\newblock In \emph{2021 IEEE International Conference on Robotics and
+  Automation (ICRA)}, pages 6527--6533. IEEE, 2021.
+
+\bibitem[Geng et~al.(2022{\natexlab{a}})Geng, Xu, Zhao, Xu, Yi, Huang, and
+  Wang]{geng2022gapartnet}
+Haoran Geng, Helin Xu, Chengyang Zhao, Chao Xu, Li~Yi, Siyuan Huang, and
+  He~Wang.
+\newblock Gapartnet: Cross-category domain-generalizable object perception and
+  manipulation via generalizable and actionable parts.
+\newblock \emph{arXiv preprint arXiv:2211.05272}, 2022{\natexlab{a}}.
+
+\bibitem[Geng et~al.(2023)Geng, Li, Geng, Chen, Dong, and
+  Wang]{geng2023partmanip}
+Haoran Geng, Ziming Li, Yiran Geng, Jiayi Chen, Hao Dong, and He~Wang.
+\newblock Partmanip: Learning cross-category generalizable part manipulation
+  policy from point cloud observations, 2023.
+
+\bibitem[Geng et~al.(2022{\natexlab{b}})Geng, An, Geng, Chen, Yang, and
+  Dong]{geng2022end}
+Yiran Geng, Boshi An, Haoran Geng, Yuanpei Chen, Yaodong Yang, and Hao Dong.
+\newblock End-to-end affordance learning for robotic manipulation.
+\newblock \emph{arXiv preprint arXiv:2209.12941}, 2022{\natexlab{b}}.
+
+\bibitem[Ghosh et~al.(2021)Ghosh, Rahme, Kumar, Zhang, Adams, and
+  Levine]{ghosh2021generalization}
+Dibya Ghosh, Jad Rahme, Aviral Kumar, Amy Zhang, Ryan~P Adams, and Sergey
+  Levine.
+\newblock Why generalization in rl is difficult: Epistemic pomdps and implicit
+  partial observability.
+\newblock \emph{Advances in Neural Information Processing Systems},
+  34:\penalty0 25502--25515, 2021.
+
+\bibitem[Gong et~al.(2023)Gong, Huang, Zhao, Geng, Gao, Wu, Ai, Zhou,
+  Terzopoulos, Zhu, et~al.]{gong2023arnold}
+Ran Gong, Jiangyong Huang, Yizhou Zhao, Haoran Geng, Xiaofeng Gao, Qingyang Wu,
+  Wensi Ai, Ziheng Zhou, Demetri Terzopoulos, Song-Chun Zhu, et~al.
+\newblock Arnold: A benchmark for language-grounded task learning with
+  continuous states in realistic 3d scenes.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision (ICCV)}, 2023.
+
+\bibitem[Gou et~al.(2021)Gou, Fang, Zhu, Xu, Wang, and Lu]{gou2021rgb}
+Minghao Gou, Hao-Shu Fang, Zhanda Zhu, Sheng Xu, Chenxi Wang, and Cewu Lu.
+\newblock Rgb matters: Learning 7-dof grasp poses on monocular rgbd images.
+\newblock In \emph{2021 IEEE International Conference on Robotics and
+  Automation (ICRA)}, pages 13459--13466. IEEE, 2021.
+
+\bibitem[Goyal et~al.(2021)Goyal, Mooney, and Niekum]{goyal2021zero}
+Prasoon Goyal, Raymond~J. Mooney, and Scott Niekum.
+\newblock Zero-shot task adaptation using natural language.
+\newblock \emph{CoRR}, abs/2106.02972, 2021.
+\newblock URL \url{https://arxiv.org/abs/2106.02972}.
+
+\bibitem[Gu et~al.(2023)Gu, Xiang, Li, Ling, Liu, Mu, Tang, Tao, Wei, Yao,
+  et~al.]{gu2023maniskill2}
+Jiayuan Gu, Fanbo Xiang, Xuanlin Li, Zhan Ling, Xiqiang Liu, Tongzhou Mu, Yihe
+  Tang, Stone Tao, Xinyue Wei, Yunchao Yao, et~al.
+\newblock Maniskill2: A unified benchmark for generalizable manipulation
+  skills.
+\newblock \emph{arXiv preprint arXiv:2302.04659}, 2023.
+
+\bibitem[Hu et~al.(2019)Hu, Yarats, Gong, Tian, and Lewis]{hu2019hierarchical}
+Hengyuan Hu, Denis Yarats, Qucheng Gong, Yuandong Tian, and Mike Lewis.
+\newblock Hierarchical decision making by generating and following natural
+  language instructions.
+\newblock \emph{Advances in neural information processing systems}, 32, 2019.
+
+\bibitem[Huang et~al.(2022{\natexlab{a}})Huang, Abbeel, Pathak, and
+  Mordatch]{huang2022language}
+Wenlong Huang, Pieter Abbeel, Deepak Pathak, and Igor Mordatch.
+\newblock Language models as zero-shot planners: Extracting actionable
+  knowledge for embodied agents.
+\newblock In \emph{International Conference on Machine Learning}, pages
+  9118--9147. PMLR, 2022{\natexlab{a}}.
+
+\bibitem[Huang et~al.(2022{\natexlab{b}})Huang, Xia, Xiao, Chan, Liang,
+  Florence, Zeng, Tompson, Mordatch, Chebotar, Sermanet, Jackson, Brown, Luu,
+  Levine, Hausman, and brian ichter]{huang2022inner}
+Wenlong Huang, Fei Xia, Ted Xiao, Harris Chan, Jacky Liang, Pete Florence, Andy
+  Zeng, Jonathan Tompson, Igor Mordatch, Yevgen Chebotar, Pierre Sermanet,
+  Tomas Jackson, Noah Brown, Linda Luu, Sergey Levine, Karol Hausman, and brian
+  ichter.
+\newblock Inner monologue: Embodied reasoning through planning with language
+  models.
+\newblock In \emph{6th Annual Conference on Robot Learning},
+  2022{\natexlab{b}}.
+\newblock URL \url{https://openreview.net/forum?id=3R3Pz5i0tye}.
+
+\bibitem[Huang et~al.(2023)Huang, Wang, Zhang, Li, Wu, and
+  Fei-Fei]{huang2023voxposer}
+Wenlong Huang, Chen Wang, Ruohan Zhang, Yunzhu Li, Jiajun Wu, and Li~Fei-Fei.
+\newblock Voxposer: Composable 3d value maps for robotic manipulation with
+  language models.
+\newblock \emph{arXiv preprint arXiv:2307.05973}, 2023.
+
+\bibitem[Jain and Kemp(2009)]{jain2009pulling}
+Advait Jain and Charles~C Kemp.
+\newblock Pulling open novel doors and drawers with equilibrium point control.
+\newblock In \emph{2009 9th ieee-ras international conference on humanoid
+  robots}, pages 498--505. IEEE, 2009.
+
+\bibitem[Jang et~al.(2022)Jang, Irpan, Khansari, Kappler, Ebert, Lynch, Levine,
+  and Finn]{jang2022bc}
+Eric Jang, Alex Irpan, Mohi Khansari, Daniel Kappler, Frederik Ebert, Corey
+  Lynch, Sergey Levine, and Chelsea Finn.
+\newblock Bc-z: Zero-shot task generalization with robotic imitation learning.
+\newblock In \emph{Conference on Robot Learning}, pages 991--1002. PMLR, 2022.
+
+\bibitem[Jiang et~al.(2020)Jiang, Zhao, Shi, Liu, Fu, and
+  Jia]{jiang2020pointgroup}
+Li~Jiang, Hengshuang Zhao, Shaoshuai Shi, Shu Liu, Chi-Wing Fu, and Jiaya Jia.
+\newblock Pointgroup: Dual-set point grouping for 3d instance segmentation.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 4867--4876, 2020.
+
+\bibitem[Jiang et~al.(2022)Jiang, Gupta, Zhang, Wang, Dou, Chen, Fei-Fei,
+  Anandkumar, Zhu, and Fan]{jiang2022vima}
+Yunfan Jiang, Agrim Gupta, Zichen Zhang, Guanzhi Wang, Yongqiang Dou, Yanjun
+  Chen, Li~Fei-Fei, Anima Anandkumar, Yuke Zhu, and Linxi Fan.
+\newblock Vima: General robot manipulation with multimodal prompts.
+\newblock \emph{arXiv preprint arXiv:2210.03094}, 2022.
+
+\bibitem[Kirillov et~al.(2023)Kirillov, Mintun, Ravi, Mao, Rolland, Gustafson,
+  Xiao, Whitehead, Berg, Lo, Doll{\'a}r, and Girshick]{kirillov2023segany}
+Alexander Kirillov, Eric Mintun, Nikhila Ravi, Hanzi Mao, Chloe Rolland, Laura
+  Gustafson, Tete Xiao, Spencer Whitehead, Alexander~C. Berg, Wan-Yen Lo, Piotr
+  Doll{\'a}r, and Ross Girshick.
+\newblock Segment anything.
+\newblock \emph{arXiv:2304.02643}, 2023.
+
+\bibitem[Kirk et~al.(2021)Kirk, Zhang, Grefenstette, and
+  Rockt{\"a}schel]{kirk2021generalization_survey}
+Robert Kirk, Amy Zhang, Edward Grefenstette, and Tim Rockt{\"a}schel.
+\newblock A survey of generalisation in deep reinforcement learning.
+\newblock \emph{arXiv preprint arXiv:2111.09794}, 2021.
+
+\bibitem[Liang et~al.(2022)Liang, Huang, Xia, Xu, Hausman, Ichter, Florence,
+  and Zeng]{codeaspolicies2022}
+Jacky Liang, Wenlong Huang, Fei Xia, Peng Xu, Karol Hausman, Brian Ichter, Pete
+  Florence, and Andy Zeng.
+\newblock Code as policies: Language model programs for embodied control.
+\newblock In \emph{arXiv preprint arXiv:2209.07753}, 2022.
+
+\bibitem[Lin et~al.(2023)Lin, Agia, Migimatsu, Pavone, and
+  Bohg]{lin2023text2motion}
+Kevin Lin, Christopher Agia, Toki Migimatsu, Marco Pavone, and Jeannette Bohg.
+\newblock Text2motion: From natural language instructions to feasible plans.
+\newblock \emph{arXiv preprint arXiv:2303.12153}, 2023.
+
+\bibitem[Liu et~al.(2022)Liu, Xu, Rao, Gan, and Yi]{liu2022autogpart}
+Xueyi Liu, Xiaomeng Xu, Anyi Rao, Chuang Gan, and Li~Yi.
+\newblock Autogpart: Intermediate supervision search for generalizable 3d part
+  segmentation.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 11624--11634, 2022.
+
+\bibitem[Mees et~al.(2022)Mees, Hermann, and Burgard]{mees2022matters}
+Oier Mees, Lukas Hermann, and Wolfram Burgard.
+\newblock What matters in language conditioned robotic imitation learning.
+\newblock \emph{arXiv preprint arXiv:2204.06252}, 2022.
+
+\bibitem[Mo et~al.(2021)Mo, Guibas, Mukadam, Gupta, and
+  Tulsiani]{mo2021where2act}
+Kaichun Mo, Leonidas~J Guibas, Mustafa Mukadam, Abhinav Gupta, and Shubham
+  Tulsiani.
+\newblock Where2act: From pixels to actions for articulated 3d objects.
+\newblock In \emph{Proceedings of the IEEE/CVF International Conference on
+  Computer Vision}, pages 6813--6823, 2021.
+
+\bibitem[Mu et~al.(2021)Mu, Ling, Xiang, Yang, Li, Tao, Huang, Jia, and
+  Su]{mu2021maniskill}
+Tongzhou Mu, Zhan Ling, Fanbo Xiang, Derek Yang, Xuanlin Li, Stone Tao, Zhiao
+  Huang, Zhiwei Jia, and Hao Su.
+\newblock Maniskill: Generalizable manipulation skill benchmark with
+  large-scale demonstrations.
+\newblock \emph{arXiv preprint arXiv:2107.14483}, 2021.
+
+\bibitem[OpenAI(2023)]{openai2023gpt4}
+OpenAI.
+\newblock Gpt-4 technical report, 2023.
+
+\bibitem[Oquab et~al.(2023)Oquab, Darcet, Moutakanni, Vo, Szafraniec, Khalidov,
+  Fernandez, Haziza, Massa, El-Nouby, Howes, Huang, Xu, Sharma, Li, Galuba,
+  Rabbat, Assran, Ballas, Synnaeve, Misra, Jegou, Mairal, Labatut, Joulin, and
+  Bojanowski]{oquab2023dinov2}
+Maxime Oquab, Timothée Darcet, Theo Moutakanni, Huy~V. Vo, Marc Szafraniec,
+  Vasil Khalidov, Pierre Fernandez, Daniel Haziza, Francisco Massa, Alaaeldin
+  El-Nouby, Russell Howes, Po-Yao Huang, Hu~Xu, Vasu Sharma, Shang-Wen Li,
+  Wojciech Galuba, Mike Rabbat, Mido Assran, Nicolas Ballas, Gabriel Synnaeve,
+  Ishan Misra, Herve Jegou, Julien Mairal, Patrick Labatut, Armand Joulin, and
+  Piotr Bojanowski.
+\newblock Dinov2: Learning robust visual features without supervision, 2023.
+
+\bibitem[Peterson et~al.(2000)Peterson, Austin, and Kragic]{peterson2000high}
+L~Peterson, David Austin, and Danica Kragic.
+\newblock High-level control of a mobile manipulator for door opening.
+\newblock In \emph{Proceedings. 2000 IEEE/RSJ International Conference on
+  Intelligent Robots and Systems (IROS 2000)(Cat. No. 00CH37113)}, volume~3,
+  pages 2333--2338. IEEE, 2000.
+
+\bibitem[Rajeswaran et~al.(2017)Rajeswaran, Kumar, Gupta, Vezzani, Schulman,
+  Todorov, and Levine]{rajeswaran2017dapg}
+Aravind Rajeswaran, Vikash Kumar, Abhishek Gupta, Giulia Vezzani, John
+  Schulman, Emanuel Todorov, and Sergey Levine.
+\newblock Learning complex dexterous manipulation with deep reinforcement
+  learning and demonstrations.
+\newblock \emph{arXiv preprint arXiv:1709.10087}, 2017.
+
+\bibitem[Shao et~al.(2021)Shao, Migimatsu, Zhang, Yang, and
+  Bohg]{shao2021concept2robot}
+Lin Shao, Toki Migimatsu, Qiang Zhang, Karen Yang, and Jeannette Bohg.
+\newblock Concept2robot: Learning manipulation concepts from instructions and
+  human demonstrations.
+\newblock \emph{The International Journal of Robotics Research}, 40\penalty0
+  (12-14):\penalty0 1419--1434, 2021.
+
+\bibitem[Shen et~al.(2022)Shen, Wan, and Wang]{shen2022learning}
+Hao Shen, Weikang Wan, and He~Wang.
+\newblock Learning category-level generalizable object manipulation policy via
+  generative adversarial self-imitation learning from demonstrations.
+\newblock \emph{arXiv preprint arXiv:2203.02107}, 2022.
+
+\bibitem[Shridhar et~al.(2022)Shridhar, Manuelli, and Fox]{shridhar2022cliport}
+Mohit Shridhar, Lucas Manuelli, and Dieter Fox.
+\newblock Cliport: What and where pathways for robotic manipulation.
+\newblock In \emph{Conference on Robot Learning}, pages 894--906. PMLR, 2022.
+
+\bibitem[Shridhar et~al.(2023)Shridhar, Manuelli, and
+  Fox]{shridhar2023perceiver}
+Mohit Shridhar, Lucas Manuelli, and Dieter Fox.
+\newblock Perceiver-actor: A multi-task transformer for robotic manipulation.
+\newblock In \emph{Conference on Robot Learning}, pages 785--799. PMLR, 2023.
+
+\bibitem[Singh et~al.(2022)Singh, Blukis, Mousavian, Goyal, Xu, Tremblay, Fox,
+  Thomason, and Garg]{singh2022progprompt}
+Ishika Singh, Valts Blukis, Arsalan Mousavian, Ankit Goyal, Danfei Xu, Jonathan
+  Tremblay, Dieter Fox, Jesse Thomason, and Animesh Garg.
+\newblock Progprompt: Generating situated robot task plans using large language
+  models.
+\newblock \emph{arXiv preprint arXiv:2209.11302}, 2022.
+
+\bibitem[Stepputtis et~al.(2020)Stepputtis, Campbell, Phielipp, Lee, Baral, and
+  Ben~Amor]{stepputtis2020language}
+Simon Stepputtis, Joseph Campbell, Mariano Phielipp, Stefan Lee, Chitta Baral,
+  and Heni Ben~Amor.
+\newblock Language-conditioned imitation learning for robot manipulation tasks.
+\newblock \emph{Advances in Neural Information Processing Systems},
+  33:\penalty0 13139--13150, 2020.
+
+\bibitem[Sundermeyer et~al.(2021)Sundermeyer, Mousavian, Triebel, and
+  Fox]{sundermeyer2021contact}
+Martin Sundermeyer, Arsalan Mousavian, Rudolph Triebel, and Dieter Fox.
+\newblock Contact-graspnet: Efficient 6-dof grasp generation in cluttered
+  scenes.
+\newblock In \emph{2021 IEEE International Conference on Robotics and
+  Automation (ICRA)}, pages 13438--13444. IEEE, 2021.
+
+\bibitem[Umeyama(1991)]{umeyama1991least}
+Shinji Umeyama.
+\newblock Least-squares estimation of transformation parameters between two
+  point patterns.
+\newblock \emph{IEEE Transactions on Pattern Analysis \& Machine Intelligence},
+  13\penalty0 (04):\penalty0 376--380, 1991.
+
+\bibitem[Urakami et~al.(2019)Urakami, Hodgkinson, Carlin, Leu, Rigazio, and
+  Abbeel]{urakami2019doorgym}
+Yusuke Urakami, Alec Hodgkinson, Casey Carlin, Randall Leu, Luca Rigazio, and
+  Pieter Abbeel.
+\newblock Doorgym: A scalable door opening environment and baseline agent.
+\newblock \emph{arXiv preprint arXiv:1908.01887}, 2019.
+
+\bibitem[Vu et~al.(2022)Vu, Kim, Luu, Nguyen, and Yoo]{vu2022softgroup}
+Thang Vu, Kookhoi Kim, Tung~M Luu, Thanh Nguyen, and Chang~D Yoo.
+\newblock Softgroup for 3d instance segmentation on point clouds.
+\newblock In \emph{Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition}, pages 2708--2717, 2022.
+
+\bibitem[Wan et~al.(2023)Wan, Geng, Liu, Shan, Yang, Yi, and
+  Wang]{wan2023unidexgrasp++}
+Weikang Wan, Haoran Geng, Yun Liu, Zikang Shan, Yaodong Yang, Li~Yi, and
+  He~Wang.
+\newblock Unidexgrasp++: Improving dexterous grasping policy learning via
+  geometry-aware curriculum and iterative generalist-specialist learning.
+\newblock \emph{arXiv preprint arXiv:2304.00464}, 2023.
+
+\bibitem[Wang et~al.(2022)Wang, Wu, Mo, Ke, Fan, Guibas, and
+  Dong]{wang2022adaafford}
+Yian Wang, Ruihai Wu, Kaichun Mo, Jiaqi Ke, Qingnan Fan, Leonidas~J Guibas, and
+  Hao Dong.
+\newblock Adaafford: Learning to adapt manipulation affordance for 3d
+  articulated objects via few-shot interactions.
+\newblock In \emph{European Conference on Computer Vision}, pages 90--107.
+  Springer, 2022.
+
+\bibitem[Wei et~al.(2023)Wei, Wang, Schuurmans, Bosma, Ichter, Xia, Chi, Le,
+  and Zhou]{wei2023chainofthought}
+Jason Wei, Xuezhi Wang, Dale Schuurmans, Maarten Bosma, Brian Ichter, Fei Xia,
+  Ed~Chi, Quoc Le, and Denny Zhou.
+\newblock Chain-of-thought prompting elicits reasoning in large language
+  models, 2023.
+
+\bibitem[Wu et~al.(2022)Wu, Zhao, Mo, Guo, Wang, Wu, Fan, Chen, Guibas, and
+  Dong]{wu2022vatmart}
+Ruihai Wu, Yan Zhao, Kaichun Mo, Zizheng Guo, Yian Wang, Tianhao Wu, Qingnan
+  Fan, Xuelin Chen, Leonidas Guibas, and Hao Dong.
+\newblock {VAT}-mart: Learning visual action trajectory proposals for
+  manipulating 3d {ART}iculated objects.
+\newblock In \emph{International Conference on Learning Representations}, 2022.
+\newblock URL \url{https://openreview.net/forum?id=iEx3PiooLy}.
+
+\bibitem[Xiang et~al.(2020)Xiang, Qin, Mo, Xia, Zhu, Liu, Liu, Jiang, Yuan,
+  Wang, et~al.]{xiang2020sapien}
+Fanbo Xiang, Yuzhe Qin, Kaichun Mo, Yikuan Xia, Hao Zhu, Fangchen Liu, Minghua
+  Liu, Hanxiao Jiang, Yifu Yuan, He~Wang, et~al.
+\newblock Sapien: A simulated part-based interactive environment.
+\newblock In \emph{CVPR}, 2020.
+
+\bibitem[Xu et~al.(2023)Xu, Wan, Zhang, Liu, Shan, Shen, Wang, Geng, Weng,
+  Chen, et~al.]{xu2023unidexgrasp}
+Yinzhen Xu, Weikang Wan, Jialiang Zhang, Haoran Liu, Zikang Shan, Hao Shen,
+  Ruicheng Wang, Haoran Geng, Yijia Weng, Jiayi Chen, et~al.
+\newblock Unidexgrasp: Universal robotic dexterous grasping via learning
+  diverse proposal generation and goal-conditioned policy.
+\newblock \emph{arXiv preprint arXiv:2303.00938}, 2023.
+
+\bibitem[Xu et~al.(2021)Xu, Qi, Agrawal, and Song]{xu2021adagrasp}
+Zhenjia Xu, Beichun Qi, Shubham Agrawal, and Shuran Song.
+\newblock Adagrasp: Learning an adaptive gripper-aware grasping policy.
+\newblock In \emph{2021 IEEE International Conference on Robotics and
+  Automation (ICRA)}, pages 4620--4626. IEEE, 2021.
+
+\bibitem[Xu et~al.(2022)Xu, He, and Song]{xu2022universal}
+Zhenjia Xu, Zhanpeng He, and Shuran Song.
+\newblock Universal manipulation policy network for articulated objects.
+\newblock \emph{IEEE Robotics and Automation Letters}, 7\penalty0 (2):\penalty0
+  2447--2454, 2022.
+
+\bibitem[You et~al.(2023)You, Shen, Deng, Geng, Wang, and Guibas]{you2023make}
+Yang You, Bokui Shen, Congyue Deng, Haoran Geng, He~Wang, and Leonidas Guibas.
+\newblock Make a donut: Language-guided hierarchical emd-space planning for
+  zero-shot deformable object manipulation, 2023.
+
+\bibitem[Yu et~al.(2021)Yu, Quillen, He, Julian, Narayan, Shively, Bellathur,
+  Hausman, Finn, and Levine]{yu2021metaworld}
+Tianhe Yu, Deirdre Quillen, Zhanpeng He, Ryan Julian, Avnish Narayan, Hayden
+  Shively, Adithya Bellathur, Karol Hausman, Chelsea Finn, and Sergey Levine.
+\newblock Meta-world: A benchmark and evaluation for multi-task and meta
+  reinforcement learning, 2021.
+
+\bibitem[Zhang and Patel(2006)]{zhang2006distributed}
+Jiajie Zhang and Vimla~L Patel.
+\newblock Distributed cognition, representation, and affordance.
+\newblock \emph{Pragmatics \& Cognition}, 14\penalty0 (2):\penalty0 333--341,
+  2006.
+
+\bibitem[Zhao et~al.(2022)Zhao, Wu, Chen, Zhang, Fan, Mo, and
+  Dong]{zhao2022dualafford}
+Yan Zhao, Ruihai Wu, Zhehuan Chen, Yourong Zhang, Qingnan Fan, Kaichun Mo, and
+  Hao Dong.
+\newblock Dualafford: Learning collaborative visual affordance for dual-gripper
+  object manipulation.
+\newblock \emph{arXiv preprint arXiv:2207.01971}, 2022.
+
+\end{thebibliography}
