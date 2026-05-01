@@ -1,0 +1,30 @@
+\section{Introduction}
+\label{sec:intro}
+
+Consider a long-running personal assistant that has conversed with a user across hundreds of sessions over months.
+When the user asks a multi-hop question --- ``Which hobby did I pick up right after quitting the gym?'' --- the agent must integrate two distant conversation fragments out of thousands of accumulated memory entries.
+The challenge is not retrieval quality alone: as related interactions accumulate, a fixed retrieval budget increasingly fills with near-duplicate evidence rather than the distinct facts that such questions demand.
+This retrieval-noise problem is not hypothetical: on LoCoMo's multi-hop benchmark, which requires integrating evidence across multiple conversation sessions, even strong systems score below 20 F1 without effective memory consolidation~\citep{Maharana2024EvaluatingVL}.
+
+Memory fusion --- the consolidation of semantically similar fragments into compact, non-redundant representations --- is the single largest performance driver in state-of-the-art long-horizon memory systems.
+In FadeMem's ablation study, removing fusion while holding everything else fixed drops multi-hop F1 from 29.43 to 13.63, a 53.7\% collapse~\citep{Wei2026FadeMemBF}.
+Fusion is not a peripheral optimization; it is what makes long-horizon conversational QA work at all.
+
+However, every system that performs fusion does so through LLM-guided consolidation: an LLM rewrites the memory cluster into a coherent summary, then a second LLM call verifies that the rewrite preserved information~\citep{Wei2026FadeMemBF,chhikara2025mem0buildingproductionreadyai}.
+This pipeline works, but it rests on an unexamined assumption whose necessity has never been empirically tested.
+Our key insight is that in fact-centric conversational QA, the fusion gain comes almost entirely from deduplicating and packing verbatim evidence into the fixed retrieval budget --- not from the LLM's linguistic rewriting ability.
+Different from prior works that treat LLM rewriting as an indispensable step, we show that a fully deterministic operator preserving verbatim sentences recovers the same gain while requiring zero additional LLM calls at maintenance time.
+This changes how practitioners design agent memory: persistent, consolidating memory becomes deployable without any API dependency in the maintenance loop, making it accessible for local deployments, cost-sensitive applications, and settings where reproducibility or auditability is required.
+
+We propose \textbf{DFM-Fusion} (Deterministic FadeMem-Fusion), a four-stage pipeline that replaces LLM-guided fusion with fully deterministic operations.
+Concretely, given a cluster of semantically similar memory entries, DFM-Fusion applies sentence segmentation, near-duplicate removal via embedding similarity, MMR-based sentence packing within a token budget, and salient-token coverage verification with a fallback guarantee --- without invoking any LLM at any stage.
+We evaluate the same memory pipeline across six open-weight model families on LoCoMo while holding the retrieval budget, scoring protocol, and answer-generation stack fixed.
+Our contributions are:
+\begin{itemize}
+    \item A deterministic, quote-preserving fusion operator that eliminates all LLM calls from memory consolidation while maintaining auditable, verbatim evidence packing.
+    \item A six-model family evaluation on LoCoMo showing that DFM-Fusion achieves the strongest average multi-hop F1 (0.1877) and improves over LLM-Fusion on the primary metric in 5/6 models --- confirming that the fusion gain is driven by information packing, not LLM rewriting.
+    \item Consistent operational gains: 69.13$\times$ average maintenance speedup, 11.74\% reduction in total API calls, and complete elimination of fusion-specific LLM calls --- with no performance cost.
+\end{itemize}
+
+The conclusion is deliberately scoped: for fact-centric long-horizon conversational QA, where the evaluation rewards verbatim evidence retrieval, LLM-guided fusion is unnecessary.
+Whether the same holds for tasks requiring abstraction or conflict reconciliation remains open, and we discuss this boundary explicitly in Section~\ref{sec:discussion}.

@@ -1,0 +1,5 @@
+url: https://ar5iv.labs.arxiv.org/html/2501.13956
+title: Zep: A Temporal Knowledge Graph Architecture for Agent Memory
+authors: Preston Rasmussen and Pavlo Paliychuk and Travis Beauvais and Jack Ryan and Daniel Chalef
+publish date: 2025
+citation_key: rasmussen2025zeptemporalknowledgegraph

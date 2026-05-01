@@ -1,0 +1,2 @@
+C. Conversation Feature Definition for Structure Selection
+C.1. Feature Overview We extract a compact set of interpretable interaction-level features to characterize the structural properties of the ongoing conversation. These features are designed to capture temporal dynamics, entity-centricity, and topic evolution patterns, which are indicative of suitable memory organizations.

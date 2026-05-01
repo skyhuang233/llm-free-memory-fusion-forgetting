@@ -1,0 +1,5 @@
+Profile Study
+We evaluate the effect of the consolidated user profile on PersonaMem-v2 (32k) ~\cite{b12}; results are not directly comparable across dataset versions due to differences in task setup and annotations. Table 4 shows that adding the User Profile to episodic evidence improves overall accuracy by 9.32 points over episodes-only (53.25 vs. 43.93), indicating that semantic consolidation provides complementary signal beyond episodic retrieval. We defer the full comparison against other memory systems on PersonaMem-v2 to Appendix A.4.
+
+Section references:
+[b12]: Bowen Jiang, Yuan Yuan, Maohao Shen, Zhuoqun Hao, Zhangchen Xu, Zichen Chen, Ziyi Liu, Anvesh Vijjini, Jiashu He, Hanchao Yu, Radha Poovendran, Gregory Wornell, Lyle Ungar, Dan Roth, Sihao Chen, Camillo Jose. Towards personalized intelligence via learning implicit user personas and agentic memory. (2025). Towards personalized intelligence via learning implicit user personas and agentic memory

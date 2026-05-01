@@ -1,0 +1,5 @@
+url: https://ar5iv.labs.arxiv.org/html/2601.18642
+title: FadeMem: Biologically-Inspired Forgetting for Efficient Agent Memory
+authors: Lei Wei and Xiao Peng and Xu Dong and Niantao Xie and Bin Wang
+publish date: 2026
+citation_key: Wei2026FadeMemBF

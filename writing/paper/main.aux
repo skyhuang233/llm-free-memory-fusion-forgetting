@@ -1,0 +1,120 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{Maharana2024EvaluatingVL}
+\citation{Wei2026FadeMemBF}
+\citation{Wei2026FadeMemBF,chhikara2025mem0buildingproductionreadyai}
+\providecommand \oddpage@label [2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\newlabel{sec:intro@cref}{{[section][1][]1}{[1][1][]1}{}{}{}}
+\citation{Packer2023MemGPTTL}
+\citation{Wei2026FadeMemBF}
+\citation{chhikara2025mem0buildingproductionreadyai}
+\citation{Li2026TiMemTM}
+\citation{Liu2026SimpleMemEL}
+\citation{Hu2026EverMemOSAS}
+\citation{Carbonell1998MMR}
+\citation{Gao2023RetrievalAugmentedGF}
+\citation{Gutierrez2024HippoRAGNI}
+\citation{Edge2024FromLT}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\newlabel{sec:related}{{2}{2}{Related Work}{section.2}{}}
+\newlabel{sec:related@cref}{{[section][2][]2}{[1][2][]2}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Memory Systems for Conversational Agents.}{2}{section*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Redundancy-Aware Selection in Information Retrieval.}{2}{section*.2}\protected@file@percent }
+\citation{Maharana2024EvaluatingVL}
+\citation{Tavakoli2025BeyondAM}
+\citation{Wei2026FadeMemBF,chhikara2025mem0buildingproductionreadyai}
+\citation{Reimers2019SentenceBERTSE}
+\@writefile{toc}{\contentsline {paragraph}{Retrieval-Augmented Generation.}{3}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Memory Benchmarks.}{3}{section*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method}{3}{section.3}\protected@file@percent }
+\newlabel{sec:method}{{3}{3}{Method}{section.3}{}}
+\newlabel{sec:method@cref}{{[section][3][]3}{[1][3][]3}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Problem Formulation}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}DFM-Fusion Pipeline}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stage 1: Sentence Segmentation.}{3}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stage 2: Near-Duplicate Removal.}{3}{section*.6}\protected@file@percent }
+\citation{Carbonell1998MMR}
+\citation{Maharana2024EvaluatingVL}
+\citation{Reimers2019SentenceBERTSE}
+\@writefile{toc}{\contentsline {paragraph}{Stage 3: MMR-Based Sentence Packing.}{4}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Stage 4: Coverage Verification.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Hyperparameter Selection}{4}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{4}{section.4}\protected@file@percent }
+\newlabel{sec:experiments}{{4}{4}{Experiments}{section.4}{}}
+\newlabel{sec:experiments@cref}{{[section][4][]4}{[1][4][]4}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Experimental Setup}{4}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Dataset.}{4}{section*.9}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comprehensive results on LoCoMo-10. Per-model rows show DFM-Fusion (DFM), LLM-Fusion (LLM), and No-Fusion (No) across all six question categories; $\Delta $ is DFM minus LLM on multi-hop F1; $p$ is the paired t-test $p$-value. The \textbf  {Average} row reports six-model means; bolded cells indicate the best-performing method per column. Ablation rows (\textit  {indented}) show DFM variant averages; \textit  {italicized} LLM and No values repeat the fixed baselines from the Average row (LLM-Fusion and No-Fusion are unaffected by DFM ablations); $\Delta ^\dagger $ compares the ablation to DFM-Fusion on multi-hop F1. DFM-Fusion eliminates all maintenance-time LLM calls: 69.13$\times $ average maintenance speedup, 11.74\% total-call reduction, 3.88\% cost savings. Cost figures use \texttt  {DeepSeek-V3.2} pricing (\$0.27/1M input, \$1.10/1M output); local Ollama models incur zero direct API cost.}}{5}{table.1}\protected@file@percent }
+\newlabel{tab:main_results}{{1}{5}{Comprehensive results on LoCoMo-10. Per-model rows show DFM-Fusion (DFM), LLM-Fusion (LLM), and No-Fusion (No) across all six question categories; $\Delta $ is DFM minus LLM on multi-hop F1; $p$ is the paired t-test $p$-value. The \textbf {Average} row reports six-model means; bolded cells indicate the best-performing method per column. Ablation rows (\textit {indented}) show DFM variant averages; \textit {italicized} LLM and No values repeat the fixed baselines from the Average row (LLM-Fusion and No-Fusion are unaffected by DFM ablations); $\Delta ^\dagger $ compares the ablation to DFM-Fusion on multi-hop F1. DFM-Fusion eliminates all maintenance-time LLM calls: 69.13$\times $ average maintenance speedup, 11.74\% total-call reduction, 3.88\% cost savings. Cost figures use \texttt {DeepSeek-V3.2} pricing (\$0.27/1M input, \$1.10/1M output); local Ollama models incur zero direct API cost}{table.1}{}}
+\newlabel{tab:main_results@cref}{{[table][1][]1}{[1][5][]5}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{Cross-model protocol.}{5}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistical tests.}{5}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Main Results}{5}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Accuracy results.}{5}{section*.12}\protected@file@percent }
+\citation{Reimers2019SentenceBERTSE}
+\@writefile{toc}{\contentsline {paragraph}{Retrieval and fusion diagnostics.}{6}{section*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Operational efficiency.}{6}{section*.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion and Limitations}{6}{section.5}\protected@file@percent }
+\newlabel{sec:discussion}{{5}{6}{Discussion and Limitations}{section.5}{}}
+\newlabel{sec:discussion@cref}{{[section][5][]5}{[1][6][]6}{}{}{}}
+\@writefile{toc}{\contentsline {paragraph}{No universal equivalence claim.}{6}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Benchmark scope.}{6}{section*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Serving-stack dependence.}{6}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Surface-biased preservation heuristics.}{6}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Fallback asymmetry with LLM-Fusion.}{6}{section*.19}\protected@file@percent }
+\citation{Reimers2019SentenceBERTSE}
+\citation{Reimers2019SentenceBERTSE}
+\citation{Reimers2019SentenceBERTSE}
+\@writefile{toc}{\contentsline {paragraph}{Embedding model sensitivity.}{7}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single-benchmark scope and benchmark generalization.}{7}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why gap recovery is no longer the right headline.}{7}{section*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{7}{section.6}\protected@file@percent }
+\newlabel{sec:conclusion}{{6}{7}{Conclusion}{section.6}{}}
+\newlabel{sec:conclusion@cref}{{[section][6][]6}{[1][7][]7}{}{}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Additional Results}{7}{appendix.A}\protected@file@percent }
+\newlabel{sec:appendix}{{A}{7}{Additional Results}{appendix.A}{}}
+\newlabel{sec:appendix@cref}{{[section][1][]A}{[1][7][]7}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.1}Per-model operational breakdown}{7}{subsection.A.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.2}Retrieval diagnostics}{7}{subsection.A.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.3}Fusion behavior}{7}{subsection.A.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.4}TOST outcomes}{7}{subsection.A.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.5}Targeted error analysis}{7}{subsection.A.5}\protected@file@percent }
+\bibdata{analemma}
+\bibcite{Carbonell1998MMR}{{1}{1998}{{Carbonell \& Goldstein}}{{Carbonell and Goldstein}}}
+\bibcite{chhikara2025mem0buildingproductionreadyai}{{2}{2025}{{Chhikara et~al.}}{{Chhikara, Khant, Aryan, Singh, and Yadav}}}
+\bibcite{Edge2024FromLT}{{3}{2024}{{Edge et~al.}}{{Edge, Trinh, Cheng, Bradley, Chao, Mody, Truitt, and Larson}}}
+\bibcite{Gao2023RetrievalAugmentedGF}{{4}{2023}{{Gao et~al.}}{{Gao, Xiong, Gao, Jia, Pan, Bi, Dai, Sun, Guo, Wang, and Wang}}}
+\bibcite{Gutierrez2024HippoRAGNI}{{5}{2024}{{Gutierrez et~al.}}{{Gutierrez, Shu, Gu, Yasunaga, and Su}}}
+\bibcite{Hu2026EverMemOSAS}{{6}{2026}{{Hu et~al.}}{{Hu, Gao, Zhou, Xu, Bai, Li, Zhang, Li, Zhang, Bing, and Deng}}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Per-model latency, call volume, and cost breakdown. Cost figures use \texttt  {DeepSeek-V3.2} pricing (\$0.27/1M input, \$1.10/1M output) applied to all LLM calls. Local Ollama answer models incur zero direct API cost; their cost figures reflect maintenance-call overhead only. DFM-Fusion cost is identical across all six models (zero fusion calls, same QA call count). Answer-generation cost estimated at 1,585 input + 30 output tokens per QA call.}}{8}{table.2}\protected@file@percent }
+\newlabel{tab:appendix_operational}{{2}{8}{Per-model latency, call volume, and cost breakdown. Cost figures use \texttt {DeepSeek-V3.2} pricing (\$0.27/1M input, \$1.10/1M output) applied to all LLM calls. Local Ollama answer models incur zero direct API cost; their cost figures reflect maintenance-call overhead only. DFM-Fusion cost is identical across all six models (zero fusion calls, same QA call count). Answer-generation cost estimated at 1,585 input + 30 output tokens per QA call}{table.2}{}}
+\newlabel{tab:appendix_operational@cref}{{[table][2][]2}{[1][7][]8}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Per-model retrieval quality diagnostics. Retrieval statistics depend solely on the memory pipeline and the shared Sentence-BERT encoder~\citep  {Reimers2019SentenceBERTSE}, not on the answer-generation model; identical or near-identical values across the six answer models are expected by design.}}{8}{table.3}\protected@file@percent }
+\newlabel{tab:appendix_retrieval}{{3}{8}{Per-model retrieval quality diagnostics. Retrieval statistics depend solely on the memory pipeline and the shared Sentence-BERT encoder~\citep {Reimers2019SentenceBERTSE}, not on the answer-generation model; identical or near-identical values across the six answer models are expected by design}{table.3}{}}
+\newlabel{tab:appendix_retrieval@cref}{{[table][3][]3}{[1][7][]8}{}{}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {A.6}DeepSeek-V3.2 single-model sanity check}{8}{subsection.A.6}\protected@file@percent }
+\bibcite{Li2026TiMemTM}{{7}{2026}{{Li et~al.}}{{Li, Yu, Ni, Zeng, Xu, Zhang, Li, Sang, Duan, Wang, Liu, and Tan}}}
+\bibcite{Liu2026SimpleMemEL}{{8}{2026}{{Liu et~al.}}{{Liu, Su, Xia, Han, Zheng, Xie, Ding, and Yao}}}
+\bibcite{Maharana2024EvaluatingVL}{{9}{2024}{{Maharana et~al.}}{{Maharana, Lee, Tulyakov, Bansal, Barbieri, and Fang}}}
+\bibcite{Packer2023MemGPTTL}{{10}{2023}{{Packer et~al.}}{{Packer, Fang, Patil, Lin, Wooders, and Gonzalez}}}
+\bibcite{Reimers2019SentenceBERTSE}{{11}{2019}{{Reimers \& Gurevych}}{{Reimers and Gurevych}}}
+\bibcite{Tavakoli2025BeyondAM}{{12}{2025}{{Tavakoli et~al.}}{{Tavakoli, Salemi, Ye, Abdalla, Zamani, and Mitchell}}}
+\bibcite{Wei2026FadeMemBF}{{13}{2026}{{Wei et~al.}}{{Wei, Peng, Dong, Xie, and Wang}}}
+\bibstyle{analemma}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Per-model DFM-Fusion behavior and coverage diagnostics. DFM-Fusion is fully deterministic; fusion behavior statistics are independent of the answer-generation model and identical across models sharing the same fusion-event history.}}{9}{table.4}\protected@file@percent }
+\newlabel{tab:appendix_fusion_behavior}{{4}{9}{Per-model DFM-Fusion behavior and coverage diagnostics. DFM-Fusion is fully deterministic; fusion behavior statistics are independent of the answer-generation model and identical across models sharing the same fusion-event history}{table.4}{}}
+\newlabel{tab:appendix_fusion_behavior@cref}{{[table][4][]4}{[1][7][]9}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Per-model TOST equivalence outcomes for DFM-Fusion vs.\ LLM-Fusion on multi-hop F1.}}{9}{table.5}\protected@file@percent }
+\newlabel{tab:appendix_tost}{{5}{9}{Per-model TOST equivalence outcomes for DFM-Fusion vs.\ LLM-Fusion on multi-hop F1}{table.5}{}}
+\newlabel{tab:appendix_tost@cref}{{[table][5][]5}{[1][7][]9}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Representative targeted error cases extracted from model-level analyses.}}{10}{table.6}\protected@file@percent }
+\newlabel{tab:appendix_error_cases}{{6}{10}{Representative targeted error cases extracted from model-level analyses}{table.6}{}}
+\newlabel{tab:appendix_error_cases@cref}{{[table][6][]6}{[1][8][]10}{}{}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces DeepSeek-V3.2 single-model sanity check (3 runs per condition, temperature=0). Reported as harness validation only.}}{10}{table.7}\protected@file@percent }
+\newlabel{tab:appendix_pilot}{{7}{10}{DeepSeek-V3.2 single-model sanity check (3 runs per condition, temperature=0). Reported as harness validation only}{table.7}{}}
+\newlabel{tab:appendix_pilot@cref}{{[table][7][]7}{[1][8][]10}{}{}{}}
+\gdef \@abspage@last{10}

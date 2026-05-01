@@ -1,0 +1,15 @@
+abstract.md
+1 Introduction.md
+2 Methodology.md
+  2.1 Dual-Layer Memory Architecture with Differential Forgetting.md
+  2.2 Biologically-Inspired Forgetting Curves.md
+  2.3 Memory Conflict Resolution.md
+  2.4 Adaptive Memory Fusion.md
+3 Experiments.md
+  3.1 Experimental Setup.md
+  3.2 Memory Retention and Forgetting Dynamics.md
+  3.3 Conflict Resolution Performance.md
+  3.4 Cross-Dataset Evaluation.md
+  3.5 Ablation Study.md
+4 Conclusion.md
+References.md

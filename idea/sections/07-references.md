@@ -1,0 +1,25 @@
+## References
+
+- [FadeMem: Biologically-Inspired Forgetting for Efficient Agent Memory](./references/FadeMem-Biologically-Inspired-Forgetting-for-Efficient-Agent-Memory/meta/meta_info.txt) - Wei et al., 2026
+- [Evaluating Very Long-Term Conversational Memory of LLM Agents (LoCoMo)](./references/Evaluating-Very-Long-Term-Conversational-Memory-of-LLM-Agents/meta/meta_info.txt) - Maharana et al., 2024
+- [Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory](./references/Mem0-Building-Production-Ready-AI-Agents-with-Scalable-Long-Term-Memory/meta/meta_info.txt) - Chhikara et al., 2025
+- [EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning](./references/EverMemOS-A-Self-Organizing-Memory-Operating-System-for-Structured-Long-Horizon-Reasoning/meta/meta_info.txt) - Hu et al., 2026
+- [Choosing How to Remember: Adaptive Memory Structures for LLM Agents](./references/Choosing-How-to-Remember-Adaptive-Memory-Structures-for-LLM-Agents/meta/meta_info.txt) - Lu et al., 2026
+- [SimpleMem: Efficient Lifelong Memory for LLM Agents](./references/SimpleMem-Efficient-Lifelong-Memory-for-LLM-Agents/meta/meta_info.txt) - Liu et al., 2026
+- [TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents](./references/TiMem-Temporal-Hierarchical-Memory-Consolidation-for-Long-Horizon-Conversational-Agents/meta/meta_info.txt) - Li et al., 2026
+- [MemWeaver: Weaving Hybrid Memories for Traceable Long-Horizon Agentic Reasoning](./references/MemWeaver-Weaving-Hybrid-Memories-for-Traceable-Long-Horizon-Agentic-Reasoning/meta/meta_info.txt) - Ye et al., 2026
+- [A Simple Yet Strong Baseline for Long-Term Conversational Memory of LLM Agents (EMem)](./references/A-Simple-Yet-Strong-Baseline-for-Long-Term-Conversational-Memory-of-LLM-Agents/meta/meta_info.txt) - Zhou & Han, 2025
+- [Zep: A Temporal Knowledge Graph Architecture for Agent Memory](./references/Zep-A-Temporal-Knowledge-Graph-Architecture-for-Agent-Memory/meta/meta_info.txt) - Rasmussen et al., 2025
+- [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172) - Liu et al., 2024
+- [Retrieval-Augmented Generation for Large Language Models: A Survey](https://arxiv.org/abs/2312.10997) - Gao et al., 2024
+- [GraphRAG](https://arxiv.org/abs/2404.16130) - Edge et al., 2024
+- [HippoRAG](https://arxiv.org/abs/2405.14831) - Gutiérrez et al., 2024
+- [Generative Agents](https://arxiv.org/abs/2304.03442) - Park et al., 2023
+- [MemoryBank](https://arxiv.org/abs/2305.10250) - Zhong et al., 2023
+- [A-Mem](https://arxiv.org/abs/2502.12110) - Xu et al., 2025
+- [Memory OS of AI Agent](https://arxiv.org/abs/2506.06326) - Kang et al., 2025
+- [SelfCheckGPT](https://arxiv.org/abs/2303.08896) - Manakul et al., 2023
+- [MemGPT](https://arxiv.org/abs/2310.08560) - Packer et al., 2023
+- [SGMem](https://arxiv.org/abs/2406.15939) - (Sentence graph memory), 2024
+- [ENGRAM](https://arxiv.org/abs/2409.15796) - (Memory orchestration), 2024
+- [Memory-R1](https://arxiv.org/abs/2502.04301) - (RL for memory operations), 2025

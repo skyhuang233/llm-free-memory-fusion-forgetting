@@ -1,0 +1,8 @@
+@Article{Hu2026EverMemOSAS,
+ author = {Chuanrui Hu and Xingze Gao and Zuyi Zhou and Dannong Xu and Yi Bai and Xintong Li and Hui Zhang and Tong Li and Chong Zhang and Lidong Bing and Yafeng Deng},
+ booktitle = {arXiv.org},
+ journal = {ArXiv},
+ title = {EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning},
+ volume = {abs/2601.02163},
+ year = {2026}
+}

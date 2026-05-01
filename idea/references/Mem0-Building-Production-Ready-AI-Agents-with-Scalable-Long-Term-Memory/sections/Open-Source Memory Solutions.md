@@ -1,0 +1,2 @@
+Open-Source Memory Solutions
+Our second category consists of promising open-source memory architectures such as LangMem2https://langchain-ai.github.io/langmem/ (Hot Path) that have demonstrated effectiveness in related conversational tasks but have not yet been evaluated on the LOCOMO dataset. By adapting these systems to our evaluation framework we broaden the comparative landscape and identify potential alternative approaches that may offer competitive performance. We initialized the LLM with gpt-4o-mini and used text-embedding-small-3 as the embedding model.

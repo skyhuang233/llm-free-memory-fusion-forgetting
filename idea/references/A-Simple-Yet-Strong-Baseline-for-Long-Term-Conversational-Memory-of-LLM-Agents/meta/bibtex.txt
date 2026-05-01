@@ -1,0 +1,9 @@
+@misc{zhou2025simplestrongbaselinelongterm,
+      title={A Simple Yet Strong Baseline for Long-Term Conversational Memory of LLM Agents}, 
+      author={Sizhe Zhou and Jiawei Han},
+      year={2025},
+      eprint={2511.17208},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2511.17208}, 
+}

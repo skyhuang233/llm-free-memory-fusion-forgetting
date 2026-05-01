@@ -1,0 +1,5 @@
+@Inproceedings{Ye2026MemWeaverWH,
+ author = {Juexiang Ye and Xue Li and Xinyu Yang and Chengkai Huang and Lanshun Nie and Lina Yao and Dechen Zhan},
+ title = {MemWeaver: Weaving Hybrid Memories for Traceable Long-Horizon Agentic Reasoning},
+ year = {2026}
+}

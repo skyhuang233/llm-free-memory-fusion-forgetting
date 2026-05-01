@@ -1,0 +1,68 @@
+\section{Experiments}
+\label{sec:experiments}
+
+We evaluate DFM-Fusion on LoCoMo to test whether deterministic fusion can replace LLM-guided fusion as the default memory-maintenance operator under a fixed retrieval and answer-generation pipeline.
+
+\subsection{Experimental Setup}
+
+\paragraph{Dataset.}
+We use LoCoMo-10~\citep{Maharana2024EvaluatingVL}, a subset of the LoCoMo benchmark containing 10 conversations with 1,986 QA pairs. Questions span five categories: multi-hop (282), single-hop (817), temporal (321), open-domain (96), and adversarial (446). Multi-hop F1 serves as our primary metric, as it requires integrating information across multiple memory entries and is most sensitive to fusion quality.
+
+\paragraph{Cross-model protocol.}
+The main empirical evaluation is a six-model family study. We run the same memory pipeline across six open-weight answer-generation models served locally via Ollama: \texttt{qwen25\_7b}, \texttt{qwen25\_14b}, \texttt{qwen3\_8b}, \texttt{llama31\_8b}, \texttt{llama32\_3b}, and \texttt{mistral\_7b}. The answer-generation LLM is the sole experimental variable; the memory pipeline (Sentence-BERT embeddings~\citep{Reimers2019SentenceBERTSE}, identical retrieval budgets, and DFM-Fusion or LLM-Fusion operator) is held constant across models. LLM-Fusion maintenance calls (fusion generation and preservation checking) always use \texttt{DeepSeek-V3.2} regardless of which local answer model runs, replicating FadeMem's API-based maintenance design. For each model we compare three conditions: (1)~\textbf{LLM-Fusion}: FadeMem-style fusion with additional \texttt{DeepSeek-V3.2} calls for fusion generation and preservation checking; (2)~\textbf{DFM-Fusion}: our deterministic fusion operator with no maintenance-time LLM calls; and (3)~\textbf{No-Fusion}: no memory merging. All conditions share identical retrieval budgets, scoring protocol, and memory infrastructure.
+
+An additional single-model pilot using \texttt{DeepSeek-V3.2} as the answer model (3 runs per condition, temperature=0) validated the harness and is reported in Appendix~\ref{sec:appendix} (Table~\ref{tab:appendix_pilot}) as a sanity check only; it is not part of the main results.
+
+\paragraph{Statistical tests.}
+We report mean$\pm$std over 3 runs per condition. Our primary paired comparison is DFM-Fusion vs.\ LLM-Fusion on per-question multi-hop F1 scores. We report mean differences, paired t-test $p$-values, and TOST equivalence outcomes with a pre-specified equivalence margin of $\pm 0.01$ absolute multi-hop F1. This margin corresponds to a practically negligible change relative to the observed No-Fusion to LLM-Fusion gaps on LoCoMo-10. The resulting evidence should be interpreted conservatively: only one model satisfies the configured TOST equivalence criterion, so our main claim is practical competitiveness rather than universal statistical equivalence.
+
+\subsection{Main Results}
+
+\begin{table}[t]
+\centering
+\caption{Comprehensive results on LoCoMo-10. Per-model rows show DFM-Fusion (DFM), LLM-Fusion (LLM), and No-Fusion (No) across all six question categories; $\Delta$ is DFM minus LLM on multi-hop F1; $p$ is the paired t-test $p$-value. The \textbf{Average} row reports six-model means; bolded cells indicate the best-performing method per column. Ablation rows (\textit{indented}) show DFM variant averages; \textit{italicized} LLM and No values repeat the fixed baselines from the Average row (LLM-Fusion and No-Fusion are unaffected by DFM ablations); $\Delta^\dagger$ compares the ablation to DFM-Fusion on multi-hop F1. DFM-Fusion eliminates all maintenance-time LLM calls: 69.13$\times$ average maintenance speedup, 11.74\% total-call reduction, 3.88\% cost savings. Cost figures use \texttt{DeepSeek-V3.2} pricing (\$0.27/1M input, \$1.10/1M output); local Ollama models incur zero direct API cost.}
+\label{tab:main_results}
+\renewcommand{\arraystretch}{1.35}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{l rrr rrr rrr rrr rrr rrr rr}
+\toprule
+& \multicolumn{3}{c}{Multi-hop F1}
+& \multicolumn{3}{c}{Overall F1}
+& \multicolumn{3}{c}{Temporal F1}
+& \multicolumn{3}{c}{Open-domain F1}
+& \multicolumn{3}{c}{Single-hop F1}
+& \multicolumn{3}{c}{Adversarial F1} & & \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+\cmidrule(lr){11-13}\cmidrule(lr){14-16}\cmidrule(lr){17-19}
+Model / Method & DFM & LLM & No & DFM & LLM & No & DFM & LLM & No & DFM & LLM & No & DFM & LLM & No & DFM & LLM & No & $\Delta$ & $p$ \\
+\midrule
+Qwen2.5-7B  & 0.1832 & 0.1839 & 0.1769 & 0.3703 & 0.3709 & 0.3644 & 0.0536 & 0.0588 & 0.0536 & 0.0792 & 0.0785 & 0.0739 & 0.3269 & 0.3238 & 0.3133 & 0.8610 & 0.8655 & 0.8655 & $-$0.0007 & 0.9142 \\
+Qwen2.5-14B & 0.1836 & 0.1833 & 0.1697 & \textbf{0.3714} & 0.3728 & 0.3682 & 0.0505 & 0.0531 & 0.0538 & 0.1216 & 0.1217 & 0.1170 & 0.2830 & 0.2841 & 0.2817 & 0.9417 & 0.9439 & 0.9372 & $+$0.0003 & 0.9510 \\
+Qwen3-8B    & \textbf{0.2157} & 0.2057 & 0.1992 & 0.3683 & 0.3663 & 0.3643 & 0.0575 & 0.0619 & 0.0610 & 0.1229 & 0.1274 & 0.1394 & 0.3334 & 0.3317 & 0.3262 & 0.8072 & 0.8034 & 0.8072 & $+$0.0100 & 0.1493 \\
+Llama3.1-8B & 0.1909 & 0.1881 & 0.1825 & 0.3674 & 0.3650 & 0.3611 & 0.0566 & 0.0560 & 0.0580 & 0.1030 & 0.1092 & 0.1108 & 0.3137 & 0.3079 & 0.3085 & 0.8610 & 0.8617 & 0.8453 & $+$0.0028 & 0.5896 \\
+Llama3.2-3B & 0.1795 & 0.1737 & 0.1780 & 0.3348 & 0.3321 & 0.3337 & 0.0536 & 0.0534 & 0.0494 & 0.0941 & 0.0983 & 0.0838 & 0.2676 & 0.2640 & 0.2694 & 0.8139 & 0.8117 & 0.8117 & $+$0.0058 & 0.0698 \\
+Mistral-7B  & 0.1731 & 0.1699 & 0.1644 & 0.3383 & 0.3395 & 0.3354 & 0.0549 & 0.0596 & 0.0599 & 0.1046 & 0.1047 & 0.1015 & 0.2907 & 0.2867 & 0.2852 & 0.7870 & 0.7982 & 0.7870 & $+$0.0032 & 0.5526 \\
+\midrule
+\textbf{Average} & \textbf{0.1877} & 0.1841 & 0.1785 & \textbf{0.3584} & 0.3577 & 0.3545 & 0.0545 & \textbf{0.0571} & 0.0560 & 0.1042 & \textbf{0.1066} & 0.1044 & \textbf{0.3026} & 0.2997 & 0.2974 & 0.8453 & \textbf{0.8474} & 0.8423 & \textbf{$+$0.0036} & --- \\
+\midrule
+\quad DFM w/o budget truncation & 0.1875 & \textit{0.1841} & \textit{0.1785} & 0.3584 & \textit{0.3577} & \textit{0.3545} & 0.0545 & \textit{0.0571} & \textit{0.0560} & 0.1042 & \textit{0.1066} & \textit{0.1044} & 0.3025 & \textit{0.2997} & \textit{0.2974} & 0.8453 & \textit{0.8474} & \textit{0.8423} & $-$0.0002$^\dagger$ & --- \\
+\quad DFM w/ basic coverage     & 0.1871 & \textit{0.1841} & \textit{0.1785} & 0.3580 & \textit{0.3577} & \textit{0.3545} & 0.0545 & \textit{0.0571} & \textit{0.0560} & 0.1037 & \textit{0.1066} & \textit{0.1044} & 0.3018 & \textit{0.2997} & \textit{0.2974} & 0.8453 & \textit{0.8474} & \textit{0.8423} & $-$0.0006$^\dagger$ & --- \\
+\quad DFM w/o coverage gate     & 0.1867 & \textit{0.1841} & \textit{0.1785} & 0.3581 & \textit{0.3577} & \textit{0.3545} & 0.0557 & \textit{0.0571} & \textit{0.0560} & 0.1042 & \textit{0.1066} & \textit{0.1044} & 0.3008 & \textit{0.2997} & \textit{0.2974} & 0.8468 & \textit{0.8474} & \textit{0.8423} & $-$0.0010$^\dagger$ & --- \\
+\quad DFM w/ mean embedding     & 0.1826 & \textit{0.1841} & \textit{0.1785} & 0.3577 & \textit{0.3577} & \textit{0.3545} & 0.0579 & \textit{0.0571} & \textit{0.0560} & 0.1035 & \textit{0.1066} & \textit{0.1044} & 0.3009 & \textit{0.2997} & \textit{0.2974} & 0.8460 & \textit{0.8474} & \textit{0.8423} & $-$0.0051$^\dagger$ & --- \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\paragraph{Accuracy results.}
+Table~\ref{tab:main_results} shows that DFM-Fusion improves over LLM-Fusion on multi-hop F1 in 5/6 models; the only exception is Qwen2.5-7B, where the gap is negligible ($-0.0007$). The strongest individual result is Qwen3-8B, where DFM-Fusion reaches 0.2157, outperforming LLM-Fusion by $+0.0100$. Averaged across the six families, DFM-Fusion leads by $+0.0036$ on multi-hop F1. The key driver of this advantage is verbatim evidence packing within the retrieval budget, not LLM rewriting --- a mechanism that operates identically across model families, which is why the directional result holds consistently despite the heterogeneity of the six answer models.
+
+We observed that the per-category breakdown makes the scope of this advantage precise. DFM-Fusion leads on multi-hop and single-hop categories, where success rewards redundancy-aware packing of verbatim evidence. LLM-Fusion retains small advantages on temporal, open-domain, and adversarial categories, where success requires paraphrastic synthesis or coarse temporal normalization --- capabilities that verbatim packing cannot replicate. To illustrate where this boundary lies: on a temporal question such as ``When did Caroline join a new activist group?'', DFM-Fusion retrieved topically relevant evidence but could not normalize it into the expected relative temporal expression, returning no date; LLM-Fusion produced a coarse but partially correct relative date. This failure mode is consistent with the average-row temporal gap (DFM 0.0545 vs.\ LLM 0.0571) and marks exactly the category where generative rewriting retains value.
+
+Among the ablation variants, DFM w/ mean embedding is the weakest on multi-hop F1 ($-0.0051$ vs.\ DFM-Fusion) while showing the highest temporal F1 (0.0579). We observed that this reversal is consistent with averaged embeddings over-smoothing local structure: mean embeddings retrieve broader, more topically diffuse evidence that occasionally matches temporal queries but fails on the precise multi-hop integration that exact-text embeddings support. The remaining three ablations stay within 0.0010 of DFM-Fusion on multi-hop F1 and differ negligibly across all categories.
+
+\paragraph{Retrieval and fusion diagnostics.}
+Retrieval-side diagnostics support the same direction. Averaged across six models, DFM-Fusion yields slightly stronger evidence recall / hit rate / MRR (0.3667 / 0.4105 / 0.2067) than LLM-Fusion (0.3662 / 0.4098 / 0.2064) and No-Fusion (0.3628 / 0.4070 / 0.2045). Each DFM fusion event packs on average 9.65 selected sentences into 106.64 tokens, with mean coverage of 0.9189 for capitalized entities, 0.8278 for TF-IDF salient terms, 0.8862 for stemmed $n$-grams, and 1.0 for both dates and numeric tokens. Retrieval diagnostics and fusion behavior statistics (Tables~\ref{tab:appendix_retrieval}--\ref{tab:appendix_fusion_behavior}) are identical or near-identical across the six answer models by design: these quantities depend only on the memory pipeline and the shared Sentence-BERT encoder~\citep{Reimers2019SentenceBERTSE}, not on which local model generates answers.
+
+\paragraph{Operational efficiency.}
+DFM-Fusion eliminates all maintenance-time LLM calls, replacing them with CPU-only deterministic operations. This yields a 69.13$\times$ average maintenance speedup, an 11.74\% reduction in total API calls, and a 3.88\% reduction in cost --- at no accuracy cost on the primary metric. Per-model operational breakdowns, retrieval diagnostics, paired tests, TOST outcomes, and targeted error analysis appear in the appendix.

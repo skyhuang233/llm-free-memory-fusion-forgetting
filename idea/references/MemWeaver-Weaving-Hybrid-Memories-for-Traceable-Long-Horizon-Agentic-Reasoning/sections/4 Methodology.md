@@ -1,0 +1,2 @@
+4 Methodology
+This section presents MemWeaver a tri-layer long-term memory system that integrates Graph Memory (GM) Experience Memory (ExpM) and Passage Memory (PM). Each component plays a complementary role during reasoning: GM supports compositional relational facts ExpM captures reusable abstractions distilled from repeated interactions and PM preserves verbatim evidence for robust recall.

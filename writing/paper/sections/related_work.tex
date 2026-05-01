@@ -1,0 +1,25 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Memory Systems for Conversational Agents.}
+Long-horizon conversational agents require persistent memory to maintain coherence across extended interactions.
+Earlier work established the core architectural patterns: MemGPT~\citep{Packer2023MemGPTTL} pioneered hierarchical storage tiers through an operating-system metaphor for LLM context management, while FadeMem~\citep{Wei2026FadeMemBF} introduced biologically-inspired forgetting with LLM-guided fusion that consolidates related memories as less relevant ones decay.
+More recent systems extend this foundation through alternative organizational schemes: Mem0~\citep{chhikara2025mem0buildingproductionreadyai} captures relational structure via graph-based representations, TiMem~\citep{Li2026TiMemTM} organizes memories through temporal hierarchies, SimpleMem~\citep{Liu2026SimpleMemEL} achieves efficiency through semantic compression, and EverMemOS~\citep{Hu2026EverMemOSAS} models engram-inspired memory lifecycles.
+However, across all of these systems, memory consolidation invariably requires additional LLM calls --- for rewriting, merging, or preservation verification --- a dependency whose necessity has never been empirically isolated from the simpler effect of redundancy control under a fixed retrieval budget.
+
+\paragraph{Redundancy-Aware Selection in Information Retrieval.}
+The algorithmic foundations for deterministic redundancy control are well established in information retrieval.
+Maximal Marginal Relevance~\citep{Carbonell1998MMR} explicitly trades off relevance and diversity during document ranking, and near-duplicate removal via embedding similarity is a standard preprocessing step in retrieval pipelines.
+However, these techniques operate at query time --- selecting among already-stored documents to populate a retrieval result --- rather than at maintenance time, where the task is to consolidate redundant memory entries into compact representations before retrieval occurs.
+Whether their principles transfer directly to memory maintenance, replacing generative rewriting, has not been tested.
+
+\paragraph{Retrieval-Augmented Generation.}
+RAG approaches~\citep{Gao2023RetrievalAugmentedGF} retrieve relevant context to augment LLM generation.
+HippoRAG~\citep{Gutierrez2024HippoRAGNI} draws inspiration from hippocampal indexing theory, using knowledge graphs and personalized PageRank for retrieval.
+GraphRAG~\citep{Edge2024FromLT} leverages entity knowledge graphs with community summaries for query-focused summarization.
+While these methods advance retrieval quality, they assume a static document store and do not address the memory consolidation problem where redundant entries must be continuously merged while preserving information fidelity.
+
+\paragraph{Memory Benchmarks.}
+LoCoMo~\citep{Maharana2024EvaluatingVL} evaluates long-term conversational memory through multi-hop question answering over 300-turn dialogues spanning 35 sessions.
+BEAM~\citep{Tavakoli2025BeyondAM} extends evaluation to million-token contexts with diverse memory probing tasks.
+These benchmarks reveal that even long-context LLMs struggle with extended dialogues, motivating the need for effective memory management --- yet neither directly evaluates whether LLM-guided memory consolidation is necessary, or whether equivalent performance can be achieved through deterministic maintenance operators.

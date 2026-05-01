@@ -1,0 +1,9 @@
+BASELINES
+We compare FluxMem against a range of state-of-theart memory systems, including: LangMem (LangChain, 2025): A language model with built-in memory capabilities. Mem0 ~\cite{b5}: A flat retrieval-based memory system. ZEP ~\cite{b30}: A time-aware graph memory system. MemoryOS ~\cite{b19}: An OS-inspired memory management system. A-Mem (Xu et al., 2025b): An explicit structured memory system using linked notes. O-mem (Wang et al., 2025): A graph-based memory organization method. MemR 3 ~\cite{b10}: A closed-loop controller that dynamically alternates between retrieval, reflection, and answering to optimize evidence coverage for LLM agents. MEMOS (Li et al., 2025b): A redundancy-filtering memory system for edge settings. Hip-poRAG 2 ~\cite{b12}: A framework that uses knowledge graphs for efficient retrieval.
+
+Section references:
+[b10]: X Du, L Li, D Zhang, L Song. Memory retrieval via reflective reasoning for llm agents. (2025). Memory retrieval via reflective reasoning for llm agents
+[b12]: B Gutiérrez, Y Shu, W Qi, S Zhou, Y Su. From rag to memory: Non-parametric continual learning for large language models. (2025). Forty-second International Conference on Machine Learning
+[b19]: J Kang, M Ji, Z Zhao, T Bai. Memory os of ai agent. (2025). Memory os of ai agent
+[b30]: P Rasmussen, P Paliychuk, T Beauvais, J Ryan, D Chalef. Zep: a temporal knowledge graph architecture for agent memory. (2025). Zep: a temporal knowledge graph architecture for agent memory
+[b5]: P Chhikara, D Khant, S Aryan, T Singh, D Yadav. Mem0: Building production-ready ai agents with scalable long-term memory. (2025). Mem0: Building production-ready ai agents with scalable long-term memory

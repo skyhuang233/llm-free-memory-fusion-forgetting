@@ -1,0 +1,13 @@
+Parametric Memory Approaches.
+Parametric Memory Approaches.
+ Context window expansion methods such as Gemini~\cite{bib.bib26} LongLoRA~\cite{bib.bib28} and RoPE scaling~\cite{bib.bib27} alleviate sequence length limits but incur quadratic computational costs and attention dilution~\cite{bib.bib39}. Parametric optimization approaches including MemLoRA~\cite{bib.bib40} HMT~\cite{bib.bib42} and TRIM-KV~\cite{bib.bib29} compress memory through adapter distillation or learned token retention. However they remain constrained by architectural context windows and do not support persistent cross-session memory.
+
+
+## Section References
+[bib.bib26] G. T. et al. (2024) Gemini 1.5: unlocking multimodal understanding across millions of tokens of context. External Links: 2403.05530 Link [https://arxiv.org/abs/2403.05530] Cited by: §1[ref_id]S1.p2.1 §2[ref_id]S2.SS0.SSS0.Px1.p1.1.
+[bib.bib28] Y. Chen S. Qian H. Tang X. Lai Z. Liu S. Han and J. Jia (2024b) LongLoRA: efficient fine-tuning of long-context large language models. External Links: 2309.12307 Link [https://arxiv.org/abs/2309.12307] Cited by: §2[ref_id]S2.SS0.SSS0.Px1.p1.1.
+[bib.bib27] S. Chen S. Wong L. Chen and Y. Tian (2023) Extending context window of large language models via positional interpolation. External Links: 2306.15595 Link [https://arxiv.org/abs/2306.15595] Cited by: §1[ref_id]S1.p2.1 §2[ref_id]S2.SS0.SSS0.Px1.p1.1.
+[bib.bib39] N. F. Liu K. Lin J. Hewitt A. Paranjape M. Bevilacqua F. Petroni and P. Liang (2024) Lost in the middle: how language models use long contexts. Transactions of the Association for Computational Linguistics 12 pp. 157–173. External Links: Link [https://aclanthology.org/2024.tacl-1.9/] Document [https://dx.doi.org/10.1162/tacl%5Fa%5F00638] Cited by: §2[ref_id]S2.SS0.SSS0.Px1.p1.1.
+[bib.bib40] M. Bini O. Bohdal U. Michieli Z. Akata M. Ozay and T. Ceritli (2025) MemLoRA: distilling expert adapters for on-device memory systems. External Links: 2512.04763 Link [https://arxiv.org/abs/2512.04763] Cited by: §1[ref_id]S1.p2.1 §2[ref_id]S2.SS0.SSS0.Px1.p1.1.
+[bib.bib42] Z. He Z. Qin N. Prakriya and Y. Sun (2025) HMT: hierarchical memory transformer for efficient long context language processing. External Links: 2405.06067 Link [https://arxiv.org/abs/2405.06067] Cited by: §2[ref_id]S2.SS0.SSS0.Px1.p1.1.
+[bib.bib29] N. Bui S. Sharma S. Lamba S. Mishra and R. Ying (2025) Cache what lasts: token retention for memory-bounded kv cache in llms. External Links: 2512.03324 Link [https://arxiv.org/abs/2512.03324] Cited by: §1[ref_id]S1.p2.1 §2[ref_id]S2.SS0.SSS0.Px1.p1.1.

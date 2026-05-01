@@ -1,0 +1,26 @@
+abstract.md
+1 Introduction.md
+2 Related Work.md
+  2.1 Memory Architectures for LLM Agents.md
+  2.2 Structured and Graph-Based Memory.md
+3 Methodology.md
+  3.1 Problem Setting.md
+  3.2 Event-Centric Memory Graph.md
+    EDUs vs. relation triples..md
+    EDU extraction..md
+    Event-argument extraction..md
+    Graph construction..md
+  3.3 Graph-Based Retrieval and QA (EMem-G).md
+    Dense retrieval of EDUs and arguments..md
+    Recall-oriented LLM filtering..md
+    Seed initialization..md
+    Personalized PageRank..md
+    Selecting EDUs and QA..md
+  3.4 Lightweight Retrieval (EMem).md
+4 Experiment.md
+  4.1 Experimental Setup.md
+  4.2 Main Results.md
+  4.3 Graph Statistics.md
+  4.4 Ablation Study.md
+  4.5 Retrieval Hyperparameters Anaysis.md
+5 Conclusion.md

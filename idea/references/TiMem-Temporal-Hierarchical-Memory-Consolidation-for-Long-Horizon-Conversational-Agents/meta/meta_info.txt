@@ -1,0 +1,5 @@
+url: https://ar5iv.labs.arxiv.org/html/2601.02845
+title: TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents
+authors: Kai Li and Xuanqing Yu and Ziyi Ni and Yi Zeng and Yao Xu and Zheqing Zhang and Xin Li and Jitao Sang and Xiaogang Duan and Xuelei Wang and Chengbao Liu and Jie Tan
+publish date: 2026
+citation_key: Li2026TiMemTM

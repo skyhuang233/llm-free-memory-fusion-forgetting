@@ -1,0 +1,100 @@
+\begin{thebibliography}{13}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Carbonell \& Goldstein(1998)Carbonell and Goldstein]{Carbonell1998MMR}
+Jaime Carbonell and Jade Goldstein.
+\newblock The use of mmr, diversity-based reranking for reordering documents
+  and producing summaries.
+\newblock In \emph{Proceedings of the 21st Annual International ACM SIGIR
+  Conference on Research and Development in Information Retrieval}, pp.\
+  335--336, 1998.
+
+\bibitem[Chhikara et~al.(2025)Chhikara, Khant, Aryan, Singh, and
+  Yadav]{chhikara2025mem0buildingproductionreadyai}
+Prateek Chhikara, Dev Khant, Saket Aryan, Taranjeet Singh, and Deshraj Yadav.
+\newblock Mem0: Building production-ready ai agents with scalable long-term
+  memory, 2025.
+
+\bibitem[Edge et~al.(2024)Edge, Trinh, Cheng, Bradley, Chao, Mody, Truitt, and
+  Larson]{Edge2024FromLT}
+Darren Edge, Ha~Trinh, Newman Cheng, Joshua Bradley, Alex Chao, Apurva~N. Mody,
+  Steven Truitt, and Jonathan Larson.
+\newblock From local to global: A graph rag approach to query-focused
+  summarization.
+\newblock \emph{ArXiv}, abs/2404.16130, 2024.
+
+\bibitem[Gao et~al.(2023)Gao, Xiong, Gao, Jia, Pan, Bi, Dai, Sun, Guo, Wang,
+  and Wang]{Gao2023RetrievalAugmentedGF}
+Yunfan Gao, Yun Xiong, Xinyu Gao, Kangxiang Jia, Jinliu Pan, Yuxi Bi, Yi~Dai,
+  Jiawei Sun, Qianyu Guo, Meng Wang, and Haofen Wang.
+\newblock Retrieval-augmented generation for large language models: A survey.
+\newblock \emph{ArXiv}, abs/2312.10997, 2023.
+
+\bibitem[Gutierrez et~al.(2024)Gutierrez, Shu, Gu, Yasunaga, and
+  Su]{Gutierrez2024HippoRAGNI}
+Bernal~Jimenez Gutierrez, Yiheng Shu, Yu~Gu, Michihiro Yasunaga, and Yu~Su.
+\newblock Hipporag: Neurobiologically inspired long-term memory for large
+  language models.
+\newblock \emph{ArXiv}, abs/2405.14831, 2024.
+
+\bibitem[Hu et~al.(2026)Hu, Gao, Zhou, Xu, Bai, Li, Zhang, Li, Zhang, Bing, and
+  Deng]{Hu2026EverMemOSAS}
+Chuanrui Hu, Xingze Gao, Zuyi Zhou, Dannong Xu, Yi~Bai, Xintong Li, Hui Zhang,
+  Tong Li, Chong Zhang, Lidong Bing, and Yafeng Deng.
+\newblock Evermemos: A self-organizing memory operating system for structured
+  long-horizon reasoning.
+\newblock \emph{ArXiv}, abs/2601.02163, 2026.
+
+\bibitem[Li et~al.(2026)Li, Yu, Ni, Zeng, Xu, Zhang, Li, Sang, Duan, Wang, Liu,
+  and Tan]{Li2026TiMemTM}
+Kai Li, Xuanqing Yu, Ziyi Ni, Yi~Zeng, Yao Xu, Zheqing Zhang, Xin Li, Jitao
+  Sang, Xiaogang Duan, Xuelei Wang, Chengbao Liu, and Jie Tan.
+\newblock Timem: Temporal-hierarchical memory consolidation for long-horizon
+  conversational agents.
+\newblock \emph{ArXiv}, abs/2601.02845, 2026.
+
+\bibitem[Liu et~al.(2026)Liu, Su, Xia, Han, Zheng, Xie, Ding, and
+  Yao]{Liu2026SimpleMemEL}
+Jiaqi Liu, Yaofeng Su, Peng Xia, Siwei Han, Zeyu Zheng, Cihang Xie, Mingyu
+  Ding, and Huaxiu Yao.
+\newblock Simplemem: Efficient lifelong memory for llm agents.
+\newblock 2026.
+
+\bibitem[Maharana et~al.(2024)Maharana, Lee, Tulyakov, Bansal, Barbieri, and
+  Fang]{Maharana2024EvaluatingVL}
+Adyasha Maharana, Dong-Ho Lee, S.~Tulyakov, Mohit Bansal, Francesco Barbieri,
+  and Yuwei Fang.
+\newblock Evaluating very long-term conversational memory of llm agents.
+\newblock \emph{ArXiv}, abs/2402.17753, 2024.
+
+\bibitem[Packer et~al.(2023)Packer, Fang, Patil, Lin, Wooders, and
+  Gonzalez]{Packer2023MemGPTTL}
+Charles Packer, Vivian Fang, Shishir~G. Patil, Kevin Lin, Sarah Wooders, and
+  Joseph Gonzalez.
+\newblock Memgpt: Towards llms as operating systems.
+\newblock \emph{ArXiv}, abs/2310.08560, 2023.
+
+\bibitem[Reimers \& Gurevych(2019)Reimers and
+  Gurevych]{Reimers2019SentenceBERTSE}
+Nils Reimers and Iryna Gurevych.
+\newblock Sentence-bert: Sentence embeddings using siamese bert-networks.
+\newblock \emph{ArXiv}, abs/1908.10084, 2019.
+
+\bibitem[Tavakoli et~al.(2025)Tavakoli, Salemi, Ye, Abdalla, Zamani, and
+  Mitchell]{Tavakoli2025BeyondAM}
+Mohammad Tavakoli, Alireza Salemi, Carrie Ye, Mohamed Abdalla, Hamed Zamani,
+  and J.~R. Mitchell.
+\newblock Beyond a million tokens: Benchmarking and enhancing long-term memory
+  in llms.
+\newblock \emph{ArXiv}, abs/2510.27246, 2025.
+
+\bibitem[Wei et~al.(2026)Wei, Peng, Dong, Xie, and Wang]{Wei2026FadeMemBF}
+Lei Wei, Xiao Peng, Xu~Dong, Niantao Xie, and Bin Wang.
+\newblock Fademem: Biologically-inspired forgetting for efficient agent memory.
+\newblock 2026.
+
+\end{thebibliography}

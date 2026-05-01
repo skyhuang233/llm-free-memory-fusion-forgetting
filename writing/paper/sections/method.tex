@@ -1,0 +1,53 @@
+\section{Method}
+\label{sec:method}
+
+We propose DFM-Fusion (Deterministic FadeMem-Fusion), a fully deterministic replacement for LLM-guided memory fusion in long-horizon conversational agents. Our approach maintains the memory architecture and retrieval mechanisms of existing systems while eliminating all LLM calls from the fusion operator.
+
+\subsection{Problem Formulation}
+
+Memory fusion addresses the challenge of consolidating redundant information in conversational memory stores. Given a cluster of semantically similar memory entries $\mathcal{M} = \{m_1, m_2, \ldots, m_k\}$ identified through temporal-semantic clustering, the fusion task produces a single consolidated entry $m_f$ that preserves essential information within a token budget $B$.
+
+Existing approaches~\citep{Wei2026FadeMemBF,chhikara2025mem0buildingproductionreadyai} employ LLMs to rewrite and merge memories, then use an additional LLM call to verify that the rewrite preserved information. As discussed in Section~\ref{sec:intro}, this introduces deployment challenges related to cost, determinism, and auditability. Our approach addresses these by preserving verbatim spans while enforcing explicit token budgets.
+
+\paragraph{Memory strength.}
+We follow the FadeMem-style strength dynamics used by the implementation. Each new memory starts with strength $v_i=1.0$ in the short-term layer. At time $t$, its importance is
+\begin{equation}
+I_i(t)=\alpha r_i(t)+\beta \frac{a_i}{1+a_i}+\gamma \exp(-\delta \Delta t_i),
+\end{equation}
+where $r_i(t)$ is cosine relevance to the current session context when available, $a_i$ is access frequency, and $\Delta t_i$ is age in days. Strength decays as
+\begin{equation}
+v_i(t)=v_i(t_0)\exp\left[-\lambda_\text{base}\exp(-\mu I_i(t))(\Delta t_i)^{\rho}\right],
+\end{equation}
+with $\rho=0.8$ for long-term memories and $\rho=1.2$ for short-term memories. Access consolidation increases strength by
+\begin{equation}
+v_i \leftarrow v_i + d_v(1-v_i)\exp(-c_i/N),
+\end{equation}
+where $c_i$ is access count. A fused memory receives strength
+\begin{equation}
+v_f=\min\left(1,\max_i v_i+\epsilon \operatorname{Var}(\{v_i\})\right),
+\end{equation}
+and is inserted into the long-term layer. In our experiments $\alpha=0.4$, $\beta=0.3$, $\gamma=0.3$, $\delta=0.1$, $\mu=2.0$, $d_v=0.15$, $N=5$, and $\epsilon=0.1$.
+
+\subsection{DFM-Fusion Pipeline}
+
+Given a cluster $\mathcal{M}$ exceeding a minimum size threshold, DFM-Fusion produces fused text $s_f$ through four deterministic stages. More specifically: (1) sentence segmentation breaks each memory entry into sentence-level units to enable fine-grained selection; (2) near-duplicate removal eliminates redundant sentences via embedding similarity; (3) MMR-based sentence packing selects a diverse, high-strength subset within the token budget; and (4) coverage verification confirms that salient evidence is preserved, with a fallback guarantee if it is not. No LLM is invoked at any stage.
+
+\paragraph{Stage 1: Sentence Segmentation.}
+Each memory entry $m_i$ is split into individual sentences using rule-based tokenization. However, applying fusion directly at the memory-entry level would truncate content mid-sentence when the token budget is enforced, fragmenting the verbatim spans that downstream retrieval and F1 evaluation depend on. Sentence-level segmentation ensures that every selected unit is a complete, citable span.
+
+\paragraph{Stage 2: Near-Duplicate Removal.}
+We compute pairwise cosine similarity between sentence embeddings using Sentence-BERT~\citep{Reimers2019SentenceBERTSE} (384-dim). However, the raw sentence pool from a cluster frequently contains near-identical reformulations of the same fact --- variants that would consume token budget without adding evidence coverage. Sentences with cosine similarity exceeding threshold $\theta_{\text{dup}} = 0.85$ are treated as near-duplicates; we retain the sentence from the memory with higher strength $v_i(t)$, using a more recent timestamp as a tie-breaker. The same Sentence-BERT encoder is reused throughout the pipeline --- for deduplication, for MMR scoring, and for computing the retrieval embedding of the final fused entry --- eliminating any inconsistency between maintenance-time and retrieval-time representations.
+
+\paragraph{Stage 3: MMR-Based Sentence Packing.}
+From the deduplicated sentence pool, we select sentences using a strength-aware variant of Maximal Marginal Relevance~\citep{Carbonell1998MMR} with diversity parameter $\lambda = 0.7$. However, relevance scoring alone would fill the budget with the highest-strength sentences from the dominant source memory, crowding out lower-strength entries that may contain complementary evidence. The MMR objective balances source-memory strength against redundancy with already-selected sentences:
+\begin{equation}
+\text{MMR}(s_i) = \lambda \cdot \hat{v}(s_i) - (1-\lambda) \cdot \max_{s_j \in S} \cos(s_i, s_j)
+\end{equation}
+where $\hat{v}(s_i) \in [0,1]$ is the normalized strength of the source memory for sentence $s_i$, and $S$ is the set of already-selected sentences. We greedily pick $\arg\max_{s_i \in R \setminus S} \text{MMR}(s_i)$ until adding the next sentence would exceed the token budget $B_{\text{fuse}} = 768$ tokens. Selected sentences are sorted by source-memory timestamp before concatenation. The fused memory embedding is computed from the actual fused text $s_f$, not by averaging constituent embeddings; this ensures retrieval operates on a representation that accurately reflects the consolidated content, and was validated by our ablation (Table~\ref{tab:main_results}, lower block).
+
+\paragraph{Stage 4: Coverage Verification.}
+To confirm information preservation without an LLM, we implement a deterministic coverage check. We extract salient evidence from the original cluster: numbers and date-like expressions, capitalized entities, top-$K$ TF-IDF weighted tokens ($K=20$), and stemmed $n$-gram coverage features in the enriched configuration. Coverage recall is the fraction of these tokens appearing in $s_f$. It should be noted that a coverage gate that simply rejects low-recall fusions would leave clusters unmerged, breaking the consolidation guarantee. To address this, when recall falls below threshold $\theta_{\text{cov}} = 0.85$, we fall back to concatenating the highest-strength original memories within the budget in strength-descending order, so a fused result is always emitted rather than leaving the cluster unmerged.
+
+\subsection{Hyperparameter Selection}
+
+FadeMem decay parameters ($\theta_\text{fusion}=0.75$, $T_\text{window}=10$, $\lambda_\text{base}=0.1$) are adopted directly from the original system. DFM-specific fusion parameters were initialized to interpretable defaults ($\theta_\text{dup}=0.90$, $B_\text{fuse}=512$, $\lambda=0.5$, $K=10$, $\theta_\text{cov}=0.80$) and revised once, in a single diagnostic pass that identified four concrete issues: an embedding representation bug (weighted-average rather than fused-text encoding), a suboptimal text separator, an over-aggressive deduplication threshold, and an undersized fusion budget. This pass was conducted on the full LoCoMo-10 evaluation set without a held-out split. While the changes are individually motivated by interpretable diagnostics rather than metric search, we acknowledge that we cannot fully rule out mild overfitting to the 10 evaluation conversations; the six-model cross-family replication (Section~\ref{sec:experiments}) provides indirect stability evidence.

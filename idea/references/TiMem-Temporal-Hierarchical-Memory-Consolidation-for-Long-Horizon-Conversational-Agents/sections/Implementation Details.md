@@ -1,0 +1,3 @@
+Implementation Details
+Implementation Details
+ For fair comparison all methods use the same LLM and embedding setup: gpt-4o-mini-2024-07-18 for generation and recall Qwen3-Embedding-0.6B for embeddings and recall budget k\!=\!20. TiMem uses \lambda\!=\!0.9 and w_{i}\!=\!3. We use the LLM-as-a-Judge (LLJ) where an LLM judges answer correctness; we report accuracy along with memory tokens and recall latency for efficiency. Details are in Appendix B[ref_id]A2.

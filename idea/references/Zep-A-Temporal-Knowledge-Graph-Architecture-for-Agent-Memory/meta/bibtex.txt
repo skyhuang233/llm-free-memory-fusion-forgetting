@@ -1,0 +1,9 @@
+@misc{rasmussen2025zeptemporalknowledgegraph,
+      title={Zep: A Temporal Knowledge Graph Architecture for Agent Memory}, 
+      author={Preston Rasmussen and Pavlo Paliychuk and Travis Beauvais and Jack Ryan and Daniel Chalef},
+      year={2025},
+      eprint={2501.13956},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2501.13956}, 
+}

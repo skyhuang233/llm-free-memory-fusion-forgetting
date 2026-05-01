@@ -1,0 +1,8 @@
+@Article{Maharana2024EvaluatingVL,
+ author = {Adyasha Maharana and Dong-Ho Lee and S. Tulyakov and Mohit Bansal and Francesco Barbieri and Yuwei Fang},
+ booktitle = {Annual Meeting of the Association for Computational Linguistics},
+ journal = {ArXiv},
+ title = {Evaluating Very Long-Term Conversational Memory of LLM Agents},
+ volume = {abs/2402.17753},
+ year = {2024}
+}

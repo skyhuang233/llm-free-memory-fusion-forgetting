@@ -1,0 +1,5 @@
+url: https://arxiv.org/pdf/2601.02553
+title: SimpleMem: Efficient Lifelong Memory for LLM Agents
+authors: Jiaqi Liu and Yaofeng Su and Peng Xia and Siwei Han and Zeyu Zheng and Cihang Xie and Mingyu Ding and Huaxiu Yao
+publish date: 2026
+citation_key: Liu2026SimpleMemEL

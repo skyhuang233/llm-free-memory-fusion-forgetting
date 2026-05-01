@@ -1,0 +1,11 @@
+\section{Conclusion}
+\label{sec:conclusion}
+
+The central finding of this paper is that the gain attributed to LLM-guided memory fusion in fact-centric long-horizon conversational QA comes almost entirely from deduplicating and packing verbatim evidence into a fixed retrieval budget --- not from the LLM's linguistic rewriting ability.
+DFM-Fusion, a fully deterministic four-stage operator requiring zero maintenance-time LLM calls, recovers this gain across a heterogeneous family of six open-weight models, confirming that effective memory consolidation can be made entirely free of API dependencies in the maintenance loop.
+For practitioners, this means that persistent, consolidating memory is deployable in local, cost-sensitive, and reproducibility-constrained settings without any sacrifice in multi-hop reasoning performance.
+
+At the same time, our results do not support a blanket equivalence claim.
+DFM-Fusion's advantage is specific to fact-centric QA, where the evaluation rewards verbatim evidence retrieval; LLM-Fusion retains advantages on temporal normalization and open-domain preference synthesis, where paraphrastic rewriting adds genuine value.
+Future work should extend this investigation to benchmarks requiring abstraction and conflict reconciliation, and explore hybrid operators that apply deterministic packing by default while invoking selective LLM rewriting only when coverage verification signals a genuine synthesis gap.
+Limitations of the current study --- including single-benchmark scope, surface-biased preservation heuristics, and the absence of a held-out validation split --- are discussed in Section~\ref{sec:discussion}.

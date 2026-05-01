@@ -1,0 +1,10 @@
+Established LOCOMO Benchmarks
+We first establish a comparative foundation by evaluating previously benchmarked methods on the LOCOMO dataset. These include five established approaches: LoCoMo ~\cite{bib.bib14} ReadAgent ~\cite{bib.bib12} MemoryBank ~\cite{bib.bib30} MemGPT ~\cite{bib.bib17} and A-Mem ~\cite{bib.bib25}. These established benchmarks not only provide direct comparison points with published results but also represent the evolution of conversational memory architectures across different algorithmic paradigms. For our evaluation we select the metrics where gpt-4o-mini was used for the evaluation. More details about these benchmarks are mentioned in Appendix C[ref_id]A3.
+
+
+## Section References
+[bib.bib14] Maharana et al. (2024) Adyasha Maharana Dong-Ho Lee Sergey Tulyakov Mohit Bansal Francesco Barbieri and Yuwei Fang. Evaluating very long-term conversational memory of llm agents. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) pages 13851–13870 2024.
+[bib.bib12] Lee et al. (2024) Kuang-Huei Lee Xinyun Chen Hiroki Furuta John Canny and Ian Fischer. A human-inspired reading agent with gist memory of very long contexts. In International Conference on Machine Learning pages 26396–26415. PMLR 2024.
+[bib.bib30] Zhong et al. (2024) Wanjun Zhong Lianghong Guo Qiqi Gao He Ye and Yanlin Wang. Memorybank: Enhancing large language models with long-term memory. In Proceedings of the AAAI Conference on Artificial Intelligence volume 38 pages 19724–19731 2024.
+[bib.bib17] Packer et al. (2023) Charles Packer Vivian Fang Shishir_G Patil Kevin Lin Sarah Wooders and Joseph_E Gonzalez. Memgpt: Towards llms as operating systems. 2023.
+[bib.bib25] Xu et al. (2025) Wujiang Xu Zujie Liang Kai Mei Hang Gao Juntao Tan and Yongfeng Zhang. A-mem: Agentic memory for llm agents. arXiv preprint arXiv:2502.12110 2025.

@@ -1,0 +1,11 @@
+3 Memory Retrieval
+The memory retrieval system in Zep provides powerful complex and highly configurable functionality. At a high level the Zep graph search API implements a function f:S\to S that accepts a text-string query \alpha\in S as input and returns a text-string context \beta\in S as output. The output \beta contains formatted data from nodes and edges required for an LLM agent to generate an accurate response to query \alpha. The process f(\alpha)\to\beta comprises three distinct steps:
+ •
+ Search (\varphi): The process begins by identifying candidate nodes and edges potentially containing relevant information. While Zep employs multiple distinct search methods the overall search function can be represented as \varphi:S\to\{E}_{s}^{n}\times\{N}_{s}^{n}\times\{N}_{c}^{n}. Thus \varphi transforms a query into a 3-tuple containing lists of semantic edges entity nodes and community nodes—the three graph types containing relevant textual information.
+ •
+ Reranker (\rho): The second step reorders search results. A reranker function or model accepts a list of search results and produces a reordered version of those results: \rho:{\varphi(\alpha)...}\to\{E}_{s}^{n}\times\{N}_{s}^{n}\times\{N}_{c}^{n}.
+ •
+ Constructor (\chi): The final step the constructor transforms the relevant nodes and edges into text context: \chi:\{E}_{s}^{n}\times\{N}_{s}^{n}\times\{N}c^{n}\to S. For each e_{i}\in\{E}s \chi returns the fact and t\text{valid}t\text{invalid} fields; for each n_{i}\in\{N}_{s} the name and summary fields; and for each n_{i}\in\{N}_{c} the summary field.
+ With these definitions established we can express f as a composition of these three components: f(\alpha)=\chi(\rho(\varphi(\alpha)))=\beta.
+ Sample context string template:
+ FACTS and ENTITIES represent relevant context to the current conversation. These are the most relevant facts and their valid date ranges. If the fact is about an event the event takes place during this time. format: FACT (Date range: from - to) <FACTS> {facts} </FACTS> These are the most relevant entities ENTITY_NAME: entity summary <ENTITIES> {entities} </ENTITIES>

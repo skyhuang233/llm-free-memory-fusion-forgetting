@@ -1,0 +1,29 @@
+\section{Discussion and Limitations}
+\label{sec:discussion}
+
+\paragraph{No universal equivalence claim.}
+The revised evidence does not support a blanket statement that DFM-Fusion is statistically equivalent to LLM-Fusion everywhere. Under the configured TOST test, only Qwen2.5-14B satisfies equivalence. The correct claim is therefore practical rather than absolute: DFM-Fusion is competitive or better on the primary multi-hop metric across a heterogeneous model family, with consistent operational savings.
+
+\paragraph{Benchmark scope.}
+All results are on LoCoMo, which is an appropriate benchmark for fact-centric long-horizon conversational QA but not a sufficient basis for claiming that deterministic fusion replaces LLM-guided consolidation in every setting. The six-model cross-family replication provides evidence of robustness across answer-model families, but not across benchmarks.
+
+\paragraph{Serving-stack dependence.}
+Quality results are model-level, but latency and maintenance numbers are partly serving-stack dependent. The exact speedup factors reported here should therefore be interpreted as deployment-relevant evidence rather than universal constants. What appears robust is the directional result: eliminating maintenance-time fusion calls substantially simplifies and accelerates the memory-maintenance loop.
+
+\paragraph{Surface-biased preservation heuristics.}
+Our deterministic preservation check is based on surface proxies rather than deep semantic entailment. The enriched configuration captures capitalized entities, dates and numerics, TF-IDF salient tokens, and stemmed $n$-gram coverage, yet it remains English- and formatting-dependent. This leaves open failure modes involving implicit paraphrases, noisy conversational logs, or multilingual settings.
+
+\paragraph{Fallback asymmetry with LLM-Fusion.}
+DFM-Fusion's coverage gate, when triggered, falls back to concatenating the highest-strength originals within budget — a fused memory is always produced. LLM-Fusion has no equivalent fallback: a failed preservation check discards the entire cluster, leaving memories unmerged. In practice this asymmetry is moot for the reported experiments (LLM-Fusion rejected 0/113 clusters across all six models), but it means DFM-Fusion is more conservative at the preservation gate while still guaranteeing a consolidation result.
+
+\paragraph{Embedding model sensitivity.}
+All reported experiments use Sentence-BERT~\citep{Reimers2019SentenceBERTSE} for both sentence deduplication and retrieval. Cross-encoder sensitivity was not part of the main result. We provide runnable reviewer-study configurations for E5 and BGE-style sentence encoders, but treat those as sensitivity checks rather than a new headline claim.
+
+\paragraph{Single-benchmark scope and benchmark generalization.}
+All results are on LoCoMo, which is appropriate for fact-centric long-horizon conversational QA. Tasks requiring abstraction, preference synthesis, or explicit reconciliation of conflicting evidence may benefit more from generative maintenance operators, as the targeted error analysis already shows (temporal normalization, open-domain preference synthesis). Evaluation on additional benchmarks such as LongMemEval is an important next step.
+
+\paragraph{Query-time redundancy control.}
+The main paper compares maintenance-time fusion operators. It does not yet fully disentangle maintenance-time consolidation from query-time redundancy control. To address this directly, we implemented additional reviewer-study baselines that apply query-time MMR and query-time deduplication without maintenance fusion under the same retrieval budget. These baselines test whether the observed gains come from persistent memory consolidation or simply from diversity-aware retrieval at inference time.
+
+\paragraph{Why gap recovery is no longer the right headline.}
+In the earlier single-setting draft, gap recovery was a convenient scalar because the ordering between No-Fusion and LLM-Fusion was clean. In the six-model family this is less stable; for example, Llama3.2-3B places No-Fusion slightly above LLM-Fusion on multi-hop F1. For this reason, we emphasize direct DFM--LLM deltas, model-count wins (5/6), and cross-method averages rather than using gap recovery as the primary summary statistic.

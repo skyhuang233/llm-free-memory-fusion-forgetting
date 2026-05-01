@@ -1,0 +1,18 @@
+2 Knowledge Graph Construction
+In Zep memory is powered by a temporally-aware dynamic knowledge graph \{G}=(\{N}\{E}\phi) where \{N} represents nodes \{E} represents edges and \phi:\{E}\to\{N}\times\{N} represents a formal incidence function. This graph comprises three hierarchical tiers of subgraphs: an episode subgraph a semantic entity subgraph and a community subgraph.
+ •
+ Episode Subgraph \{G}_{e}: Episodic nodes (episodes) n_{i}\in\{N}_{e} contain raw input data in the form of messages text or JSON. Episodes serve as a non-lossy data store from which semantic entities and relations are extracted. Episodic edges e_{i}\in\{E}_{e}\subseteq\phi^{*}(\{N}_{e}\times\{N}_{s}) connect episodes to their referenced semantic entities.
+ •
+ Semantic Entity Subgraph \{G}_{s}: The semantic entity subgraph builds upon the episode subgraph. Entity nodes (entities) n_{i}\in\{N}_{s} represent entities extracted from episodes and resolved with existing graph entities. Entity edges (semantic edges) e_{i}\in\{E}_{s}\subseteq\phi^{*}(\{N}_{s}\times\{N}_{s}) represent relationships between entities extracted from episodes.
+ •
+ Community Subgraph \{G}_{c}: The community subgraph forms the highest level of Zep’s knowledge graph. Community nodes (communities) n_{i}\in\{N}_{c} represent clusters of strongly connected entities. Communities contain high-level summarizations of these clusters and represent a more comprehensive interconnected view of \{G}_{s}’s structure. Community edges e_{i}\in\{E}_{c}\subseteq\phi^{*}(\{N}_{c}\times\{N}_{s}) connect communities to their entity members.
+ The dual storage of both raw episodic data and derived semantic entity information mirrors psychological models of human memory. These models distinguish between episodic memory which represents distinct events and semantic memory which captures associations between concepts and their meanings ~\cite{bib.bib8}. This approach enables LLM agents using Zep to develop more sophisticated and nuanced memory structures that better align with our understanding of human memory systems. Knowledge graphs provide an effective medium for representing these memory structures and our implementation of distinct episodic and semantic subgraphs draws from similar approaches in AriGraph ~\cite{bib.bib9}.
+ Our use of community nodes to represent high-level structures and domain concepts builds upon work from GraphRAG ~\cite{bib.bib4} enabling a more comprehensive global understanding of the domain. The resulting hierarchical organization—from episodes to facts to entities to communities—extends existing hierarchical RAG strategies ~\cite{bib.bib10}~\cite{bib.bib11}.
+
+
+## Section References
+[bib.bib8] [8] Wong Gonzalez and Daniela. The relationship between semantic and episodic memory: Exploring the effect of semantic neighbourhood density on episodic memory. PhD thesis University of Winsor 2018.
+[bib.bib9] [9] Petr Anokhin Nikita Semenov Artyom Sorokin Dmitry Evseev Mikhail Burtsev and Evgeny Burnaev. Arigraph: Learning knowledge graph world models with episodic memory for llm agents 2024.
+[bib.bib4] [4] Darren Edge Ha Trinh Newman Cheng Joshua Bradley Alex Chao Apurva Mody Steven Truitt and Jonathan Larson. From local to global: A graph rag approach to query-focused summarization 2024.
+[bib.bib10] [10] Xinyue Chen Pengyu Gao Jiangjiang Song and Xiaoyang Tan. Hiqa: A hierarchical contextual augmentation rag for multi-documents qa 2024.
+[bib.bib11] [11] Krish Goel and Mahek Chandak. Hiro: Hierarchical information retrieval optimization 2024.

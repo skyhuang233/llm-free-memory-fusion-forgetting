@@ -1,0 +1,5 @@
+@Inproceedings{Wei2026FadeMemBF,
+ author = {Lei Wei and Xiao Peng and Xu Dong and Niantao Xie and Bin Wang},
+ title = {FadeMem: Biologically-Inspired Forgetting for Efficient Agent Memory},
+ year = {2026}
+}

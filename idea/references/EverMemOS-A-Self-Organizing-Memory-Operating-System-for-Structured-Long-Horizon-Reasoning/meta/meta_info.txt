@@ -1,0 +1,5 @@
+url: https://arxiv.org/pdf/2601.02163
+title: EverMemOS: A Self-Organizing Memory Operating System for Structured Long-Horizon Reasoning
+authors: Chuanrui Hu and Xingze Gao and Zuyi Zhou and Dannong Xu and Yi Bai and Xintong Li and Hui Zhang and Tong Li and Chong Zhang and Lidong Bing and Yafeng Deng
+publish date: 2026
+citation_key: Hu2026EverMemOSAS

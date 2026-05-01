@@ -1,0 +1,2 @@
+Event-argument extraction.
+For each EDU e\in\{E} we invoke a second LLM g_{\text{ARG}} that treats e as a single event and returns an event type t(e) and a set of role–argument pairs \{(r_{k}a_{k})\}_{k=1}^{K_{e}}. We collect all unique argument strings into a global argument set \{A}. Each argument a\in\{A} is associated with a node-level embedding h_{\text{arg}}(a). We do not enforce a fixed ontology of roles; the usage of r_{k} is not explored in our framework while arguments themselves become nodes in the memory graph.

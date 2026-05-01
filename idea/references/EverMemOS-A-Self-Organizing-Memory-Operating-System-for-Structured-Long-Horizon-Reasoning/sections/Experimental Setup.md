@@ -1,0 +1,7 @@
+Experimental Setup
+Benchmarks We evaluate memory-augmented reasoning on LoCoMo and LongMemEval. Lo-CoMo contains 1,540 questions over 10 ultra-long dialogues (∼9K tokens each), spanning single-hop, multi-hop, and temporal questions. LongMemEval (S-setting, ∼115k tokens per conversation) evaluates 500 questions requiring full-history parsing across core capabilities (e.g., updates and abstention). We additionally evaluate user profiling on PersonaMem-v2. Baselines We compare EverMemOS against state-of-the-art memory systems: Zep ~\cite{b24}, Mem0 ~\cite{b5}, MemOS (Li et al., 2025), MemoryOS ~\cite{b14}, and MemUfoot_0[foot_0] . Fair comparison: We standardize the answer-generation backbone across methods while keeping each baseline's official memory configuration unchanged; for Long-MemEval, we report baseline scores from the official MemOS leaderboard. Full settings are provided in Appendix A.1.
+
+Section references:
+[b14]: Jiazheng Kang, Mingming Ji, Zhe Zhao, Ting Bai. Memory os of ai agent. (2025). Memory os of ai agent
+[b24]: Preston Rasmussen, Pavlo Paliychuk, Travis Beauvais, Jack Ryan, Daniel Chalef. Zep: A temporal knowledge graph architecture for agent memory. (2025). Zep: A temporal knowledge graph architecture for agent memory
+[b5]: Prateek Chhikara, Dev Khant. Saket Aryan, Taranjeet Singh, and Deshraj Yadav. (2025). Mem0: Building production-ready ai agents with scalable long-term memory

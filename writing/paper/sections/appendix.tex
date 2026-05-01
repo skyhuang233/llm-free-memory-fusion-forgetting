@@ -1,0 +1,132 @@
+\section{Additional Results}
+\label{sec:appendix}
+
+\subsection{Per-model operational breakdown}
+
+\begin{table}[h]
+\centering
+\caption{Per-model latency, call volume, and cost breakdown. Cost figures use \texttt{DeepSeek-V3.2} pricing (\$0.27/1M input, \$1.10/1M output) applied to all LLM calls. Local Ollama answer models incur zero direct API cost; their cost figures reflect maintenance-call overhead only. DFM-Fusion cost is identical across all six models (zero fusion calls, same QA call count). Answer-generation cost estimated at 1,585 input + 30 output tokens per QA call.}
+\label{tab:appendix_operational}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Model & LLM calls & DFM calls & LLM fusion calls & LLM maint. & DFM maint. & LLM total & DFM total & LLM cost & DFM cost \\
+\midrule
+Qwen2.5-7B  & 2212 & 1986 & 226 & 332.6 & 5.5 & 458.2 & 272.2 & 0.948 & 0.916 \\
+Qwen2.5-14B & 2292 & 1986 & 306 & 635.0 & 5.7 & 1018.4 & 705.3 & 0.960 & 0.916 \\
+Qwen3-8B    & 2212 & 1986 & 226 & 423.0 & 9.5 & 618.2 & 384.2 & 0.948 & 0.916 \\
+Llama3.1-8B & 2264 & 1986 & 278 & 473.3 & 4.3 & 893.8 & 637.2 & 0.955 & 0.916 \\
+Llama3.2-3B & 2280 & 1986 & 294 & 393.4 & 7.7 & 618.2 & 456.9 & 0.957 & 0.916 \\
+Mistral-7B  & 2244 & 1986 & 258 & 296.8 & 7.6 & 695.7 & 542.0 & 0.952 & 0.916 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Retrieval diagnostics}
+
+\begin{table}[h]
+\centering
+\caption{Per-model retrieval quality diagnostics. Retrieval statistics depend solely on the memory pipeline and the shared Sentence-BERT encoder~\citep{Reimers2019SentenceBERTSE}, not on the answer-generation model; identical or near-identical values across the six answer models are expected by design.}
+\label{tab:appendix_retrieval}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Model & DFM Rec. & LLM Rec. & No Rec. & DFM Hit & LLM Hit & No Hit & DFM MRR & LLM MRR & No MRR \\
+\midrule
+Qwen2.5-7B  & 0.3667 & 0.3657 & 0.3628 & 0.4105 & 0.4093 & 0.4070 & 0.2067 & 0.2063 & 0.2045 \\
+Qwen2.5-14B & 0.3667 & 0.3667 & 0.3628 & 0.4105 & 0.4103 & 0.4070 & 0.2067 & 0.2067 & 0.2045 \\
+Qwen3-8B    & 0.3667 & 0.3657 & 0.3628 & 0.4105 & 0.4093 & 0.4070 & 0.2067 & 0.2063 & 0.2045 \\
+Llama3.1-8B & 0.3667 & 0.3676 & 0.3628 & 0.4105 & 0.4112 & 0.4070 & 0.2067 & 0.2066 & 0.2045 \\
+Llama3.2-3B & 0.3667 & 0.3657 & 0.3628 & 0.4105 & 0.4093 & 0.4070 & 0.2067 & 0.2064 & 0.2045 \\
+Mistral-7B  & 0.3667 & 0.3657 & 0.3628 & 0.4105 & 0.4093 & 0.4070 & 0.2067 & 0.2063 & 0.2045 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Fusion behavior}
+
+\begin{table}[h]
+\centering
+\caption{Per-model DFM-Fusion behavior and coverage diagnostics. DFM-Fusion is fully deterministic; fusion behavior statistics are independent of the answer-generation model and identical across models sharing the same fusion-event history.}
+\label{tab:appendix_fusion_behavior}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{lrrrrrrrrr}
+\toprule
+Model & Cluster & Selected & Tokens & Fallback & Cap. & TF-IDF & Stem & Date & Num. \\
+\midrule
+Qwen2.5-7B  & 3.4592 & 9.6735 & 106.8878 & 46 & 0.9189 & 0.8301 & 0.8852 & 1.0000 & 1.0000 \\
+Qwen2.5-14B & 3.4592 & 9.6735 & 106.8878 & 46 & 0.9189 & 0.8301 & 0.8852 & 1.0000 & 1.0000 \\
+Qwen3-8B    & 3.4490 & 9.6224 & 106.3878 & 44 & 0.9189 & 0.8255 & 0.8872 & 1.0000 & 1.0000 \\
+Llama3.1-8B & 3.4592 & 9.6735 & 106.8878 & 46 & 0.9189 & 0.8301 & 0.8852 & 1.0000 & 1.0000 \\
+Llama3.2-3B & 3.4490 & 9.6224 & 106.3878 & 44 & 0.9189 & 0.8255 & 0.8872 & 1.0000 & 1.0000 \\
+Mistral-7B  & 3.4490 & 9.6224 & 106.3878 & 44 & 0.9189 & 0.8255 & 0.8872 & 1.0000 & 1.0000 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{TOST outcomes}
+
+\begin{table}[h]
+\centering
+\caption{Per-model TOST equivalence outcomes for DFM-Fusion vs.\ LLM-Fusion on multi-hop F1.}
+\label{tab:appendix_tost}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{lrrl}
+\toprule
+Model & DFM--LLM delta & $p$-value & TOST equivalent \\
+\midrule
+Qwen2.5-7B  & -0.0007 & 0.9142 & false \\
+Qwen2.5-14B & +0.0003 & 0.9510 & true \\
+Qwen3-8B    & +0.0100 & 0.1493 & false \\
+Llama3.1-8B & +0.0028 & 0.5896 & false \\
+Llama3.2-3B & +0.0058 & 0.0698 & false \\
+Mistral-7B  & +0.0032 & 0.5526 & false \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{Targeted error analysis}
+
+Across the inspected model logs, DFM-Fusion underperforms LLM-Fusion in two recurring ways. The dominant failure mode is temporal retrieval miss: the retrieved evidence is either absent or incomplete, after which LLM-Fusion sometimes still answers with a coarse relative date such as ``last Tuesday'' or ``last week.'' A second, smaller failure mode appears in open-domain questions that require paraphrastic synthesis rather than verbatim evidence packing. These patterns match the category-level averages in Table~\ref{tab:main_results} (lower block), where LLM-Fusion retains small advantages on temporal and open-domain questions.
+
+\begin{table}[h]
+\centering
+\caption{Representative targeted error cases extracted from model-level analyses.}
+\label{tab:appendix_error_cases}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{p{0.16\textwidth}p{0.17\textwidth}p{0.27\textwidth}p{0.32\textwidth}}
+\toprule
+Model & Failure mode & Representative question & Interpretation \\
+\midrule
+Qwen2.5-7B  & answer generation mismatch & Which pet did Jolene adopt first, Susie or Seraphim? & Retrieved evidence was partial, and DFM answered ``Not mentioned'' while LLM-Fusion returned the correct short answer. \\
+Qwen3-8B    & temporal retrieval miss & When did Caroline join a new activist group? & DFM returned no date after a retrieval miss, while LLM-Fusion produced a coarse but partially correct relative date. \\
+Qwen3-8B    & temporal normalization & When did Evan meet his future wife? & DFM preserved topical evidence (Canada trip) but failed to normalize it into the expected relative temporal expression. \\
+Llama3.1-8B & paraphrase or synthesis & Which type of vacation would Evan prefer, city walking tours or camping outdoors? & The open-domain answer requires synthesizing preference evidence into a short decision, a setting where LLM-Fusion still has an advantage. \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\subsection{DeepSeek-V3.2 single-model sanity check}
+
+Before running the six-model family study, we validated the harness using \texttt{DeepSeek-V3.2} (API, temperature=0) as the answer model, with 3 independent runs per condition. These results confirmed the directional ordering (DFM-Fusion $>$ No-Fusion, DFM-Fusion $\approx$ LLM-Fusion) and are included only as a harness sanity check; the main empirical basis of the paper is the six-model local-model evaluation in Section~\ref{sec:experiments}.
+
+\begin{table}[h]
+\centering
+\caption{DeepSeek-V3.2 single-model sanity check (3 runs per condition, temperature=0). Reported as harness validation only.}
+\label{tab:appendix_pilot}
+\begin{tabular}{lcc}
+\toprule
+Setting & Multi-hop F1 & Overall F1 \\
+\midrule
+LLM-Fusion & 0.1863 $\pm$ 0.0021 & 0.3805 $\pm$ 0.0004 \\
+DFM-Fusion & 0.1872 $\pm$ 0.0034 & 0.3795 $\pm$ 0.0012 \\
+No-Fusion & 0.1710 $\pm$ 0.0009 & 0.3750 $\pm$ 0.0011 \\
+\bottomrule
+\end{tabular}
+\end{table}
+

@@ -1,0 +1,40 @@
+abstract.md
+1 Introduction.md
+2 Related Work.md
+  Parametric Memory Approaches..md
+  External Memory Management..md
+3 Methodology.md
+  3.1 Temporal Memory Tree.md
+    Implementation.md
+  3.2 Memory Consolidation.md
+    3.2.1 Memory Consolidator.md
+    3.2.2 Stratified Scheduling.md
+  3.3 Memory Recall.md
+    3.3.1 Recall Planner.md
+    3.3.2 Hierarchical Recall.md
+    3.3.3 Recall Gating.md
+    3.3.4 Recall Pipeline.md
+4 Experiments.md
+  4.1 Experimental Setup.md
+    Datasets.md
+    Baselines.md
+    Implementation Details.md
+  4.2 Main Results.md
+    4.2.1 Results on LoCoMo.md
+    4.2.2 Results on LongMemEval-S.md
+  4.3 Ablation Studies.md
+    4.3.1 Planner and Recall Gating.md
+    4.3.2 Hierarchical Architecture.md
+  4.4 Memory Manifold Analysis.md
+  4.5 Recall Efficiency Analysis.md
+  4.6 Parameter Studies.md
+  4.7 Case Study.md
+  4.8 Discussion.md
+5 Conclusion.md
+6 Limitations.md
+  LLM Middleware Performance.md
+  Structured Representation.md
+  Forgetting Mechanism.md
+  Temporal Parameterization.md
+7 Ethics Statement.md
+References.md

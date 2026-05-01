@@ -1,0 +1,2 @@
+Personalized PageRank.
+Let T be the column-stochastic transition matrix derived from G (e.g. uniform over neighbors). We compute a Personalized PageRank vector \pi=\{PPR}(G\{s})\;\triangleq\;(1-\alpha)\{s}+\alpha T^{\top}\pi with a fixed damping factor \alpha\in(01) using a small number of power iterations. The resulting \pi(v) scores reflect how strongly each node is connected to the query seeds under random walks that repeatedly return to \{s}.

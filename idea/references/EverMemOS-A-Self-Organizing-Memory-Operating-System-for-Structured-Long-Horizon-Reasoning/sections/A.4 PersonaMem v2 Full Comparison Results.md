@@ -1,0 +1,5 @@
+A.4 PersonaMem v2: Full Comparison Results
+Table 9 reports the full comparison on PersonaMem v2 (32k) ~\cite{b12} (2,447 questions across 9 scenarios). The Profile row indicates whether a memory system provides a profile-like component (not necessarily named "Profile") that summarizes stable user information (e.g., MemOS maintains explicit vs. implicit preferences). For methods with such a component (✓), we generate answers using the retrieved memories plus the system's profilelike component; for methods without it (✗), we generate answers using the retrieved memories only. EverMemOS achieves the best overall accuracy (53.25%), outperforming the strongest baseline (MemOS, 50.72%) by 2.53 points.
+
+Section references:
+[b12]: Bowen Jiang, Yuan Yuan, Maohao Shen, Zhuoqun Hao, Zhangchen Xu, Zichen Chen, Ziyi Liu, Anvesh Vijjini, Jiashu He, Hanchao Yu, Radha Poovendran, Gregory Wornell, Lyle Ungar, Dan Roth, Sihao Chen, Camillo Jose. Towards personalized intelligence via learning implicit user personas and agentic memory. (2025). Towards personalized intelligence via learning implicit user personas and agentic memory

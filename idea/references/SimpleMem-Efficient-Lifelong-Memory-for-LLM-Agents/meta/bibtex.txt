@@ -1,0 +1,5 @@
+@Inproceedings{Liu2026SimpleMemEL,
+ author = {Jiaqi Liu and Yaofeng Su and Peng Xia and Siwei Han and Zeyu Zheng and Cihang Xie and Mingyu Ding and Huaxiu Yao},
+ title = {SimpleMem: Efficient Lifelong Memory for LLM Agents},
+ year = {2026}
+}

@@ -1,0 +1,79 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{analemma,times}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+
+% For theorems and such
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+% Custom
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage[capitalize,noabbrev]{cleveref}
+\usepackage{xspace}
+\usepackage{pifont}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% THEOREMS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{assumption}[theorem]{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\graphicspath{{figures/}} % To reference your generated figures, name the PNGs directly.
+
+\title{Deterministic Memory Fusion for Long-Horizon Conversational QA: Cross-Model Evidence Beyond LLM-Guided Fusion}
+
+\author{}
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+\analemmafinalcopy % Camera-ready version (non-anonymous)
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+To maintain factual coherence across long conversational sessions, memory-augmented agents must continuously consolidate redundant dialogue fragments into compact, retrievable representations --- a process known as memory fusion that accounts for the dominant share of system performance, with its removal collapsing multi-hop F1 by over 53\%. However, fusion universally relies on additional LLM calls at maintenance time, a dependency whose necessity has never been empirically tested. We ask a precise question: is the fusion gain driven by the LLM's linguistic rewriting, or by the simpler effect of deduplicating and packing verbatim evidence into a fixed retrieval budget? To answer it, we propose DFM-Fusion, a fully deterministic operator requiring zero maintenance-time LLM calls. More concretely, DFM-Fusion applies four sequential stages --- sentence segmentation, near-duplicate removal, MMR-based sentence packing, and deterministic coverage verification --- to consolidate memory clusters without any generative rewriting. Key to DFM-Fusion's design is the recognition that verbatim evidence packing, not LLM rewriting, accounts for virtually all of the fusion gain in fact-centric conversational QA. Across six open-weight model families on LoCoMo, DFM-Fusion achieves the best average multi-hop F1 (0.1877) versus LLM-Fusion (0.1841) and No-Fusion (0.1785), improving in 5/6 models while reducing maintenance overhead by 69.13$\times$ and eliminating all fusion-specific API calls. The answer to our question is clear: effective memory consolidation for long-horizon conversational agents can be made entirely free of API dependencies in the maintenance loop.
+\end{abstract}
+
+\input{sections/introduction}
+
+\input{sections/related_work}
+
+\input{sections/method}
+
+\input{sections/experiments}
+
+\input{sections/discussion}
+
+\input{sections/conclusion}
+
+\appendix
+\input{sections/appendix}
+
+\bibliography{analemma}
+\bibliographystyle{analemma}
+
+\end{document}

@@ -1,0 +1,3 @@
+4 LoCoMo Evaluation Benchmark
+Based on the dialogues generated in section 3[ref_id]S3 we introduce an evaluation benchmark (see Figure 2) composed of three tasks to assess the accuracy of long-term memory. See statistics of the dataset and evaluation benchmark in Table 5[ref_id]A2.T5 in the Appendix.
+[IMAGE START] [IMAGE URL: /mnt/bmcpfs-29000zjpjtl6xjmjiifyk/xkhu/ideation_workspace/papers/reference_figures/f274f6fdc545cd12f7ea667d2a5ba5da.png] Figure 2: Overview of our evaluation framework. We propose three tasks: question answering, event summarization and multimodal dialog generation to evaluate models’ comprehension in very long-term dialogues.[IMAGE END]

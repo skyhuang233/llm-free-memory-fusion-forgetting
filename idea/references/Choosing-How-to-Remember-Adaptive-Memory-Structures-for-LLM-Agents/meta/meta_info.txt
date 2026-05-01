@@ -1,0 +1,5 @@
+url: https://arxiv.org/pdf/2602.14038
+title: Choosing How to Remember: Adaptive Memory Structures for LLM Agents
+authors: Ming-Liang Lu and Mengjia Wu and Feng Liu and Jiawei Xu and Weikai Li and Haoyang Wang and Zhengdong Hu and Ying Ding and Yizhou Sun and Jie Lu and Yi Zhang
+publish date: 2026
+citation_key: Lu2026ChoosingHT

@@ -1,0 +1,3 @@
+Limited exploration of multimodal behavior.
+Limited exploration of multimodal behavior.
+ Since the images in our dataset are sourced from the web they do not demonstrate the visual long-term consistencies that are usually exhibited in personal photos (e.g. appearance home environment people and pets etc.). Consequently we find that the images in our dataset can be replaced with their captions without much loss of information except for cases where OCR is required. Nevertheless our work is a first step toward research into the multimodal aspect of very long-term conversations.

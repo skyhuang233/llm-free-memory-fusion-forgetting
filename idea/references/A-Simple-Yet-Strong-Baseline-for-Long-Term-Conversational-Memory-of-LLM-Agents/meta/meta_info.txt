@@ -1,0 +1,5 @@
+url: https://ar5iv.labs.arxiv.org/html/2511.17208
+title: A Simple Yet Strong Baseline for Long-Term Conversational Memory of LLM Agents
+authors: Sizhe Zhou and Jiawei Han
+publish date: 2025
+citation_key: zhou2025simplestrongbaselinelongterm

@@ -1,0 +1,9 @@
+Question Answering.
+Question Answering.
+ We evaluate three types of models: (1) Base LLMs operating with constrained context lengths where earlier dialogues are omitted i.e. Mistral-7B~\cite{bib.bib22} LLama-70B-chat~\cite{bib.bib52} gpt-3.5-turbo5https://platform.openai.com/docs/models/gpt-3-5 and gpt-4-turbo6https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo; (2) Long-context LLMs with an extended context window i.e. gpt-3.5-turbo-16k; (3) Retrieval-augmented Generation (RAG) involves retrieving relevant context from a database of dialog history observations (assertions about speakers; see § 3.3[ref_id]S3.SS3 Figure 9[ref_id]A1.F9) or session-level summaries (see § 3.3[ref_id]S3.SS3 Figure 8[ref_id]A1.F8). We employ DRAGON~\cite{bib.bib35} as retriever and gpt-3.5-turbo-16k as reader.
+
+
+## Section References
+[bib.bib22] Jiang et al. (2023) Albert Q Jiang Alexandre Sablayrolles Arthur Mensch Chris Bamford Devendra Singh Chaplot Diego de las Casas Florian Bressand Gianna Lengyel Guillaume Lample Lucile Saulnier et al. 2023. Mistral 7b. arXiv preprint arXiv:2310.06825.
+[bib.bib52] Touvron et al. (2023) Hugo Touvron Louis Martin Kevin Stone Peter Albert Amjad Almahairi Yasmine Babaei Nikolay Bashlykov Soumya Batra Prajjwal Bhargava Shruti Bhosale et al. 2023. Llama 2: Open foundation and fine-tuned chat models. arXiv preprint arXiv:2307.09288.
+[bib.bib35] Lin et al. (2023) Sheng-Chieh Lin Akari Asai Minghan Li Barlas Oguz Jimmy Lin Yashar Mehdad Wen-tau Yih and Xilun Chen. 2023. How to train your dragon: Diverse augmentation towards generalizable dense retrieval [https://doi.org/10.18653/v1/2023.findings-emnlp.423]. In Findings of the Association for Computational Linguistics: EMNLP 2023 pages 6385–6400 Singapore. Association for Computational Linguistics.

@@ -1,0 +1,5 @@
+url: https://ar5iv.labs.arxiv.org/html/2402.17753
+title: Evaluating Very Long-Term Conversational Memory of LLM Agents
+authors: Adyasha Maharana and Dong-Ho Lee and S. Tulyakov and Mohit Bansal and Francesco Barbieri and Yuwei Fang
+publish date: 2024
+citation_key: Maharana2024EvaluatingVL

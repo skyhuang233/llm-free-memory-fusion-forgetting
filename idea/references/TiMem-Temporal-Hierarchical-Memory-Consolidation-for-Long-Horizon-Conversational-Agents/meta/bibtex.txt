@@ -1,0 +1,8 @@
+@Article{Li2026TiMemTM,
+ author = {Kai Li and Xuanqing Yu and Ziyi Ni and Yi Zeng and Yao Xu and Zheqing Zhang and Xin Li and Jitao Sang and Xiaogang Duan and Xuelei Wang and Chengbao Liu and Jie Tan},
+ booktitle = {arXiv.org},
+ journal = {ArXiv},
+ title = {TiMem: Temporal-Hierarchical Memory Consolidation for Long-Horizon Conversational Agents},
+ volume = {abs/2601.02845},
+ year = {2026}
+}

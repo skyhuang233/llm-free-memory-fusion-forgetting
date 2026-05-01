@@ -1,0 +1,2 @@
+6 Experimental Results
+We evaluate and analyze the comprehensive performance of all baseline methods for question answering (§ 6.1[ref_id]S6.SS1) event graph summarization (§ 6.2[ref_id]S6.SS2) and multi-modal dialogue generation (§ 6.3[ref_id]S6.SS3).

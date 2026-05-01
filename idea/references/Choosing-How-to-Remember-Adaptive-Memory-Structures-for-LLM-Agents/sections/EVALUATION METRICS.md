@@ -1,0 +1,2 @@
+EVALUATION METRICS
+We evaluate memory systems using dataset-specific metrics. On the PERSONAMEM dataset, where each query is formulated as a single-choice question, we use accuracy as the evaluation metric. On the LOCOMO dataset, which involves free-form response generation, we adopt a multidimensional evaluation suite, including F1, BLEU-1 (B1), ROUGE-L, ROUGE-1, ROUGE-2, and BERTScore, to comprehensively assess response quality.

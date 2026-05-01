@@ -1,0 +1,5 @@
+@Inproceedings{Lu2026ChoosingHT,
+ author = {Ming-Liang Lu and Mengjia Wu and Feng Liu and Jiawei Xu and Weikai Li and Haoyang Wang and Zhengdong Hu and Ying Ding and Yizhou Sun and Jie Lu and Yi Zhang},
+ title = {Choosing How to Remember: Adaptive Memory Structures for LLM Agents},
+ year = {2026}
+}
