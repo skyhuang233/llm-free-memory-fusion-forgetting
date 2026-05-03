@@ -48,6 +48,120 @@ where $\hat{v}(s_i) \in [0,1]$ is the normalized strength of the source memory f
 \paragraph{Stage 4: Coverage Verification.}
 To confirm information preservation without an LLM, we implement a deterministic coverage check. We extract salient evidence from the original cluster: numbers and date-like expressions, capitalized entities, top-$K$ TF-IDF weighted tokens ($K=20$), and stemmed $n$-gram coverage features in the enriched configuration. Coverage recall is the fraction of these tokens appearing in $s_f$. It should be noted that a coverage gate that simply rejects low-recall fusions would leave clusters unmerged, breaking the consolidation guarantee. To address this, when recall falls below threshold $\theta_{\text{cov}} = 0.85$, we fall back to concatenating the highest-strength original memories within the budget in strength-descending order, so a fused result is always emitted rather than leaving the cluster unmerged.
 
+\subsection{DFM-Route: Query-Aware Retrieval Extension}
+\label{sec:dfm-route}
+
+While DFM-Fusion operates at maintenance time --- consolidating memory clusters offline before any query arrives --- DFM-Route extends the system at retrieval time by routing each query to a retrieval strategy matched to its evidence requirements.
+Like DFM-Fusion, DFM-Route introduces zero LLM calls at any stage; all routing and verification decisions are fully deterministic.
+
+\paragraph{Query Type Classification.}
+Each incoming query is classified into one of eight types by a rule-based regex classifier: \textit{temporal} (when-questions), \textit{list}, \textit{number}, \textit{who}, \textit{where}, \textit{yes\_no}, \textit{inferential\_yes\_no}, or \textit{fact} (default).
+Classification is based solely on surface patterns (e.g., leading ``when'', ``who'', ``how many'') without any learned model.
+
+\paragraph{Evidence Gate Score.}
+For each query, two candidate retrieval results are generated: a \textit{conservative} set (standard cosine-similarity ranking) and an \textit{expansive} set (anchor-then-MMR, which locks on the highest-similarity memory and applies MMR diversification).
+A deterministic gate score $g \in [0,1]$ is computed for each candidate set:
+\begin{equation}
+    g = 0.35\,\sigma_{\max} + 0.30\,\rho_{\text{unit}} + 0.20\,\rho_{\text{subj}} + 0.10\,a + 0.05\,b,
+    \label{eq:gate}
+\end{equation}
+where $\sigma_{\max}$ is the maximum embedding similarity in the retrieved set, $\rho_{\text{unit}}$ is the overlap between query key units (entities, dates, numerics) and retrieved tokens, $\rho_{\text{subj}}$ is subject-phrase overlap, $a$ is the Jaccard agreement between the conservative and expansive sets, and $b = \min(1, |\text{sources}|/6)$ is a source-diversity bonus.
+
+\paragraph{Routing Decision.}
+The route is selected by comparing the gate scores of the two candidate sets against type-specific thresholds.
+For \textit{temporal} queries, the conservative set is used by default (\textit{temporal guard}) unless the expansive gate score exceeds $\theta_{\text{temp}}=0.62$ with agreement $\geq 0.25$, in which case the expansive set is used.
+For \textit{list}, \textit{number}, \textit{who}, and \textit{where} queries, the \textit{union} of both sets is used when subject overlap is sufficient and gate scores meet minimum thresholds.
+For \textit{fact} queries, the expansive set is used only when it shows a clear gate-score advantage ($\Delta g \geq 0.08$) over the conservative set; otherwise the conservative set is used.
+Across 1,986 questions on LoCoMo, this yields 78\% conservative, 12\% union, and 10\% expansive routing.
+
+\paragraph{Rule-Based Answer Verifier.}
+After answer generation, a lightweight verifier checks whether the answer is supported by the retrieved context.
+The verifier applies type-specific rules without any LLM: for yes/no questions it checks substring support; for list questions it verifies each item against the retrieved evidence; for temporal questions it attempts date-unit recovery from the context.
+In practice the verifier keeps 97\% of answers unchanged, recovers 2\%, and abstains on 1\%, confirming that its role is conservative post-hoc filtering rather than aggressive rewriting.
+
+\subsection{Theoretical Analysis}
+\label{sec:theory}
+
+We establish two formal properties that together justify DFM-Fusion's design and explain its empirical advantage on fact-centric benchmarks.
+The first (Lemma~\ref{lem:submodular}) shows that coverage maximization is a submodular optimization problem, justifying the greedy sentence selection in Stage~3.
+The second (Theorem~\ref{thm:equiv}) identifies the structural condition under which verbatim packing is provably equivalent to LLM-guided rewriting in terms of answer recall.
+
+\paragraph{Coverage maximization as submodular optimization.}
+Let $\mathcal{S} = \bigcup_{i=1}^{k} \mathrm{sent}(m_i)$ be the full sentence pool after Stage~1, and let $T = T_{\mathrm{num}} \cup T_{\mathrm{ent}} \cup T_{\mathrm{tfidf}} \cup T_{\mathrm{ng}}$ be the salient token set assembled in Stage~4.
+Define the coverage function
+\begin{equation}
+    f(A) = \frac{\bigl|T \cap \textstyle\bigcup_{s \in A} \mathrm{tok}(s)\bigr|}{|T|}, \quad A \subseteq \mathcal{S},
+    \label{eq:coverage}
+\end{equation}
+where $\mathrm{tok}(s)$ denotes the token multiset of sentence $s$.
+The DFM-Fusion selection problem is
+\begin{equation}
+    \max_{A \subseteq \mathcal{S}} \; f(A) \quad \text{s.t.} \quad \textstyle\sum_{s \in A}|s|_{\mathrm{tok}} \leq B_{\mathrm{fuse}}.
+    \label{eq:opt_fusion}
+\end{equation}
+
+\begin{lemma}[Submodularity of Coverage]
+\label{lem:submodular}
+The function $f$ defined in~\eqref{eq:coverage} is monotone submodular.
+\end{lemma}
+\begin{proof}
+\emph{Monotonicity}: For $A \subseteq A'$, $\bigcup_{s \in A}\mathrm{tok}(s) \subseteq \bigcup_{s \in A'}\mathrm{tok}(s)$, so $f(A) \leq f(A')$.
+\emph{Diminishing returns}: For any $A \subseteq B \subseteq \mathcal{S}$ and $s \notin B$, the marginal gain satisfies
+\[
+  f(B \cup \{s\}) - f(B)
+  = \frac{\bigl|T \cap \mathrm{tok}(s) \setminus \textstyle\bigcup_{t \in B}\mathrm{tok}(t)\bigr|}{|T|}
+  \;\leq\;
+  \frac{\bigl|T \cap \mathrm{tok}(s) \setminus \textstyle\bigcup_{t \in A}\mathrm{tok}(t)\bigr|}{|T|}
+  = f(A \cup \{s\}) - f(A),
+\]
+since $A \subseteq B$ implies $\bigcup_{t \in A}\mathrm{tok}(t) \subseteq \bigcup_{t \in B}\mathrm{tok}(t)$, so the tokens excluded from $s$'s marginal contribution are a superset under $B$.
+\end{proof}
+
+Because $f$ is monotone submodular and the budget constraint is a modular knapsack, a greedy algorithm that iteratively selects the sentence with the highest marginal coverage-per-token achieves a $(1-1/e)$-approximation to the optimal solution of~\eqref{eq:opt_fusion}~\citep{Nemhauser1978AnalysisOA,Sviridenko2004ANO}.
+Stage~3 maximizes a strength-weighted generalization of $f$ via greedy MMR; the submodular structure is preserved because the strength weights enter as non-negative scalars on the marginal coverage terms.
+
+\paragraph{When verbatim packing is sufficient.}
+
+\begin{definition}[Verbatim Sufficiency]
+\label{def:vs}
+A QA instance $(q, a^*)$ is \emph{Verbatim Sufficient} (VS) with respect to cluster $\mathcal{M}$ if every token of the gold answer $a^*$ appears verbatim in at least one sentence of the pool:
+\[
+  \forall\, w \in \mathrm{tok}(a^*),\quad \exists\, s \in \mathcal{S} : w \in \mathrm{tok}(s).
+\]
+\end{definition}
+
+\begin{theorem}[Recall Dominance under VS]
+\label{thm:equiv}
+Let $(q, a^*)$ be VS with respect to $\mathcal{M}$, and let $s_f = \mathrm{concat}(A)$ be the DFM-Fusion output such that $\mathrm{tok}(a^*) \subseteq \mathrm{tok}(s_f)$ (the answer-bearing sentences are included within budget).
+Then for any rewriting-based fusion output $s_r$ of $\mathcal{M}$:
+\[
+  \mathrm{Recall}(s_f,\, a^*) = 1 \;\geq\; \mathrm{Recall}(s_r,\, a^*),
+\]
+where $\mathrm{Recall}(s, a^*) = |\mathrm{tok}(s) \cap \mathrm{tok}(a^*)| \,/\, |\mathrm{tok}(a^*)|$.
+\end{theorem}
+\begin{proof}
+By assumption, $\mathrm{tok}(a^*) \subseteq \mathrm{tok}(s_f)$, so $|\mathrm{tok}(s_f) \cap \mathrm{tok}(a^*)| = |\mathrm{tok}(a^*)|$, giving $\mathrm{Recall}(s_f, a^*) = 1$.
+Since $\mathrm{Recall} \in [0,1]$, the inequality $1 \geq \mathrm{Recall}(s_r, a^*)$ is immediate for any $s_r$.
+\end{proof}
+
+Theorem~\ref{thm:equiv} establishes that under VS, DFM-Fusion achieves perfect answer-token recall---the maximum possible---making LLM-guided rewriting redundant for recall on fact-centric questions.
+Any LLM rewrite that paraphrases or omits answer tokens strictly reduces recall below 1; any rewrite that preserves them achieves recall equal to DFM-Fusion.
+The condition ``answer-bearing sentences within budget'' is satisfied when the budget $B_{\mathrm{fuse}}$ is large enough to accommodate the salient high-strength members that carry the answer, as our Stage~3 MMR selection prioritizes.
+
+\begin{remark}
+\label{rem:vs_boundary}
+VS holds for fact-centric questions whose answers are directly stated in the conversation: entity names, precise dates, and numerical facts.
+It fails when the gold answer requires synthesis not present verbatim in the cluster --- for example, normalizing ``she joined three months after moving'' into a relative temporal expression.
+This boundary is consistent with DFM-Fusion's observed advantages on multi-hop and single-hop categories and LLM-Fusion's retained advantages on temporal and open-domain categories (Table~\ref{tab:main_results}).
+\end{remark}
+
+\begin{remark}[Coverage Certificate vs.\ LLM Preservation Check]
+\label{rem:cert}
+Stage~4 provides a \emph{certified} lower bound: $f(A) \geq \theta_{\mathrm{cov}}$ guarantees that at least $\theta_{\mathrm{cov}}$ fraction of salient tokens appear verbatim in $s_f$.
+By contrast, LLM-Fusion's preservation check produces an uncertified judgment that may hallucinate confirmation or miss subtle omissions.
+The certificate is weaker in scope (token-level coverage, not semantic equivalence) but strictly stronger in reliability: it is deterministic and auditable.
+\end{remark}
+
 \subsection{Hyperparameter Selection}
 
 FadeMem decay parameters ($\theta_\text{fusion}=0.75$, $T_\text{window}=10$, $\lambda_\text{base}=0.1$) are adopted directly from the original system. DFM-specific fusion parameters were initialized to interpretable defaults ($\theta_\text{dup}=0.90$, $B_\text{fuse}=512$, $\lambda=0.5$, $K=10$, $\theta_\text{cov}=0.80$) and revised once, in a single diagnostic pass that identified four concrete issues: an embedding representation bug (weighted-average rather than fused-text encoding), a suboptimal text separator, an over-aggressive deduplication threshold, and an undersized fusion budget. This pass was conducted on the full LoCoMo-10 evaluation set without a held-out split. While the changes are individually motivated by interpretable diagnostics rather than metric search, we acknowledge that we cannot fully rule out mild overfitting to the 10 evaluation conversations; the six-model cross-family replication (Section~\ref{sec:experiments}) provides indirect stability evidence.

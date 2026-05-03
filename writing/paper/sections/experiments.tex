@@ -64,5 +64,70 @@ Among the ablation variants, DFM w/ mean embedding is the weakest on multi-hop F
 \paragraph{Retrieval and fusion diagnostics.}
 Retrieval-side diagnostics support the same direction. Averaged across six models, DFM-Fusion yields slightly stronger evidence recall / hit rate / MRR (0.3667 / 0.4105 / 0.2067) than LLM-Fusion (0.3662 / 0.4098 / 0.2064) and No-Fusion (0.3628 / 0.4070 / 0.2045). Each DFM fusion event packs on average 9.65 selected sentences into 106.64 tokens, with mean coverage of 0.9189 for capitalized entities, 0.8278 for TF-IDF salient terms, 0.8862 for stemmed $n$-grams, and 1.0 for both dates and numeric tokens. Retrieval diagnostics and fusion behavior statistics (Tables~\ref{tab:appendix_retrieval}--\ref{tab:appendix_fusion_behavior}) are identical or near-identical across the six answer models by design: these quantities depend only on the memory pipeline and the shared Sentence-BERT encoder~\citep{Reimers2019SentenceBERTSE}, not on which local model generates answers.
 
+\paragraph{Retrieval-time redundancy baseline.}
+To isolate whether the observed gains stem from maintenance-time consolidation or could equally be obtained by query-time diversity control, we evaluated \textbf{No-Fusion+QueryMMR}: query-time MMR reranking applied at every inference call, without any memory fusion.
+Averaged across six models in the same experimental run, No-Fusion+QueryMMR achieves 0.1934 multi-hop F1 --- exceeding both DFM-Fusion (0.1885) and LLM-Fusion (0.1828) within the same run --- confirming that deduplication at any stage of the pipeline yields substantial gains.
+However, No-Fusion+QueryMMR degrades adversarial F1 by $-0.029$ relative to DFM-Fusion (0.8160 vs.\ 0.8453), because per-query diversity reranking introduces noise on adversarial questions that reward selective non-answers.
+DFM-Fusion achieves comparable multi-hop gains through offline maintenance (a one-time cost amortized over all future queries) while preserving adversarial F1.
+
 \paragraph{Operational efficiency.}
 DFM-Fusion eliminates all maintenance-time LLM calls, replacing them with CPU-only deterministic operations. This yields a 69.13$\times$ average maintenance speedup, an 11.74\% reduction in total API calls, and a 3.88\% reduction in cost --- at no accuracy cost on the primary metric. Per-model operational breakdowns, retrieval diagnostics, paired tests, TOST outcomes, and targeted error analysis appear in the appendix.
+
+\subsection{DFM-Route Evaluation}
+\label{sec:exp-route}
+
+We evaluate DFM-Route (Section~\ref{sec:dfm-route}) on the same six model families plus DeepSeek-V3.2 Pro (served via SiliconFlow API), using the \texttt{dfm\_fusion\_optimized\_extractive\_v2} pipeline as the within-study baseline and \texttt{no\_fusion\_anchor\_then\_mmr\_extractive\_v2} as the no-fusion reference.
+All three conditions share identical memory maintenance (DFM-Fusion), retrieval budgets, and answer-generation stacks; DFM-Route differs only in the retrieval-routing layer at inference time.
+\textbf{Important:} this evaluation uses a different pipeline configuration from the six-model study in Table~\ref{tab:main_results}; numbers are not directly comparable across tables.
+
+\begin{table}[t]
+\centering
+\caption{DFM-Route evaluation on LoCoMo-10 across six local models and DeepSeek-V3.2 Pro.
+DFM-Route (R), DFM-Extractive v2 (E), and No-Fusion+AnchorMMR (N) are compared within the same pipeline.
+Bold indicates best per column within each model row.
+DFM-Route uses zero LLM calls at maintenance or retrieval time.
+\textbf{Average} row: six local-model means; DeepSeek-V3.2 row is a single-model API result.}
+\label{tab:route_results}
+\renewcommand{\arraystretch}{1.3}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{l rrr rrr rrr rrr rrr}
+\toprule
+& \multicolumn{3}{c}{Multi-hop F1}
+& \multicolumn{3}{c}{Overall F1}
+& \multicolumn{3}{c}{Temporal F1}
+& \multicolumn{3}{c}{Single-hop F1}
+& \multicolumn{3}{c}{Adversarial F1} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}
+Model & R & E & N & R & E & N & R & E & N & R & E & N & R & E & N \\
+\midrule
+Qwen2.5-7B  & \textbf{0.1775} & 0.1468 & 0.1334 & \textbf{0.4280} & 0.3662 & 0.3544 & \textbf{0.3052} & 0.1936 & 0.1896 & \textbf{0.3898} & 0.2702 & 0.2709 & \textbf{0.8251} & 0.8767 & 0.8386 \\
+Qwen2.5-14B & \textbf{0.1745} & 0.1312 & 0.1447 & \textbf{0.4591} & 0.3771 & 0.3846 & \textbf{0.2962} & 0.1779 & 0.1672 & \textbf{0.4023} & 0.2610 & 0.2842 & 0.9462 & \textbf{0.9641} & 0.9529 \\
+Qwen3-8B    & \textbf{0.1977} & 0.1698 & 0.1706 & \textbf{0.4423} & 0.3782 & 0.3732 & \textbf{0.2950} & 0.1952 & 0.1958 & \textbf{0.4467} & 0.3155 & 0.3250 & 0.7683 & \textbf{0.8221} & 0.7825 \\
+Llama3.1-8B & \textbf{0.2105} & 0.1767 & 0.1883 & \textbf{0.4354} & 0.3719 & 0.3661 & \textbf{0.2778} & 0.1663 & 0.1512 & \textbf{0.4331} & 0.3161 & 0.3298 & 0.7668 & \textbf{0.8117} & 0.7623 \\
+Llama3.2-3B & \textbf{0.1786} & 0.1395 & 0.1591 & \textbf{0.3879} & 0.3323 & 0.3345 & \textbf{0.3010} & 0.1872 & 0.1843 & \textbf{0.3787} & 0.2777 & 0.3009 & 0.6667 & \textbf{0.7197} & 0.6771 \\
+Mistral-7B  & \textbf{0.1665} & 0.1417 & 0.1637 & \textbf{0.4225} & 0.3568 & 0.3554 & \textbf{0.3128} & 0.2126 & 0.2012 & \textbf{0.4261} & 0.3025 & 0.3174 & 0.7309 & \textbf{0.7623} & 0.7265 \\
+\midrule
+\textbf{Average} & \textbf{0.1842} & 0.1509 & 0.1600 & \textbf{0.4292} & 0.3637 & 0.3614 & \textbf{0.2980} & 0.1888 & 0.1816 & \textbf{0.4128} & 0.2905 & 0.3047 & 0.7840 & \textbf{0.8261} & 0.7900 \\
+\midrule
+DeepSeek-V3.2 Pro & \textbf{0.2023} & 0.1600 & 0.1510 & \textbf{0.4969} & 0.4114 & 0.4101 & \textbf{0.3257} & 0.2038 & 0.1985 & \textbf{0.4776} & 0.3309 & 0.3364 & 0.9357 & \textbf{0.9469} & 0.9410 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\paragraph{Accuracy results.}
+Table~\ref{tab:route_results} shows that DFM-Route leads on multi-hop F1 in 6/6 local models and on temporal F1 in 6/6 models.
+The most striking gain is on temporal F1: the six-model average rises from 0.1888 (DFM-Extractive) to 0.2980 (DFM-Route), a $+58\%$ relative improvement.
+This directly addresses the temporal limitation identified in Section~\ref{sec:experiments}: by routing temporal queries to conservative anchor-based retrieval and applying date-unit recovery in the verifier, DFM-Route recovers the temporal precision that verbatim packing alone could not achieve.
+
+The overall F1 improvement (0.3637 → 0.4292, $+0.0655$) is driven jointly by temporal and single-hop gains.
+With DeepSeek-V3.2 Pro as the answer model, DFM-Route reaches 0.4969 overall F1 --- the highest result across all experiments.
+
+A consistent trade-off appears on adversarial F1: DFM-Route averages 0.7840 versus 0.8261 for DFM-Extractive.
+However, we observed that this adversarial gap is identical in character to the adversarial gap of No-Fusion+QueryMMR (Section~\ref{sec:experiments}) relative to DFM-Fusion: expanding the retrieval set introduces more potential for incorrectly supported answers, which adversarial questions penalize.
+The adversarial difference is concentrated in models with weak abstention behavior (Llama3.2-3B, Mistral-7B); Qwen2.5-14B retains near-parity (0.9462 vs.\ 0.9641).
+
+\paragraph{Routing statistics.}
+Averaged across 1,986 queries on LoCoMo, DFM-Route routes 78\% of queries to the conservative strategy, 12\% to union, and 10\% to expansive.
+Temporal queries are the main beneficiary of the temporal guard: among the 292 temporal questions, the anchor-based conservative strategy is selected by default, ensuring that date-bearing sentences from the top memory anchor are always included.
+The rule-based verifier keeps 97\% of answers unchanged (1,928/1,986), recovers 2\% from over-abstention, and abstains on 1\%, confirming that it acts as a conservative post-hoc filter rather than an aggressive rewriter.

@@ -111,6 +111,39 @@ Llama3.1-8B & paraphrase or synthesis & Which type of vacation would Evan prefer
 }
 \end{table}
 
+\subsection{DFM-Route per-model results}
+
+\begin{table}[h]
+\centering
+\caption{DFM-Route (R), DFM-Extractive v2 (E), and No-Fusion+AnchorMMR (N) per-model results on LoCoMo-10 (3 runs each, mean reported). This table uses the \texttt{extractive\_v2} pipeline; numbers are not directly comparable to Table~\ref{tab:main_results} which uses a different pipeline configuration. DeepSeek-V3.2 Pro is a single-model API result (SiliconFlow).}
+\label{tab:appendix_route}
+\renewcommand{\arraystretch}{1.25}
+\adjustbox{max width=\textwidth}{
+\begin{tabular}{l rrr rrr rrr rrr rrr}
+\toprule
+& \multicolumn{3}{c}{Multi-hop F1}
+& \multicolumn{3}{c}{Overall F1}
+& \multicolumn{3}{c}{Temporal F1}
+& \multicolumn{3}{c}{Single-hop F1}
+& \multicolumn{3}{c}{Adversarial F1} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}\cmidrule(lr){11-13}\cmidrule(lr){14-16}
+Model & R & E & N & R & E & N & R & E & N & R & E & N & R & E & N \\
+\midrule
+Qwen2.5-7B    & 0.1775 & 0.1468 & 0.1334 & 0.4280 & 0.3662 & 0.3544 & 0.3052 & 0.1936 & 0.1896 & 0.3898 & 0.2702 & 0.2709 & 0.8251 & 0.8767 & 0.8386 \\
+Qwen2.5-14B   & 0.1745 & 0.1312 & 0.1447 & 0.4591 & 0.3771 & 0.3846 & 0.2962 & 0.1779 & 0.1672 & 0.4023 & 0.2610 & 0.2842 & 0.9462 & 0.9641 & 0.9529 \\
+Qwen3-8B      & 0.1977 & 0.1698 & 0.1706 & 0.4423 & 0.3782 & 0.3732 & 0.2950 & 0.1952 & 0.1958 & 0.4467 & 0.3155 & 0.3250 & 0.7683 & 0.8221 & 0.7825 \\
+Llama3.1-8B   & 0.2105 & 0.1767 & 0.1883 & 0.4354 & 0.3719 & 0.3661 & 0.2778 & 0.1663 & 0.1512 & 0.4331 & 0.3161 & 0.3298 & 0.7668 & 0.8117 & 0.7623 \\
+Llama3.2-3B   & 0.1786 & 0.1395 & 0.1591 & 0.3879 & 0.3323 & 0.3345 & 0.3010 & 0.1872 & 0.1843 & 0.3787 & 0.2777 & 0.3009 & 0.6667 & 0.7197 & 0.6771 \\
+Mistral-7B    & 0.1665 & 0.1417 & 0.1637 & 0.4225 & 0.3568 & 0.3554 & 0.3128 & 0.2126 & 0.2012 & 0.4261 & 0.3025 & 0.3174 & 0.7309 & 0.7623 & 0.7265 \\
+\midrule
+\textbf{Average} & \textbf{0.1842} & 0.1509 & 0.1600 & \textbf{0.4292} & 0.3637 & 0.3614 & \textbf{0.2980} & 0.1888 & 0.1816 & \textbf{0.4128} & 0.2905 & 0.3047 & 0.7840 & \textbf{0.8261} & 0.7900 \\
+\midrule
+DeepSeek-V3.2 Pro & \textbf{0.2023} & 0.1600 & 0.1510 & \textbf{0.4969} & 0.4114 & 0.4101 & \textbf{0.3257} & 0.2038 & 0.1985 & \textbf{0.4776} & 0.3309 & 0.3364 & 0.9357 & \textbf{0.9469} & 0.9410 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
 \subsection{DeepSeek-V3.2 single-model sanity check}
 
 Before running the six-model family study, we validated the harness using \texttt{DeepSeek-V3.2} (API, temperature=0) as the answer model, with 3 independent runs per condition. These results confirmed the directional ordering (DFM-Fusion $>$ No-Fusion, DFM-Fusion $\approx$ LLM-Fusion) and are included only as a harness sanity check; the main empirical basis of the paper is the six-model local-model evaluation in Section~\ref{sec:experiments}.

@@ -27,5 +27,14 @@ wandb/
 reference paper/*.tar.gz
 reference paper/*.pdf
 
+# LaTeX build artifacts
+*.aux
+*.blg
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+
 # VS Code (optional, keep settings)
 # .vscode/
