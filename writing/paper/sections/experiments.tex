@@ -102,12 +102,12 @@ Model & R & E & N & R & E & N & R & E & N & R & E & N & R & E & N \\
 \midrule
 Qwen2.5-7B  & \textbf{0.1775} & 0.1468 & 0.1334 & \textbf{0.4280} & 0.3662 & 0.3544 & \textbf{0.3052} & 0.1936 & 0.1896 & \textbf{0.3898} & 0.2702 & 0.2709 & \textbf{0.8251} & 0.8767 & 0.8386 \\
 Qwen2.5-14B & \textbf{0.1745} & 0.1312 & 0.1447 & \textbf{0.4591} & 0.3771 & 0.3846 & \textbf{0.2962} & 0.1779 & 0.1672 & \textbf{0.4023} & 0.2610 & 0.2842 & 0.9462 & \textbf{0.9641} & 0.9529 \\
-Qwen3-8B    & \textbf{0.1977} & 0.1698 & 0.1706 & \textbf{0.4423} & 0.3782 & 0.3732 & \textbf{0.2950} & 0.1952 & 0.1958 & \textbf{0.4467} & 0.3155 & 0.3250 & 0.7683 & \textbf{0.8221} & 0.7825 \\
-Llama3.1-8B & \textbf{0.2105} & 0.1767 & 0.1883 & \textbf{0.4354} & 0.3719 & 0.3661 & \textbf{0.2778} & 0.1663 & 0.1512 & \textbf{0.4331} & 0.3161 & 0.3298 & 0.7668 & \textbf{0.8117} & 0.7623 \\
-Llama3.2-3B & \textbf{0.1786} & 0.1395 & 0.1591 & \textbf{0.3879} & 0.3323 & 0.3345 & \textbf{0.3010} & 0.1872 & 0.1843 & \textbf{0.3787} & 0.2777 & 0.3009 & 0.6667 & \textbf{0.7197} & 0.6771 \\
+Qwen3-8B    & \textbf{0.1979} & 0.1678 & 0.1708 & \textbf{0.4425} & 0.3777 & 0.3737 & \textbf{0.2932} & 0.1968 & 0.1961 & \textbf{0.4469} & 0.3162 & 0.3256 & 0.7706 & \textbf{0.8191} & 0.7840 \\
+Llama3.1-8B & \textbf{0.2123} & 0.1786 & 0.1926 & \textbf{0.4368} & 0.3706 & 0.3673 & \textbf{0.2852} & 0.1711 & 0.1505 & \textbf{0.4363} & 0.3130 & 0.3314 & 0.7601 & \textbf{0.8072} & 0.7623 \\
+Llama3.2-3B & \textbf{0.1748} & 0.1420 & 0.1600 & \textbf{0.3861} & 0.3330 & 0.3338 & \textbf{0.2996} & 0.1872 & 0.1841 & \textbf{0.3778} & 0.2788 & 0.2994 & 0.6644 & \textbf{0.7205} & 0.6749 \\
 Mistral-7B  & \textbf{0.1665} & 0.1417 & 0.1637 & \textbf{0.4225} & 0.3568 & 0.3554 & \textbf{0.3128} & 0.2126 & 0.2012 & \textbf{0.4261} & 0.3025 & 0.3174 & 0.7309 & \textbf{0.7623} & 0.7265 \\
 \midrule
-\textbf{Average} & \textbf{0.1842} & 0.1509 & 0.1600 & \textbf{0.4292} & 0.3637 & 0.3614 & \textbf{0.2980} & 0.1888 & 0.1816 & \textbf{0.4128} & 0.2905 & 0.3047 & 0.7840 & \textbf{0.8261} & 0.7900 \\
+\textbf{Average} & \textbf{0.1839} & 0.1514 & 0.1609 & \textbf{0.4292} & 0.3636 & 0.3615 & \textbf{0.2987} & 0.1899 & 0.1815 & \textbf{0.4132} & 0.2903 & 0.3048 & 0.7829 & \textbf{0.8250} & 0.7899 \\
 \midrule
 DeepSeek-V3.2 Pro & \textbf{0.2023} & 0.1600 & 0.1510 & \textbf{0.4969} & 0.4114 & 0.4101 & \textbf{0.3257} & 0.2038 & 0.1985 & \textbf{0.4776} & 0.3309 & 0.3364 & 0.9357 & \textbf{0.9469} & 0.9410 \\
 \bottomrule
@@ -117,13 +117,13 @@ DeepSeek-V3.2 Pro & \textbf{0.2023} & 0.1600 & 0.1510 & \textbf{0.4969} & 0.4114
 
 \paragraph{Accuracy results.}
 Table~\ref{tab:route_results} shows that DFM-Route leads on multi-hop F1 in 6/6 local models and on temporal F1 in 6/6 models.
-The most striking gain is on temporal F1: the six-model average rises from 0.1888 (DFM-Extractive) to 0.2980 (DFM-Route), a $+58\%$ relative improvement.
+The most striking gain is on temporal F1: the six-model average rises from 0.1899 (DFM-Extractive) to 0.2987 (DFM-Route), a $+57\%$ relative improvement.
 This directly addresses the temporal limitation identified in Section~\ref{sec:experiments}: by routing temporal queries to conservative anchor-based retrieval and applying date-unit recovery in the verifier, DFM-Route recovers the temporal precision that verbatim packing alone could not achieve.
 
-The overall F1 improvement (0.3637 → 0.4292, $+0.0655$) is driven jointly by temporal and single-hop gains.
+The overall F1 improvement (0.3636 → 0.4292, $+0.0656$) is driven jointly by temporal and single-hop gains.
 With DeepSeek-V3.2 Pro as the answer model, DFM-Route reaches 0.4969 overall F1 --- the highest result across all experiments.
 
-A consistent trade-off appears on adversarial F1: DFM-Route averages 0.7840 versus 0.8261 for DFM-Extractive.
+A consistent trade-off appears on adversarial F1: DFM-Route averages 0.7829 versus 0.8250 for DFM-Extractive.
 However, we observed that this adversarial gap is identical in character to the adversarial gap of No-Fusion+QueryMMR (Section~\ref{sec:experiments}) relative to DFM-Fusion: expanding the retrieval set introduces more potential for incorrectly supported answers, which adversarial questions penalize.
 The adversarial difference is concentrated in models with weak abstention behavior (Llama3.2-3B, Mistral-7B); Qwen2.5-14B retains near-parity (0.9462 vs.\ 0.9641).
 

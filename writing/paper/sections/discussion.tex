@@ -27,7 +27,7 @@ We implemented No-Fusion+QueryMMR as a retrieval-time-only baseline: query-time 
 Averaged across six models, this achieves 0.1934 multi-hop F1, exceeding DFM-Fusion (0.1885) within the same run.
 This result confirms that the deduplication mechanism --- not LLM rewriting --- is the primary driver of performance gains, whether applied at maintenance or retrieval time.
 The trade-off is a $-0.029$ drop in adversarial F1 (0.8160 vs.\ 0.8453 for DFM-Fusion), because per-query diversity reranking introduces noise on questions that reward selective non-answers.
-DFM-Fusion achieves comparable multi-hop gains through offline maintenance (a one-time cost amortized over all future queries), while DFM-Route extends this at retrieval time with query-type-aware routing, recovering the temporal precision that query-agnostic deduplication cannot address (temporal F1 +58\%; Section~\ref{sec:exp-route}).
+DFM-Fusion achieves comparable multi-hop gains through offline maintenance (a one-time cost amortized over all future queries), while DFM-Route extends this at retrieval time with query-type-aware routing, recovering the temporal precision that query-agnostic deduplication cannot address (temporal F1 +57\%; Section~\ref{sec:exp-route}).
 
 \paragraph{Why gap recovery is no longer the right headline.}
 In the earlier single-setting draft, gap recovery was a convenient scalar because the ordering between No-Fusion and LLM-Fusion was clean. In the six-model family this is less stable; for example, Llama3.2-3B places No-Fusion slightly above LLM-Fusion on multi-hop F1. For this reason, we emphasize direct DFM--LLM deltas, model-count wins (5/6), and cross-method averages rather than using gap recovery as the primary summary statistic.

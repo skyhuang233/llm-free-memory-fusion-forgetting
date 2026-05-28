@@ -3,7 +3,7 @@
 
 The central finding of this paper is that the gain attributed to LLM-guided memory fusion in fact-centric long-horizon conversational QA comes almost entirely from deduplicating and packing verbatim evidence into a fixed retrieval budget --- not from the LLM's linguistic rewriting ability.
 DFM-Fusion, a fully deterministic four-stage operator requiring zero maintenance-time LLM calls, recovers this gain across a heterogeneous family of six open-weight models.
-DFM-Route, its query-aware retrieval extension, further demonstrates that the remaining temporal gap is a retrieval-routing problem rather than a rewriting problem: by routing temporal queries to anchor-based retrieval with date-unit recovery, temporal F1 improves 5.5$\times$ (0.055 to 0.298) without any LLM call at maintenance or retrieval time.
+DFM-Route, its query-aware retrieval extension, further demonstrates that the remaining temporal gap is a retrieval-routing problem rather than a rewriting problem: by routing temporal queries to anchor-based retrieval with date-unit recovery, temporal F1 improves $+57\%$ (from 0.190 to 0.299) without any LLM call at maintenance or retrieval time.
 Together, DFM-Fusion and DFM-Route demonstrate that the full memory pipeline --- from consolidation to evidence delivery --- can operate without any API dependency in the maintenance loop.
 
 At the same time, our results do not support a blanket equivalence claim.
