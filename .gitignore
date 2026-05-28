@@ -24,8 +24,7 @@ wandb/
 .env
 
 # Large binaries
-reference paper/*.tar.gz
-reference paper/*.pdf
+references/*.tar.gz
 
 # LaTeX build artifacts
 *.aux

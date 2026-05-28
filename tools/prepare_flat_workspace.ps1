@@ -60,14 +60,13 @@ if (Test-Path -LiteralPath $TargetRoot) {
 }
 
 $outerExtras = @(
-    ".vexp",
-    ".vscode",
-    "analytical_plots",
-    "method_diagrams",
-    "reference paper",
-    "writing",
-    "PAPER_BLUEPRINT.md",
-    "upload.py"
+    ".gitignore",
+    "README.md",
+    "docs",
+    "figures",
+    "paper",
+    "references",
+    "tools"
 )
 
 Write-Host "Creating flattened workspace at $TargetRoot"

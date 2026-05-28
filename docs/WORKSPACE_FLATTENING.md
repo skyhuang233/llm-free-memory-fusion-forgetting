@@ -12,7 +12,7 @@ The inner repository is the active experiment codebase. The outer workspace main
 Use the inner repository as the base, then copy the outer-only materials into a new flat workspace:
 
 ```powershell
-pwsh -ExecutionPolicy Bypass -File E:\llm-free-memory-fusion-forgetting-master\prepare_flat_workspace.ps1
+pwsh -ExecutionPolicy Bypass -File E:\llm-free-memory-fusion-forgetting-master\tools\prepare_flat_workspace.ps1
 ```
 
 Default output:
@@ -33,14 +33,13 @@ Base workspace copied from the inner repo:
 
 Additional materials copied from the outer workspace:
 
-- `.vexp`
-- `.vscode`
-- `analytical_plots`
-- `method_diagrams`
-- `reference paper`
-- `writing`
-- `PAPER_BLUEPRINT.md`
-- `upload.py`
+- `.gitignore`
+- `README.md`
+- `docs`
+- `figures`
+- `paper`
+- `references`
+- `tools`
 
 ## What Stays Untouched
 

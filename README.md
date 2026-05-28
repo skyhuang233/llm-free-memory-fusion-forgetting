@@ -38,29 +38,19 @@ source dfm_fusion/scripts/setup_env.sh
 ## Project Structure
 
 ```
-dfm_fusion/
-├── configs/              # YAML configs per experimental condition
-│   ├── base_config.yaml  # Shared hyperparameters (used by LLM-Fusion, No-Fusion)
-│   └── dfm_fusion_config.yaml  # DFM-Fusion overrides (theta_dup=0.90, etc.)
-├── memory/               # Memory system implementation
-│   ├── memory_store.py   # Dual-layer memory (LML/SML), decay, retrieval
-│   ├── fusion_llm.py     # LLM-guided fusion (FadeMem baseline)
-│   ├── fusion_deterministic.py  # Deterministic fusion (DFM, our method)
-│   ├── fusion_none.py    # No-fusion passthrough (ablation)
-│   ├── preservation.py   # Info preservation checks
-│   └── embeddings.py     # Embedding computation
-├── data/
-│   └── locomo_loader.py  # LoCoMo dataset loader
-├── evaluation/
-│   ├── f1_scorer.py      # F1 partial-match scorer
-│   └── eval_pipeline.py  # End-to-end eval pipeline
-├── scripts/              # Shell scripts for running experiments
-├── results/              # Raw results and logs
-└── analysis/             # Analysis and visualization
-external/
-└── locomo/               # Cloned LoCoMo benchmark repo
-    └── data/locomo10.json  # 10 conversations, QA pairs
+exp/
+└── dfm_fusion/           # Core experiment code, configs, and runners
+paper/                    # Current manuscript and build artifacts
+docs/                     # Planning notes, structure docs, and workspace helpers
+figures/                  # Shared analysis plots and method diagrams
+references/               # Reference paper bundles and source material
+tools/                    # Utility scripts such as workspace prep and upload helpers
+llm-free-memory-fusion-forgetting-master/  # Legacy nested workspace snapshot
 ```
+
+The core code still lives under `exp/dfm_fusion/`; the top-level directories now separate the manuscript, docs, figures, references, and utility scripts so the repo is easier to navigate.
+
+See [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md) for a shorter map of where to edit what.
 
 ## API Usage Pattern
 

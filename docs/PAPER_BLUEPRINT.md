@@ -79,14 +79,14 @@
 ## Figures
 
 ### fig_framework_overview
-- **Path**: `method_diagrams/framework_overview.png`
+- **Path**: `figures/method_diagrams/framework_overview.png`
 - **Type**: method_diagram
 - **Caption**: Overview of the DFM-Fusion pipeline. Memory entries are processed through four deterministic stages: (1) sentence segmentation, (2) near-duplicate removal using embedding similarity, (3) MMR-based sentence packing within a token budget, and (4) coverage verification via salient-token recall. The entire process requires zero LLM calls while preserving verbatim quotes.
 - **Shows**: claim_5
 - **Analysis**: This diagram illustrates the core contribution—replacing LLM-guided fusion with a deterministic pipeline. The four-stage design ensures information preservation while eliminating API dependencies.
 
 ### fig_gap_recovery
-- **Path**: `analytical_plots/gap_recovery.png`
+- **Path**: `figures/analytical_plots/gap_recovery.png`
 - **Type**: analytical_plot
 - **Caption**: DFM-Fusion achieves 106.4% gap recovery on multi-hop F1, matching LLM-Fusion performance (p=0.864) while significantly outperforming No-Fusion (p=0.031). Error bars show standard deviation across 3 runs.
 - **Shows**: claim_1, claim_2
@@ -355,4 +355,3 @@
 
 **Blueprint Status**: COMPLETE
 **Ready for Writing Phase**: YES
-
